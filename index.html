@@ -13,13 +13,14 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f8f5f2;
+      background: linear-gradient(135deg, #fff5f7, #f7f0ff);
       color: #333;
+      min-height: 100vh;
     }
 
     .container {
       max-width: 700px;
-      margin: 0 auto;
+      margin: auto;
       padding: 30px 20px;
     }
 
@@ -29,8 +30,8 @@
     }
 
     .header h1 {
-      margin-bottom: 10px;
-      color: #7b3f61;
+      color: #8e44ad;
+      margin-bottom: 8px;
       font-size: 32px;
     }
 
@@ -41,15 +42,15 @@
 
     .card {
       background: white;
+      border-radius: 18px;
       padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
 
     label {
       display: block;
-      margin-bottom: 10px;
       font-weight: bold;
+      margin-bottom: 10px;
     }
 
     textarea {
@@ -57,14 +58,15 @@
       min-height: 150px;
       padding: 15px;
       border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 12px;
       resize: vertical;
+      font-size: 16px;
+      font-family: inherit;
       outline: none;
     }
 
     textarea:focus {
-      border-color: #7b3f61;
+      border-color: #8e44ad;
     }
 
     button {
@@ -72,8 +74,8 @@
       margin-top: 15px;
       padding: 15px;
       border: none;
-      border-radius: 10px;
-      background: #7b3f61;
+      border-radius: 12px;
+      background: #8e44ad;
       color: white;
       font-size: 17px;
       font-weight: bold;
@@ -81,41 +83,41 @@
     }
 
     button:hover {
-      opacity: 0.9;
+      background: #732d91;
     }
 
     button:disabled {
-      background: #aaa;
+      background: #bbb;
       cursor: not-allowed;
     }
 
     .response {
       margin-top: 25px;
       padding: 20px;
-      background: #faf7f9;
-      border-left: 4px solid #7b3f61;
-      border-radius: 8px;
+      background: #faf7ff;
+      border-left: 4px solid #8e44ad;
+      border-radius: 10px;
       display: none;
       line-height: 1.6;
-      white-space: pre-wrap;
     }
 
     .loading {
       display: none;
       text-align: center;
       margin-top: 20px;
-      color: #7b3f61;
+      color: #8e44ad;
+      font-weight: bold;
     }
 
     .error {
-      color: #b00020;
+      color: #c0392b;
     }
 
     .footer {
       text-align: center;
       margin-top: 25px;
-      font-size: 13px;
       color: #888;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -125,22 +127,22 @@
   <div class="container">
 
     <div class="header">
-      <h1>Relationship Guidance</h1>
-      <p>A safe space to reflect, understand and move forward.</p>
+      <h1>❤️ Relationship Guidance</h1>
+      <p>A safe space to understand your relationship better.</p>
     </div>
 
     <div class="card">
 
       <label for="question">
-        What would you like guidance about?
+        What's happening in your relationship?
       </label>
 
       <textarea
         id="question"
-        placeholder="Tell us what's happening in your relationship..."
+        placeholder="Tell us what you're experiencing..."
       ></textarea>
 
-      <button id="guidanceButton" onclick="getGuidance()">
+      <button id="askButton" onclick="getGuidance()">
         Get Guidance
       </button>
 
@@ -153,7 +155,7 @@
     </div>
 
     <div class="footer">
-      Relationship Guidance • Your conversations deserve care and respect.
+      Relationship Guidance • Your thoughts matter.
     </div>
 
   </div>
@@ -175,19 +177,18 @@
         document.getElementById("loading");
 
       const button =
-        document.getElementById("guidanceButton");
+        document.getElementById("askButton");
 
       if (!question) {
         responseBox.style.display = "block";
-        responseBox.className = "response error";
-        responseBox.textContent =
-          "Please tell us a little about your situation first.";
+        responseBox.innerHTML =
+          "<div class='error'>Please tell us what's happening first.</div>";
         return;
       }
 
-      button.disabled = true;
-      loading.style.display = "block";
       responseBox.style.display = "none";
+      loading.style.display = "block";
+      button.disabled = true;
 
       try {
 
@@ -203,37 +204,38 @@
           })
         });
 
+        const data = await response.json();
+
+        loading.style.display = "none";
+        button.disabled = false;
+
+        responseBox.style.display = "block";
+
         if (!response.ok) {
           throw new Error(
-            "API returned status " + response.status
+            data.message || "Something went wrong."
           );
         }
 
-        const data = await response.json();
-
-        responseBox.className = "response";
-        responseBox.style.display = "block";
-
-        responseBox.textContent =
-          data.response ||
-          data.message ||
-          "Guidance received successfully.";
+        responseBox.innerHTML =
+          `<strong>Guidance</strong><br><br>
+           ${data.response || data.message || JSON.stringify(data)}`;
 
       } catch (error) {
 
-        console.error(error);
+        loading.style.display = "none";
+        button.disabled = false;
 
         responseBox.style.display = "block";
-        responseBox.className = "response error";
 
-        responseBox.textContent =
-          "We couldn't connect to the guidance service right now. Please try again.";
+        responseBox.innerHTML =
+          `<div class="error">
+            Unable to connect to the guidance service right now.
+            <br><br>
+            Please try again in a moment.
+          </div>`;
 
-      } finally {
-
-        button.disabled = false;
-        loading.style.display = "none";
-
+        console.error(error);
       }
     }
 
