@@ -1,416 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Relationship Guidance</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fff5f7, #f6f0ff);
-      color: #333;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 760px;
-      margin: auto;
-      padding: 25px 18px 50px;
-    }
-
-    .header {
-      text-align: center;
-      padding: 20px 10px;
-    }
-
-    .heart {
-      font-size: 46px;
-      margin-bottom: 8px;
-    }
-
-    .header h1 {
-      margin: 0;
-      color: #8e44ad;
-      font-size: 32px;
-    }
-
-    .tagline {
-      margin: 12px auto 0;
-      max-width: 560px;
-      color: #666;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .how-it-works {
-      margin: 0 auto 22px;
-    }
-
-    .how-title {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: #444;
-      margin-bottom: 12px;
-    }
-
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .how-item {
-      background: rgba(255,255,255,.85);
-      border-radius: 14px;
-      padding: 15px 12px;
-      text-align: center;
-      border: 1px solid #eee5f2;
-    }
-
-    .how-number {
-      color: #8e44ad;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .how-heading {
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .how-text {
-      font-size: 12px;
-      color: #777;
-      line-height: 1.4;
-    }
-
-    .card {
-      background: white;
-      border-radius: 22px;
-      padding: 26px;
-      box-shadow: 0 8px 35px rgba(0,0,0,.08);
-    }
-
-    .step {
-      display: none;
-    }
-
-    .step.active {
-      display: block;
-    }
-
-    .question-title {
-      text-align: center;
-      font-size: 21px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .question-subtitle {
-      text-align: center;
-      color: #777;
-      font-size: 14px;
-      margin-bottom: 22px;
-      line-height: 1.5;
-    }
-
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 12px;
-    }
-
-    .category {
-      padding: 17px 10px;
-      border: 1px solid #e2d8e8;
-      border-radius: 14px;
-      background: white;
-      color: #444;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: .2s;
-    }
-
-    .category:hover {
-      border-color: #8e44ad;
-      background: #faf6ff;
-    }
-
-    .category.selected {
-      background: #8e44ad;
-      color: white;
-      border-color: #8e44ad;
-    }
-
-    .selected-label {
-      text-align: center;
-      margin: 5px 0 20px;
-      color: #8e44ad;
-      font-weight: bold;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 180px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 14px;
-      resize: vertical;
-      font-size: 16px;
-      font-family: inherit;
-      outline: none;
-      line-height: 1.5;
-    }
-
-    textarea:focus {
-      border-color: #8e44ad;
-    }
-
-    .privacy {
-      margin-top: 12px;
-      padding: 11px 12px;
-      border-radius: 10px;
-      background: #faf7ff;
-      color: #777;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .main-button {
-      width: 100%;
-      margin-top: 16px;
-      padding: 16px;
-      border: none;
-      border-radius: 13px;
-      background: #8e44ad;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .main-button:hover {
-      background: #732d91;
-    }
-
-    .main-button:disabled {
-      background: #bbb;
-      cursor: not-allowed;
-    }
-
-    .back-button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 13px;
-      background: white;
-      color: #666;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .loading {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-      color: #8e44ad;
-      font-weight: bold;
-      line-height: 1.5;
-    }
-
-    .response {
-      display: none;
-      margin-top: 20px;
-      padding: 22px;
-      background: #faf7ff;
-      border-radius: 15px;
-      border-left: 4px solid #8e44ad;
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    .response-title {
-      color: #8e44ad;
-      font-size: 21px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    /* NEXT ACTIONS */
-
-    .next-actions {
-      display: none;
-      margin-top: 22px;
-    }
-
-    .next-title {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .action-button {
-      width: 100%;
-      margin-top: 9px;
-      padding: 15px;
-      border-radius: 13px;
-      background: white;
-      border: 1px solid #e2d8e8;
-      color: #444;
-      cursor: pointer;
-      text-align: left;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .action-button:hover {
-      border-color: #8e44ad;
-      background: #faf6ff;
-    }
-
-    .action-button.coach {
-      background: #8e44ad;
-      color: white;
-      border-color: #8e44ad;
-      text-align: center;
-      font-weight: bold;
-      font-size: 15px;
-    }
-
-    .action-button.coach:hover {
-      background: #732d91;
-    }
-
-    .new-question {
-      display: none;
-      width: 100%;
-      margin-top: 15px;
-      padding: 14px;
-      border: 1px solid #8e44ad;
-      border-radius: 13px;
-      background: white;
-      color: #8e44ad;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* HISTORY */
-
-    .history {
-      margin-top: 25px;
-    }
-
-    .history-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .history-item {
-      padding: 14px;
-      background: #faf7ff;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-
-    .history-item:hover {
-      border-color: #8e44ad;
-    }
-
-    .history-category {
-      color: #8e44ad;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .history-question {
-      margin-top: 5px;
-      font-size: 14px;
-      color: #555;
-      line-height: 1.4;
-    }
-
-    .history-date {
-      margin-top: 6px;
-      font-size: 11px;
-      color: #999;
-    }
-
-    .clear-history {
-      margin-top: 8px;
-      border: none;
-      background: transparent;
-      color: #999;
-      cursor: pointer;
-      font-size: 12px;
-    }
-
-    .error {
-      color: #c0392b;
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 22px;
-      color: #888;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    @media (max-width:500px) {
-
-      .container {
-        padding: 15px 12px 35px;
-      }
-
-      .card {
-        padding: 18px;
-      }
-
-      .header h1 {
-        font-size: 27px;
-      }
-
-      .tagline {
-        font-size: 14px;
-      }
-
-      .how-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .how-item {
-        text-align: left;
-      }
-
-      .categories {
-        grid-template-columns: 1fr;
-      }
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Relationship Guidance</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #fff5f7, #f6f0ff);
+  color: #333;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 760px;
+  margin: auto;
+  padding: 20px 16px 50px;
+}
+
+.header {
+  text-align: center;
+  padding: 18px 10px;
+}
+
+.heart {
+  font-size: 44px;
+}
+
+.header h1 {
+  margin: 5px 0;
+  color: #8e44ad;
+  font-size: 30px;
+}
+
+.tagline {
+  color: #666;
+  line-height: 1.5;
+  max-width: 560px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 8px 35px rgba(0,0,0,.08);
+}
+
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+.title {
+  text-align: center;
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 11px;
+}
+
+.category {
+  padding: 16px 10px;
+  border: 1px solid #e2d8e8;
+  border-radius: 14px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.category:hover,
+.category.selected {
+  background: #8e44ad;
+  color: white;
+  border-color: #8e44ad;
+}
+
+.selected {
+  text-align: center;
+  color: #8e44ad;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.chat {
+  display: none;
+}
+
+.chat.active {
+  display: block;
+}
+
+.messages {
+  max-height: 520px;
+  overflow-y: auto;
+  padding: 5px 2px 15px;
+}
+
+.message {
+  margin: 12px 0;
+  padding: 14px 16px;
+  border-radius: 17px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.user-message {
+  background: #8e44ad;
+  color: white;
+  margin-left: 12%;
+  border-bottom-right-radius: 5px;
+}
+
+.ai-message {
+  background: #faf7ff;
+  border-left: 4px solid #8e44ad;
+  margin-right: 7%;
+  border-bottom-left-radius: 5px;
+}
+
+.message-label {
+  font-size: 11px;
+  font-weight: bold;
+  opacity: .7;
+  margin-bottom: 5px;
+}
+
+.chat-input-area {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #8e44ad;
+}
+
+.send {
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  border: none;
+  border-radius: 13px;
+  background: #8e44ad;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.send:disabled {
+  background: #bbb;
+}
+
+.loading {
+  display: none;
+  text-align: center;
+  color: #8e44ad;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.actions {
+  display: none;
+  margin-top: 20px;
+}
+
+.action-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.action {
+  width: 100%;
+  margin-top: 9px;
+  padding: 14px;
+  border-radius: 13px;
+  border: 1px solid #e2d8e8;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.action:hover {
+  border-color: #8e44ad;
+  background: #faf7ff;
+}
+
+.coach {
+  background: #8e44ad;
+  color: white;
+  border-color: #8e44ad;
+  text-align: center;
+  font-weight: bold;
+}
+
+.back {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #666;
+}
+
+.history {
+  margin-top: 25px;
+}
+
+.history-title {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.history-item {
+  background: #faf7ff;
+  border-radius: 12px;
+  padding: 13px;
+  margin-bottom: 9px;
+  cursor: pointer;
+}
+
+.history-category {
+  color: #8e44ad;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.history-question {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #555;
+}
+
+.history-date {
+  font-size: 11px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.error {
+  color: #c0392b;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #888;
+  font-size: 12px;
+}
+
+@media(max-width:500px) {
+
+  .container {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 17px;
+  }
+
+  .categories {
+    grid-template-columns: 1fr;
+  }
+
+  .user-message {
+    margin-left: 5%;
+  }
+
+  .ai-message {
+    margin-right: 3%;
+  }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
@@ -430,209 +337,152 @@
   </div>
 
 
-  <div class="how-it-works">
-
-    <div class="how-title">
-      How it works
-    </div>
-
-    <div class="how-grid">
-
-      <div class="how-item">
-        <div class="how-number">01</div>
-        <div class="how-heading">Tell us what's happening</div>
-        <div class="how-text">
-          Share what's on your mind in your own words.
-        </div>
-      </div>
-
-      <div class="how-item">
-        <div class="how-number">02</div>
-        <div class="how-heading">Understand the pattern</div>
-        <div class="how-text">
-          Get a balanced perspective on what may be happening.
-        </div>
-      </div>
-
-      <div class="how-item">
-        <div class="how-number">03</div>
-        <div class="how-heading">Find your next step</div>
-        <div class="how-text">
-          Leave with something practical you can do.
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-
   <div class="card">
 
-    <!-- STEP 1 -->
+    <!-- CATEGORY -->
 
-    <div id="step1" class="step active">
+    <div id="categoryStep" class="step active">
 
-      <div class="question-title">
+      <div class="title">
         What would you like help with today?
       </div>
 
-      <div class="question-subtitle">
+      <div class="subtitle">
         Choose the area you'd like help understanding.
       </div>
+
 
       <div class="categories">
 
         <button class="category"
-          onclick="selectCategory(this,'Communication')">
-          💬 Communication
+        onclick="chooseCategory(this,'Communication')">
+        💬 Communication
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Trust & Jealousy')">
-          🤝 Trust & Jealousy
+        onclick="chooseCategory(this,'Trust & Jealousy')">
+        🤝 Trust & Jealousy
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Arguments & Conflict')">
-          ⚡ Arguments & Conflict
+        onclick="chooseCategory(this,'Arguments & Conflict')">
+        ⚡ Arguments & Conflict
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Marriage')">
-          💍 Marriage
+        onclick="chooseCategory(this,'Marriage')">
+        💍 Marriage
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Dating')">
-          ❤️ Dating
+        onclick="chooseCategory(this,'Dating')">
+        ❤️ Dating
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Emotional Distance')">
-          💔 Emotional Distance
+        onclick="chooseCategory(this,'Emotional Distance')">
+        💔 Emotional Distance
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Breakup & Separation')">
-          🌿 Breakup & Separation
+        onclick="chooseCategory(this,'Breakup & Separation')">
+        🌿 Breakup & Separation
         </button>
 
         <button class="category"
-          onclick="selectCategory(this,'Family & Boundaries')">
-          🏡 Family & Boundaries
+        onclick="chooseCategory(this,'Family & Boundaries')">
+        🏡 Family & Boundaries
         </button>
 
       </div>
+
 
       <div id="history" class="history"></div>
 
     </div>
 
 
-    <!-- STEP 2 -->
+    <!-- CHAT -->
 
-    <div id="step2" class="step">
+    <div id="chatStep" class="chat">
 
-      <div class="question-title">
-        Tell us what's happening
+      <div class="title">
+        Your Relationship Conversation
       </div>
 
-      <div id="selectedLabel"
-        class="selected-label">
-      </div>
+      <div id="selectedCategory" class="selected"></div>
 
-      <div class="question-subtitle">
-        You don't need to have the perfect words.
-        Just describe what you're experiencing.
-      </div>
 
-      <label for="question">
-        Your situation
-      </label>
+      <div id="messages" class="messages"></div>
 
-      <textarea
-        id="question"
-        placeholder="For example: My partner and I keep arguing about small things, and I feel like they don't really listen to me..."
-      ></textarea>
-
-      <div class="privacy">
-        🔒 Your guidance history stays on this device.
-        You don't need to share your name, phone number,
-        address, or other identifying information.
-      </div>
-
-      <button
-        id="askButton"
-        class="main-button"
-        onclick="getGuidance()">
-        Get My Guidance
-      </button>
-
-      <button
-        class="back-button"
-        onclick="goBack()">
-        ← Choose a different topic
-      </button>
 
       <div id="loading" class="loading">
-        ❤️ Understanding your situation...
-        <br>
-        <small>This may take a few seconds.</small>
+        ❤️ Thinking about what you've shared...
       </div>
 
-      <div id="response" class="response"></div>
+
+      <div class="chat-input-area">
+
+        <textarea
+          id="messageInput"
+          placeholder="Continue the conversation..."
+        ></textarea>
 
 
-      <!-- POST-GUIDANCE OPTIONS -->
+        <button
+          id="sendButton"
+          class="send"
+          onclick="sendMessage()">
 
-      <div id="nextActions" class="next-actions">
+          Send Message
 
-        <div class="next-title">
+        </button>
+
+      </div>
+
+
+      <div id="actions" class="actions">
+
+        <div class="action-title">
           What would you like to do next?
         </div>
 
+
         <button
-          class="action-button"
+          class="action"
           onclick="exploreDeeper()">
 
           🔎 <strong>Explore This Deeper</strong><br>
 
-          <span>
-            Look more closely at the situation you're experiencing.
-          </span>
+          Look more closely at what's happening.
 
         </button>
 
 
         <button
-          class="action-button"
-          onclick="startAgain()">
+          class="action"
+          onclick="newConversation()">
 
           💬 <strong>Ask Another Question</strong><br>
 
-          <span>
-            Start a new relationship question.
-          </span>
+          Start a new relationship conversation.
 
         </button>
 
 
         <button
-          class="action-button"
-          onclick="showHistory()">
+          class="action"
+          onclick="loadHistory()">
 
           🕘 <strong>View Previous Guidance</strong><br>
 
-          <span>
-            Return to something you've explored before.
-          </span>
+          Continue a previous conversation.
 
         </button>
 
 
         <button
-          class="action-button coach"
+          class="action coach"
           onclick="openCoach()">
 
           🤝 Talk to a Human Coach
@@ -641,15 +491,26 @@
 
       </div>
 
+
+      <button
+        class="back"
+        onclick="newConversation()">
+
+        ← Start Over
+
+      </button>
+
     </div>
 
   </div>
 
 
   <div class="footer">
+
     Relationship Guidance
     <br>
     Your thoughts matter.
+
   </div>
 
 </div>
@@ -657,681 +518,806 @@
 
 <script>
 
-  const API_URL =
-    "https://relationship-guidance-api.leadrize.workers.dev/";
 
-  const STORAGE_KEY =
-    "relationshipGuidanceHistory";
+/* ==================================
+   IMPORTANT
+   ================================== */
 
-  let selectedCategory =
-    "General";
-
-  let currentQuestion =
-    "";
+const API_URL =
+"https://relationship-guidance-api.leadrize.workers.dev/";
 
 
-  /* =========================
-     CATEGORY
-  ========================= */
+const STORAGE_KEY =
+"relationshipGuidanceHistory";
 
-  function selectCategory(button, category) {
 
-    document
-      .querySelectorAll(".category")
-      .forEach(function(item) {
-        item.classList.remove("selected");
-      });
+let category =
+"General";
 
-    button.classList.add("selected");
 
-    selectedCategory =
-      category;
+let conversation =
+[];
 
-    document
-      .getElementById("selectedLabel")
-      .textContent =
-      "Selected: " + category;
 
-    document
-      .getElementById("step1")
-      .classList.remove("active");
+/* ==================================
+   CATEGORY
+   ================================== */
 
-    document
-      .getElementById("step2")
-      .classList.add("active");
+function chooseCategory(button, selectedCategory) {
 
-    document
-      .getElementById("question")
-      .focus();
+  document
+  .querySelectorAll(".category")
+  .forEach(function(item) {
+
+    item.classList.remove("selected");
+
+  });
+
+
+  button.classList.add("selected");
+
+
+  category =
+  selectedCategory;
+
+
+  document
+  .getElementById("selectedCategory")
+  .textContent =
+  "Topic: " + category;
+
+
+  document
+  .getElementById("categoryStep")
+  .classList.remove("active");
+
+
+  document
+  .getElementById("chatStep")
+  .classList.add("active");
+
+
+  conversation =
+  [];
+
+
+  document
+  .getElementById("messages")
+  .innerHTML =
+  "";
+
+
+  document
+  .getElementById("actions")
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById("messageInput")
+  .focus();
+
+}
+
+
+/* ==================================
+   SEND MESSAGE
+   ================================== */
+
+async function sendMessage() {
+
+  const input =
+  document.getElementById("messageInput");
+
+  const text =
+  input.value.trim();
+
+
+  if (!text) {
+
+    return;
 
   }
 
 
-  /* =========================
-     BACK
-  ========================= */
+  const sendButton =
+  document.getElementById("sendButton");
 
-  function goBack() {
+  const loading =
+  document.getElementById("loading");
 
-    document
-      .getElementById("step2")
-      .classList.remove("active");
-
-    document
-      .getElementById("step1")
-      .classList.add("active");
-
-  }
+  const actions =
+  document.getElementById("actions");
 
 
-  /* =========================
-     GET GUIDANCE
-  ========================= */
-
-  async function getGuidance() {
-
-    const question =
-      document
-        .getElementById("question")
-        .value
-        .trim();
-
-    const responseBox =
-      document.getElementById("response");
-
-    const loading =
-      document.getElementById("loading");
-
-    const button =
-      document.getElementById("askButton");
-
-    const nextActions =
-      document.getElementById("nextActions");
+  addMessage(
+    "user",
+    text
+  );
 
 
-    if (!question) {
+  conversation.push({
 
-      responseBox.style.display =
-        "block";
+    role: "user",
 
-      responseBox.innerHTML =
-        "<div class='error'>" +
-        "Please tell us what's happening first." +
-        "</div>";
+    content: text
 
-      return;
-
-    }
+  });
 
 
-    currentQuestion =
-      question;
+  input.value =
+  "";
 
 
-    responseBox.style.display =
-      "none";
-
-    nextActions.style.display =
-      "none";
-
-    loading.style.display =
-      "block";
-
-    button.disabled =
-      true;
+  sendButton.disabled =
+  true;
 
 
-    try {
-
-      const response =
-        await fetch(API_URL, {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json"
-          },
-
-          body: JSON.stringify({
-
-            category:
-              selectedCategory,
-
-            question:
-              question
-
-          })
-
-        });
+  loading.style.display =
+  "block";
 
 
-      const data =
-        await response.json();
+  actions.style.display =
+  "none";
 
 
-      loading.style.display =
-        "none";
-
-      button.disabled =
-        false;
+  try {
 
 
-      if (!response.ok) {
+    /*
+      Build a conversation-aware question.
 
-        throw new Error(
-          data.error ||
-          "Something went wrong."
-        );
+      Your current Worker accepts one
+      "question" field, so we send the
+      conversation history inside that field.
+    */
+
+
+    const conversationText =
+    conversation
+    .map(function(message) {
+
+      if (message.role === "user") {
+
+        return "USER: " +
+        message.content;
 
       }
 
+      return "GUIDANCE ASSISTANT: " +
+      message.content;
 
-      const guidance =
-        data.response ||
-        "I couldn't generate guidance right now.";
-
-
-      responseBox.style.display =
-        "block";
+    })
+    .join("\n\n");
 
 
-      responseBox.innerHTML =
+    const response =
+    await fetch(API_URL, {
 
-        "<div class='response-title'>" +
-        "Your Guidance" +
-        "</div>" +
+      method: "POST",
 
-        formatResponse(guidance);
+      headers: {
 
+        "Content-Type":
+        "application/json"
 
-      saveHistory(
-        selectedCategory,
-        question,
-        guidance
-      );
+      },
 
+      body: JSON.stringify({
 
-      /*
-        IMPORTANT:
-        Always show the post-guidance
-        action buttons after a successful
-        normal AI response.
-      */
+        category:
+        category,
 
-      nextActions.style.display =
-        "block";
+        question:
+        conversationText
 
+      })
 
-      responseBox.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }
-
-
-    catch (error) {
-
-      loading.style.display =
-        "none";
-
-      button.disabled =
-        false;
-
-      responseBox.style.display =
-        "block";
-
-      responseBox.innerHTML =
-
-        "<div class='error'>" +
-
-        "We couldn't connect to the guidance service right now." +
-
-        "<br><br>" +
-
-        "Please try again in a moment." +
-
-        "</div>";
-
-      console.error(error);
-
-    }
-
-  }
-
-
-  /* =========================
-     FORMAT RESPONSE
-  ========================= */
-
-  function formatResponse(text) {
-
-    return text
-
-      .replace(
-        /\*\*(.*?)\*\*/g,
-        "<strong>$1</strong>"
-      )
-
-      .replace(
-        /^### (.*?)$/gm,
-        "<strong>$1</strong>"
-      )
-
-      .replace(
-        /\n/g,
-        "<br>"
-      );
-
-  }
-
-
-  /* =========================
-     EXPLORE DEEPER
-  ========================= */
-
-  function exploreDeeper() {
-
-    const questionBox =
-      document.getElementById("question");
-
-
-    questionBox.value =
-
-      currentQuestion +
-
-      "\n\nI want to explore this situation deeper. " +
-      "What might be underneath this pattern, " +
-      "what should I pay attention to, and what " +
-      "would be the most helpful next step for me?";
-
-
-    document
-      .getElementById("response")
-      .style.display =
-      "none";
-
-
-    document
-      .getElementById("nextActions")
-      .style.display =
-      "none";
-
-
-    questionBox.focus();
-
-
-    questionBox.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
     });
 
-  }
+
+    const data =
+    await response.json();
 
 
-  /* =========================
-     HUMAN COACH
-  ========================= */
+    if (!response.ok) {
 
-  function openCoach() {
+      throw new Error(
+        data.error ||
+        "Unable to generate guidance."
+      );
 
-    window.open(
-      "https://cal.id/riseandlead/partnership-call",
-      "_blank"
+    }
+
+
+    const guidance =
+    data.response ||
+    "I couldn't generate guidance right now.";
+
+
+    conversation.push({
+
+      role: "assistant",
+
+      content: guidance
+
+    });
+
+
+    addMessage(
+      "assistant",
+      guidance
     );
 
+
+    saveConversation();
+
+
+    actions.style.display =
+    "block";
+
+
+  }
+
+  catch(error) {
+
+    addMessage(
+      "assistant",
+      "I'm sorry, I couldn't connect to the guidance service right now. Please try again."
+    );
+
+
+    console.error(error);
+
   }
 
 
-  /* =========================
-     HISTORY
-  ========================= */
+  loading.style.display =
+  "none";
 
-  function saveHistory(
-    category,
-    question,
-    response
-  ) {
 
-    let history =
-      getHistory();
+  sendButton.disabled =
+  false;
 
+
+  input.focus();
+
+}
+
+
+/* ==================================
+   ADD MESSAGE
+   ================================== */
+
+function addMessage(type, text) {
+
+  const messages =
+  document.getElementById("messages");
+
+
+  const wrapper =
+  document.createElement("div");
+
+
+  wrapper.className =
+  "message " +
+  (
+    type === "user"
+    ? "user-message"
+    : "ai-message"
+  );
+
+
+  const label =
+  document.createElement("div");
+
+
+  label.className =
+  "message-label";
+
+
+  label.textContent =
+  type === "user"
+  ? "YOU"
+  : "RELATIONSHIP GUIDANCE";
+
+
+  const content =
+  document.createElement("div");
+
+
+  content.innerHTML =
+  formatResponse(text);
+
+
+  wrapper.appendChild(label);
+
+  wrapper.appendChild(content);
+
+  messages.appendChild(wrapper);
+
+
+  messages.scrollTop =
+  messages.scrollHeight;
+
+}
+
+
+/* ==================================
+   FORMAT AI RESPONSE
+   ================================== */
+
+function formatResponse(text) {
+
+  return escapeHTML(text)
+
+  .replace(
+    /\*\*(.*?)\*\*/g,
+    "<strong>$1</strong>"
+  )
+
+  .replace(
+    /^### (.*?)$/gm,
+    "<strong>$1</strong>"
+  )
+
+  .replace(
+    /\n/g,
+    "<br>"
+  );
+
+}
+
+
+/* ==================================
+   ESCAPE
+   ================================== */
+
+function escapeHTML(text) {
+
+  const div =
+  document.createElement("div");
+
+  div.textContent =
+  text;
+
+  return div.innerHTML;
+
+}
+
+
+/* ==================================
+   EXPLORE DEEPER
+   ================================== */
+
+function exploreDeeper() {
+
+  const input =
+  document.getElementById("messageInput");
+
+
+  input.value =
+  "I want to explore this situation deeper. " +
+  "What might be underneath this pattern, " +
+  "what should I pay attention to, and " +
+  "what would be the most helpful next step for me?";
+
+
+  input.focus();
+
+}
+
+
+/* ==================================
+   NEW CONVERSATION
+   ================================== */
+
+function newConversation() {
+
+  category =
+  "General";
+
+
+  conversation =
+  [];
+
+
+  document
+  .getElementById("messages")
+  .innerHTML =
+  "";
+
+
+  document
+  .getElementById("messageInput")
+  .value =
+  "";
+
+
+  document
+  .getElementById("actions")
+  .style.display =
+  "none";
+
+
+  document
+  .getElementById("chatStep")
+  .classList.remove("active");
+
+
+  document
+  .getElementById("categoryStep")
+  .classList.add("active");
+
+
+  document
+  .querySelectorAll(".category")
+  .forEach(function(item) {
+
+    item.classList.remove("selected");
+
+  });
+
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
+/* ==================================
+   SAVE CONVERSATION
+   ================================== */
+
+function saveConversation() {
+
+  if (!conversation.length) {
+
+    return;
+
+  }
+
+
+  let history =
+  getHistory();
+
+
+  const firstUserMessage =
+  conversation.find(function(item) {
+
+    return item.role === "user";
+
+  });
+
+
+  const existing =
+  history.find(function(item) {
+
+    return item.sessionId ===
+    currentSessionId;
+
+  });
+
+
+  if (existing) {
+
+    existing.conversation =
+    conversation;
+
+  }
+
+  else {
 
     history.unshift({
 
-      id: Date.now(),
+      sessionId:
+      currentSessionId,
 
       category:
-        category,
+      category,
 
       question:
-        question,
+      firstUserMessage
+      ? firstUserMessage.content
+      : "",
 
-      response:
-        response,
+      conversation:
+      conversation,
 
       date:
-        new Date().toLocaleString()
+      new Date().toLocaleString()
 
     });
-
-
-    history =
-      history.slice(0,10);
-
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(history)
-    );
-
-
-    renderHistory();
 
   }
 
 
-  function getHistory() {
+  history =
+  history.slice(0,10);
 
-    try {
 
-      return JSON.parse(
-        localStorage.getItem(
-          STORAGE_KEY
-        )
-      ) || [];
+  localStorage.setItem(
 
-    }
+    STORAGE_KEY,
 
-    catch(error) {
+    JSON.stringify(history)
 
-      return [];
+  );
 
-    }
+}
+
+
+/* ==================================
+   SESSION ID
+   ================================== */
+
+let currentSessionId =
+Date.now();
+
+
+/* ==================================
+   HISTORY
+   ================================== */
+
+function getHistory() {
+
+  try {
+
+    return JSON.parse(
+
+      localStorage.getItem(
+        STORAGE_KEY
+      )
+
+    ) || [];
+
+  }
+
+  catch(error) {
+
+    return [];
+
+  }
+
+}
+
+
+function renderHistory() {
+
+  const box =
+  document.getElementById("history");
+
+
+  const history =
+  getHistory();
+
+
+  if (!history.length) {
+
+    box.innerHTML =
+    "";
+
+    return;
 
   }
 
 
-  function renderHistory() {
-
-    const historyBox =
-      document.getElementById("history");
-
-    const history =
-      getHistory();
+  let html =
+  "<div class='history-title'>🕘 Your Recent Guidance</div>";
 
 
-    if (!history.length) {
+  history.forEach(function(item) {
 
-      historyBox.innerHTML =
-        "";
-
-      return;
-
-    }
-
-
-    let html =
-
-      "<div class='history-title'>" +
-      "🕘 Your Recent Guidance" +
-      "</div>";
-
-
-    history.forEach(function(item) {
-
-      const shortQuestion =
-        item.question.length > 90
-          ? item.question.substring(0,90) + "..."
-          : item.question;
-
-
-      html += `
-
-        <div
-          class="history-item"
-          onclick="openHistory(${item.id})">
-
-          <div class="history-category">
-            ${escapeHTML(item.category)}
-          </div>
-
-          <div class="history-question">
-            ${escapeHTML(shortQuestion)}
-          </div>
-
-          <div class="history-date">
-            ${escapeHTML(item.date)}
-          </div>
-
-        </div>
-
-      `;
-
-    });
+    const question =
+    item.question.length > 90
+    ? item.question.substring(0,90) + "..."
+    : item.question;
 
 
     html += `
 
-      <button
-        class="clear-history"
-        onclick="clearHistory()">
+      <div
+        class="history-item"
+        onclick="openHistory('${item.sessionId}')">
 
-        Clear history
+        <div class="history-category">
 
-      </button>
+          ${escapeHTML(item.category)}
+
+        </div>
+
+        <div class="history-question">
+
+          ${escapeHTML(question)}
+
+        </div>
+
+        <div class="history-date">
+
+          ${escapeHTML(item.date)}
+
+        </div>
+
+      </div>
 
     `;
 
-
-    historyBox.innerHTML =
-      html;
-
-  }
+  });
 
 
-  function openHistory(id) {
+  box.innerHTML =
+  html;
 
-    const history =
-      getHistory();
-
-
-    const item =
-      history.find(function(entry) {
-        return entry.id === id;
-      });
+}
 
 
-    if (!item) {
-      return;
-    }
+/* ==================================
+   OPEN HISTORY
+   ================================== */
+
+function openHistory(sessionId) {
+
+  const history =
+  getHistory();
 
 
-    selectedCategory =
-      item.category;
+  const item =
+  history.find(function(entry) {
 
-    currentQuestion =
-      item.question;
+    return String(entry.sessionId) ===
+    String(sessionId);
 
-
-    document
-      .getElementById("step1")
-      .classList.remove("active");
+  });
 
 
-    document
-      .getElementById("step2")
-      .classList.add("active");
+  if (!item) {
 
-
-    document
-      .getElementById("selectedLabel")
-      .textContent =
-      "Selected: " + item.category;
-
-
-    document
-      .getElementById("question")
-      .value =
-      item.question;
-
-
-    const responseBox =
-      document.getElementById("response");
-
-
-    responseBox.style.display =
-      "block";
-
-
-    responseBox.innerHTML =
-
-      "<div class='response-title'>" +
-      "Your Guidance" +
-      "</div>" +
-
-      formatResponse(
-        item.response
-      );
-
-
-    document
-      .getElementById("nextActions")
-      .style.display =
-      "block";
-
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    return;
 
   }
 
 
-  function showHistory() {
-
-    startAgain();
-
-
-    setTimeout(function() {
-
-      document
-        .getElementById("history")
-        .scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-    }, 100);
-
-  }
+  category =
+  item.category;
 
 
-  function clearHistory() {
-
-    if (!confirm(
-      "Clear all saved guidance from this device?"
-    )) {
-      return;
-    }
+  conversation =
+  item.conversation || [];
 
 
-    localStorage.removeItem(
-      STORAGE_KEY
+  currentSessionId =
+  item.sessionId;
+
+
+  document
+  .getElementById("selectedCategory")
+  .textContent =
+  "Topic: " + category;
+
+
+  document
+  .getElementById("categoryStep")
+  .classList.remove("active");
+
+
+  document
+  .getElementById("chatStep")
+  .classList.add("active");
+
+
+  const messages =
+  document.getElementById("messages");
+
+
+  messages.innerHTML =
+  "";
+
+
+  conversation.forEach(function(message) {
+
+    addMessage(
+
+      message.role === "user"
+      ? "user"
+      : "assistant",
+
+      message.content
+
     );
 
+  });
 
-    renderHistory();
+
+  if (conversation.length) {
+
+    document
+    .getElementById("actions")
+    .style.display =
+    "block";
 
   }
 
-
-  /* =========================
-     ESCAPE HTML
-  ========================= */
-
-  function escapeHTML(text) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent =
-      text;
-
-    return div.innerHTML;
-
-  }
+}
 
 
-  /* =========================
-     START AGAIN
-  ========================= */
+/* ==================================
+   LOAD HISTORY
+   ================================== */
 
-  function startAgain() {
+function loadHistory() {
+
+  newConversation();
+
+
+  setTimeout(function() {
 
     document
-      .getElementById("question")
-      .value =
-      "";
+    .getElementById("history")
+    .scrollIntoView({
 
+      behavior: "smooth",
 
-    document
-      .getElementById("response")
-      .style.display =
-      "none";
+      block: "start"
 
-
-    document
-      .getElementById("nextActions")
-      .style.display =
-      "none";
-
-
-    document
-      .getElementById("askButton")
-      .disabled =
-      false;
-
-
-    document
-      .getElementById("step2")
-      .classList.remove("active");
-
-
-    document
-      .getElementById("step1")
-      .classList.add("active");
-
-
-    document
-      .querySelectorAll(".category")
-      .forEach(function(item) {
-        item.classList.remove("selected");
-      });
-
-
-    selectedCategory =
-      "General";
-
-
-    currentQuestion =
-      "";
-
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
     });
 
+  },100);
+
+}
+
+
+/* ==================================
+   HUMAN COACH
+   ================================== */
+
+function openCoach() {
+
+  window.open(
+
+    "https://cal.id/riseandlead/partnership-call",
+
+    "_blank"
+
+  );
+
+}
+
+
+/* ==================================
+   INITIALIZE
+   ================================== */
+
+renderHistory();
+
+
+/* ==================================
+   ENTER KEY
+   ================================== */
+
+document
+.getElementById("messageInput")
+.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
   }
-
-
-  /* =========================
-     INITIALIZE
-  ========================= */
-
-  renderHistory();
+);
 
 </script>
 
