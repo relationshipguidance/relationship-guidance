@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Relationship Guidance</title>
 
   <style>
@@ -13,38 +14,82 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fff5f7, #f7f0ff);
+      background: linear-gradient(135deg, #fff5f7, #f6f0ff);
       color: #333;
       min-height: 100vh;
     }
 
     .container {
-      max-width: 700px;
+      max-width: 760px;
       margin: auto;
-      padding: 30px 20px;
+      padding: 30px 18px 50px;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+    }
+
+    .heart {
+      font-size: 42px;
+      margin-bottom: 5px;
     }
 
     .header h1 {
+      margin: 0;
       color: #8e44ad;
-      margin-bottom: 8px;
       font-size: 32px;
     }
 
     .header p {
       color: #666;
       font-size: 16px;
+      line-height: 1.5;
+      margin-top: 10px;
     }
 
     .card {
       background: white;
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 25px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .question-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .category {
+      padding: 14px 10px;
+      border: 1px solid #e1d5e8;
+      border-radius: 12px;
+      background: #fff;
+      color: #555;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .category:hover {
+      border-color: #8e44ad;
+      background: #faf5ff;
+    }
+
+    .category.selected {
+      background: #8e44ad;
+      color: white;
+      border-color: #8e44ad;
     }
 
     label {
@@ -69,7 +114,7 @@
       border-color: #8e44ad;
     }
 
-    button {
+    .main-button {
       width: 100%;
       margin-top: 15px;
       padding: 15px;
@@ -82,23 +127,13 @@
       cursor: pointer;
     }
 
-    button:hover {
+    .main-button:hover {
       background: #732d91;
     }
 
-    button:disabled {
+    .main-button:disabled {
       background: #bbb;
       cursor: not-allowed;
-    }
-
-    .response {
-      margin-top: 25px;
-      padding: 20px;
-      background: #faf7ff;
-      border-left: 4px solid #8e44ad;
-      border-radius: 10px;
-      display: none;
-      line-height: 1.6;
     }
 
     .loading {
@@ -107,6 +142,37 @@
       margin-top: 20px;
       color: #8e44ad;
       font-weight: bold;
+    }
+
+    .response {
+      display: none;
+      margin-top: 25px;
+      padding: 22px;
+      background: #faf7ff;
+      border-radius: 14px;
+      border-left: 4px solid #8e44ad;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .response-title {
+      color: #8e44ad;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .new-question {
+      display: none;
+      width: 100%;
+      margin-top: 15px;
+      padding: 13px;
+      border: 1px solid #8e44ad;
+      border-radius: 12px;
+      background: white;
+      color: #8e44ad;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .error {
@@ -118,6 +184,25 @@
       margin-top: 25px;
       color: #888;
       font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px 12px 40px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .header h1 {
+        font-size: 27px;
+      }
+
+      .categories {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -127,35 +212,94 @@
   <div class="container">
 
     <div class="header">
-      <h1>❤️ Relationship Guidance</h1>
-      <p>A safe space to understand your relationship better.</p>
+      <div class="heart">❤️</div>
+
+      <h1>Relationship Guidance</h1>
+
+      <p>
+        A private space to understand your relationship,
+        your emotions, and what you can do next.
+      </p>
     </div>
 
     <div class="card">
 
+      <div class="question-title">
+        What would you like help with today?
+      </div>
+
+      <div class="categories">
+
+        <button class="category" onclick="selectCategory(this, 'Communication')">
+          💬 Communication
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Trust & Jealousy')">
+          🤝 Trust & Jealousy
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Arguments & Conflict')">
+          ⚡ Arguments & Conflict
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Marriage')">
+          💍 Marriage
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Dating')">
+          ❤️ Dating
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Emotional Distance')">
+          💔 Emotional Distance
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Breakup & Separation')">
+          🌿 Breakup & Separation
+        </button>
+
+        <button class="category" onclick="selectCategory(this, 'Family & Boundaries')">
+          🏡 Family & Boundaries
+        </button>
+
+      </div>
+
       <label for="question">
-        What's happening in your relationship?
+        Tell us what's happening
       </label>
 
       <textarea
         id="question"
-        placeholder="Tell us what you're experiencing..."
+        placeholder="Share your situation. You don't need to have the perfect words..."
       ></textarea>
 
-      <button id="askButton" onclick="getGuidance()">
+      <button
+        id="askButton"
+        class="main-button"
+        onclick="getGuidance()"
+      >
         Get Guidance
       </button>
 
       <div id="loading" class="loading">
-        Thinking about your situation...
+        ❤️ Understanding your situation...
       </div>
 
       <div id="response" class="response"></div>
 
+      <button
+        id="newQuestion"
+        class="new-question"
+        onclick="startAgain()"
+      >
+        Ask Another Question
+      </button>
+
     </div>
 
     <div class="footer">
-      Relationship Guidance • Your thoughts matter.
+      Relationship Guidance<br>
+      Your thoughts matter. Your relationship deserves understanding.
     </div>
 
   </div>
@@ -164,6 +308,21 @@
 
     const API_URL =
       "https://relationship-guidance-api.leadrize.workers.dev/";
+
+    let selectedCategory = "General";
+
+
+    function selectCategory(button, category) {
+
+      document.querySelectorAll(".category").forEach(function(item) {
+        item.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+
+      selectedCategory = category;
+    }
+
 
     async function getGuidance() {
 
@@ -179,20 +338,33 @@
       const button =
         document.getElementById("askButton");
 
+      const newQuestion =
+        document.getElementById("newQuestion");
+
+
       if (!question) {
+
         responseBox.style.display = "block";
+
         responseBox.innerHTML =
           "<div class='error'>Please tell us what's happening first.</div>";
+
         return;
       }
 
+
       responseBox.style.display = "none";
+      newQuestion.style.display = "none";
+
       loading.style.display = "block";
+
       button.disabled = true;
+
 
       try {
 
         const response = await fetch(API_URL, {
+
           method: "POST",
 
           headers: {
@@ -200,43 +372,98 @@
           },
 
           body: JSON.stringify({
+            category: selectedCategory,
             question: question
           })
+
         });
+
 
         const data = await response.json();
 
+
         loading.style.display = "none";
+
         button.disabled = false;
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            data.message ||
+            "Something went wrong."
+          );
+
+        }
+
 
         responseBox.style.display = "block";
 
-        if (!response.ok) {
-          throw new Error(
-            data.message || "Something went wrong."
-          );
-        }
 
         responseBox.innerHTML =
-          `<strong>Guidance</strong><br><br>
-           ${data.response || data.message || JSON.stringify(data)}`;
+          "<div class='response-title'>Your Guidance</div>" +
+          formatResponse(
+            data.response ||
+            "I couldn't generate guidance right now."
+          );
+
+
+        newQuestion.style.display = "block";
+
 
       } catch (error) {
 
         loading.style.display = "none";
+
         button.disabled = false;
 
         responseBox.style.display = "block";
 
         responseBox.innerHTML =
-          `<div class="error">
-            Unable to connect to the guidance service right now.
-            <br><br>
-            Please try again in a moment.
-          </div>`;
+          "<div class='error'>" +
+          "Unable to generate guidance right now." +
+          "<br><br>" +
+          "Please try again in a moment." +
+          "</div>";
 
         console.error(error);
+
       }
+
+    }
+
+
+    function formatResponse(text) {
+
+      return text
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\n/g, "<br>");
+
+    }
+
+
+    function startAgain() {
+
+      document.getElementById("question").value = "";
+
+      document.getElementById("response").style.display = "none";
+
+      document.getElementById("newQuestion").style.display = "none";
+
+      document.getElementById("askButton").disabled = false;
+
+      document.querySelectorAll(".category").forEach(function(item) {
+        item.classList.remove("selected");
+      });
+
+      selectedCategory = "General";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
     }
 
   </script>
