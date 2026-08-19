@@ -960,7 +960,7 @@ function openCoachChat() {
    SEND COACH MESSAGE
    ========================================== */
 
-function sendCoachMessage() {
+async function sendCoachMessage() {
 
   const input =
     document.getElementById("coachInput");
@@ -978,49 +978,90 @@ function sendCoachMessage() {
     return;
   }
 
-
   /*
-   Count USER messages only.
+   Count the user's free message.
   */
 
   coachMessageCount++;
 
-  coachConversation.push({
-    role: "user",
-    content: text
-  });
+  /*
+   Show the customer's message immediately.
+  */
 
   addCoachMessage(
     "user",
     text
   );
 
+  coachConversation.push({
+    role: "user",
+    content: text
+  });
+
   input.value = "";
 
   updateCoachCounter();
 
-
   /*
-   IMPORTANT:
-
-   At this MVP stage we are not pretending
-   the coach has received the message.
-
-   Instead we show a pending state.
-
-   We'll connect this to the real coach
-   inbox in the next step.
+   Temporarily disable the input
+   while the message is being sent.
   */
 
-  setTimeout(function() {
+  input.disabled = true;
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          action: "coach_message",
+
+          message: text,
+
+          sessionId:
+            currentSessionId,
+
+          category:
+            category
+
+        })
+
+      });
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Unable to contact the coach."
+      );
+
+    }
+
+    /*
+     Confirmation only.
+     This is NOT pretending to be
+     a human coach reply.
+    */
 
     addCoachMessage(
-      "coach",
-      "Your message has been recorded. A human coach will respond once the coaching inbox is connected."
+      "system",
+      "✓ Your message has been sent to your human coach."
     );
 
     /*
-     Lock after 3 USER messages.
+     Lock after the third customer message.
     */
 
     if (
@@ -1029,12 +1070,33 @@ function sendCoachMessage() {
     ) {
 
       setTimeout(function() {
+
         lockCoachChat();
-      }, 500);
+
+      }, 700);
 
     }
 
-  }, 500);
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+    addCoachMessage(
+      "system",
+      "We couldn't send your message right now. Please try again."
+    );
+
+  }
+
+  finally {
+
+    input.disabled = false;
+
+    input.focus();
+
+  }
 }
 
 
@@ -1042,10 +1104,7 @@ function sendCoachMessage() {
    ADD COACH MESSAGE
    ========================================== */
 
-function addCoachMessage(
-  type,
-  text
-) {
+function addCoachMessage(type, text) {
 
   const messages =
     document.getElementById(
@@ -1062,6 +1121,13 @@ function addCoachMessage(
 
   }
 
+  else if (type === "system") {
+
+    wrapper.className =
+      "message ai-message";
+
+  }
+
   else {
 
     wrapper.className =
@@ -1075,10 +1141,26 @@ function addCoachMessage(
   label.className =
     "message-label";
 
-  label.textContent =
-    type === "user"
-      ? "YOU"
-      : "HUMAN COACH";
+  if (type === "user") {
+
+    label.textContent =
+      "YOU";
+
+  }
+
+  else if (type === "system") {
+
+    label.textContent =
+      "RELATIONSHIP GUIDANCE";
+
+  }
+
+  else {
+
+    label.textContent =
+      "HUMAN COACH";
+
+  }
 
   const content =
     document.createElement("div");
