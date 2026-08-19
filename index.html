@@ -953,6 +953,11 @@ function openCoachChat() {
     "coach",
     "Hi. I'm glad you reached out. You have 3 complimentary messages with a human coach. Tell me what's happening."
   );
+   /*
+   Start checking for real coach replies.
+  */
+
+  startCoachPolling();
 }
 
 
@@ -979,13 +984,18 @@ async function sendCoachMessage() {
   }
 
   /*
-   Count the user's free message.
+  ============================================================
+  COUNT CUSTOMER MESSAGE
+  ============================================================
   */
 
   coachMessageCount++;
 
+
   /*
-   Show the customer's message immediately.
+  ============================================================
+  SHOW CUSTOMER MESSAGE
+  ============================================================
   */
 
   addCoachMessage(
@@ -993,21 +1003,31 @@ async function sendCoachMessage() {
     text
   );
 
+
+  /*
+  ============================================================
+  SAVE LOCALLY
+  ============================================================
+  */
+
   coachConversation.push({
     role: "user",
     content: text
   });
 
+
   input.value = "";
 
   updateCoachCounter();
 
-  /*
-   Temporarily disable the input
-   while the message is being sent.
-  */
-
   input.disabled = true;
+
+
+  /*
+  ============================================================
+  SEND TO WORKER
+  ============================================================
+  */
 
   try {
 
@@ -1023,22 +1043,30 @@ async function sendCoachMessage() {
 
         body: JSON.stringify({
 
-          action: "coach_message",
+          action:
+            "coach_message",
 
-          message: text,
+          message:
+            text,
 
           sessionId:
             currentSessionId,
 
           category:
-            category
+            category,
+
+          userEmail:
+            window.userEmail ||
+            ""
 
         })
 
       });
 
+
     const data =
       await response.json();
+
 
     if (!response.ok) {
 
@@ -1049,10 +1077,11 @@ async function sendCoachMessage() {
 
     }
 
+
     /*
-     Confirmation only.
-     This is NOT pretending to be
-     a human coach reply.
+    ============================================================
+    CONFIRMATION
+    ============================================================
     */
 
     addCoachMessage(
@@ -1060,11 +1089,36 @@ async function sendCoachMessage() {
       "✓ Your message has been sent to your human coach."
     );
 
+
     /*
-     Lock after the third customer message.
+    ============================================================
+    UPDATE SERVER MESSAGE COUNT
+    ============================================================
     */
 
     if (
+      typeof data.messagesUsed !==
+      "undefined"
+    ) {
+
+      coachMessageCount =
+        Number(
+          data.messagesUsed
+        );
+
+      updateCoachCounter();
+
+    }
+
+
+    /*
+    ============================================================
+    LOCK AFTER 3 FREE CUSTOMER MESSAGES
+    ============================================================
+    */
+
+    if (
+      data.locked === true ||
       coachMessageCount >=
       COACH_MESSAGE_LIMIT
     ) {
@@ -1077,11 +1131,39 @@ async function sendCoachMessage() {
 
     }
 
+
+    /*
+    ============================================================
+    START CHECKING FOR COACH REPLIES
+    ============================================================
+    */
+
+    startCoachPolling();
+
   }
 
   catch(error) {
 
-    console.error(error);
+    console.error(
+      "Coach message error:",
+      error
+    );
+
+
+    /*
+    If sending failed, give the
+    customer their message back.
+    */
+
+    coachMessageCount =
+      Math.max(
+        0,
+        coachMessageCount - 1
+      );
+
+
+    updateCoachCounter();
+
 
     addCoachMessage(
       "system",
@@ -1097,12 +1179,194 @@ async function sendCoachMessage() {
     input.focus();
 
   }
+
+}
+  /*
+============================================================
+HUMAN COACH REPLY POLLING
+============================================================
+*/
+
+let coachPollingTimer = null;
+
+let lastCoachMessageId = 0;
+
+
+/*
+Start checking for new coach messages.
+*/
+
+function startCoachPolling() {
+
+  if (coachPollingTimer) {
+    return;
+  }
+
+
+  checkForCoachReplies();
+
+
+  coachPollingTimer =
+    setInterval(
+      checkForCoachReplies,
+      5000
+    );
+
 }
 
 
+/*
+Stop polling when necessary.
+*/
+
+function stopCoachPolling() {
+
+  if (coachPollingTimer) {
+
+    clearInterval(
+      coachPollingTimer
+    );
+
+    coachPollingTimer = null;
+
+  }
+
+}
+
+
+/*
+Check Worker for conversation updates.
+*/
+
+async function checkForCoachReplies() {
+
+  if (!currentSessionId) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          action:
+            "get_messages",
+
+          sessionId:
+            currentSessionId
+
+        })
+
+      });
+
+
+    if (!response.ok) {
+      return;
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !data.messages ||
+      !Array.isArray(
+        data.messages
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+    Look for messages we haven't
+    displayed yet.
+    */
+
+    for (
+      const message
+      of data.messages
+    ) {
+
+      const messageId =
+        Number(
+          message.id
+        );
+
+
+      if (
+        messageId <=
+        lastCoachMessageId
+      ) {
+
+        continue;
+
+      }
+
+
+      lastCoachMessageId =
+        messageId;
+
+
+      /*
+      Only add coach messages
+      from the server.
+      */
+
+      if (
+        message.sender ===
+        "coach"
+      ) {
+
+        addCoachMessage(
+          "coach",
+          message.message
+        );
+
+
+        coachConversation.push({
+
+          role:
+            "coach",
+
+          content:
+            message.message
+
+        });
+
+      }
+
+    }
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Coach polling error:",
+      error
+    );
+
+  }
+
+}
 /* ==========================================
    ADD COACH MESSAGE
    ========================================== */
+  
 
 function addCoachMessage(type, text) {
 
