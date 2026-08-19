@@ -22,17 +22,17 @@
     .container {
       max-width: 760px;
       margin: auto;
-      padding: 30px 18px 50px;
+      padding: 25px 18px 50px;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 25px;
+      padding: 20px 10px 25px;
     }
 
     .heart {
-      font-size: 42px;
-      margin-bottom: 5px;
+      font-size: 46px;
+      margin-bottom: 8px;
     }
 
     .header h1 {
@@ -41,40 +41,56 @@
       font-size: 32px;
     }
 
-    .header p {
+    .tagline {
+      margin: 10px auto 0;
+      max-width: 520px;
       color: #666;
       font-size: 16px;
       line-height: 1.5;
-      margin-top: 10px;
     }
 
     .card {
       background: white;
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
     }
 
     .question-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 18px;
       text-align: center;
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .question-subtitle {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 22px;
+      line-height: 1.5;
     }
 
     .categories {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-bottom: 25px;
     }
 
     .category {
-      padding: 14px 10px;
-      border: 1px solid #e1d5e8;
-      border-radius: 12px;
-      background: #fff;
-      color: #555;
+      padding: 16px 10px;
+      border: 1px solid #e2d8e8;
+      border-radius: 14px;
+      background: white;
+      color: #444;
       cursor: pointer;
       font-size: 14px;
       font-weight: 600;
@@ -83,13 +99,21 @@
 
     .category:hover {
       border-color: #8e44ad;
-      background: #faf5ff;
+      background: #faf6ff;
+      transform: translateY(-1px);
     }
 
     .category.selected {
       background: #8e44ad;
       color: white;
       border-color: #8e44ad;
+    }
+
+    .selected-label {
+      text-align: center;
+      margin: 5px 0 20px;
+      color: #8e44ad;
+      font-weight: bold;
     }
 
     label {
@@ -100,26 +124,37 @@
 
     textarea {
       width: 100%;
-      min-height: 150px;
+      min-height: 180px;
       padding: 15px;
       border: 1px solid #ddd;
-      border-radius: 12px;
+      border-radius: 14px;
       resize: vertical;
       font-size: 16px;
       font-family: inherit;
       outline: none;
+      line-height: 1.5;
     }
 
     textarea:focus {
       border-color: #8e44ad;
     }
 
+    .privacy {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #faf7ff;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     .main-button {
       width: 100%;
-      margin-top: 15px;
-      padding: 15px;
+      margin-top: 16px;
+      padding: 16px;
       border: none;
-      border-radius: 12px;
+      border-radius: 13px;
       background: #8e44ad;
       color: white;
       font-size: 17px;
@@ -136,39 +171,52 @@
       cursor: not-allowed;
     }
 
+    .back-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 13px;
+      background: white;
+      color: #666;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
     .loading {
       display: none;
       text-align: center;
       margin-top: 20px;
       color: #8e44ad;
       font-weight: bold;
+      line-height: 1.5;
     }
 
     .response {
       display: none;
-      margin-top: 25px;
+      margin-top: 20px;
       padding: 22px;
       background: #faf7ff;
-      border-radius: 14px;
+      border-radius: 15px;
       border-left: 4px solid #8e44ad;
       line-height: 1.7;
-      white-space: pre-wrap;
+      font-size: 15px;
     }
 
     .response-title {
       color: #8e44ad;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
     }
 
     .new-question {
       display: none;
       width: 100%;
       margin-top: 15px;
-      padding: 13px;
+      padding: 14px;
       border: 1px solid #8e44ad;
-      border-radius: 12px;
+      border-radius: 13px;
       background: white;
       color: #8e44ad;
       font-weight: bold;
@@ -181,15 +229,16 @@
 
     .footer {
       text-align: center;
-      margin-top: 25px;
+      margin-top: 22px;
       color: #888;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.5;
     }
 
     @media (max-width: 500px) {
+
       .container {
-        padding: 20px 12px 40px;
+        padding: 15px 12px 35px;
       }
 
       .card {
@@ -203,270 +252,363 @@
       .categories {
         grid-template-columns: 1fr;
       }
+
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="header">
-      <div class="heart">❤️</div>
+  <div class="header">
 
-      <h1>Relationship Guidance</h1>
+    <div class="heart">❤️</div>
 
-      <p>
-        A private space to understand your relationship,
-        your emotions, and what you can do next.
-      </p>
+    <h1>Relationship Guidance</h1>
+
+    <div class="tagline">
+      Understand what's happening.<br>
+      Find a healthier way forward.
     </div>
 
-    <div class="card">
+  </div>
+
+
+  <div class="card">
+
+
+    <!-- STEP 1 -->
+
+    <div id="step1" class="step active">
 
       <div class="question-title">
-        What would you like help with today?
+        What are you dealing with?
       </div>
+
+      <div class="question-subtitle">
+        Choose the area you'd like help understanding.
+      </div>
+
 
       <div class="categories">
 
-        <button class="category" onclick="selectCategory(this, 'Communication')">
+        <button class="category"
+          onclick="selectCategory(this, 'Communication')">
           💬 Communication
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Trust & Jealousy')">
+        <button class="category"
+          onclick="selectCategory(this, 'Trust & Jealousy')">
           🤝 Trust & Jealousy
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Arguments & Conflict')">
+        <button class="category"
+          onclick="selectCategory(this, 'Arguments & Conflict')">
           ⚡ Arguments & Conflict
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Marriage')">
+        <button class="category"
+          onclick="selectCategory(this, 'Marriage')">
           💍 Marriage
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Dating')">
+        <button class="category"
+          onclick="selectCategory(this, 'Dating')">
           ❤️ Dating
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Emotional Distance')">
+        <button class="category"
+          onclick="selectCategory(this, 'Emotional Distance')">
           💔 Emotional Distance
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Breakup & Separation')">
+        <button class="category"
+          onclick="selectCategory(this, 'Breakup & Separation')">
           🌿 Breakup & Separation
         </button>
 
-        <button class="category" onclick="selectCategory(this, 'Family & Boundaries')">
+        <button class="category"
+          onclick="selectCategory(this, 'Family & Boundaries')">
           🏡 Family & Boundaries
         </button>
 
       </div>
 
-      <label for="question">
+    </div>
+
+
+    <!-- STEP 2 -->
+
+    <div id="step2" class="step">
+
+      <div class="question-title">
         Tell us what's happening
+      </div>
+
+      <div id="selectedLabel" class="selected-label"></div>
+
+      <div class="question-subtitle">
+        You don't need to have the perfect words.
+        Just describe what you're experiencing.
+      </div>
+
+
+      <label for="question">
+        Your situation
       </label>
 
       <textarea
         id="question"
-        placeholder="Share your situation. You don't need to have the perfect words..."
+        placeholder="For example: My partner and I keep arguing about small things, and I feel like they don't really listen to me..."
       ></textarea>
+
+
+      <div class="privacy">
+        🔒 You don't need to share your name, phone number,
+        address, or other identifying information.
+      </div>
+
 
       <button
         id="askButton"
         class="main-button"
-        onclick="getGuidance()"
-      >
-        Get Guidance
+        onclick="getGuidance()">
+        Get My Guidance
       </button>
 
+
+      <button
+        class="back-button"
+        onclick="goBack()">
+        ← Choose a different topic
+      </button>
+
+
       <div id="loading" class="loading">
-        ❤️ Understanding your situation...
+        ❤️ Understanding your situation...<br>
+        <small>This may take a few seconds.</small>
       </div>
 
+
       <div id="response" class="response"></div>
+
 
       <button
         id="newQuestion"
         class="new-question"
-        onclick="startAgain()"
-      >
+        onclick="startAgain()">
         Ask Another Question
       </button>
 
     </div>
 
-    <div class="footer">
-      Relationship Guidance<br>
-      Your thoughts matter. Your relationship deserves understanding.
-    </div>
-
   </div>
 
-  <script>
 
-    const API_URL =
-      "https://relationship-guidance-api.leadrize.workers.dev/";
+  <div class="footer">
+    Relationship Guidance<br>
+    Your thoughts matter.
+  </div>
 
-    let selectedCategory = "General";
+</div>
 
 
-    function selectCategory(button, category) {
+<script>
 
-      document.querySelectorAll(".category").forEach(function(item) {
-        item.classList.remove("selected");
-      });
+  const API_URL =
+    "https://relationship-guidance-api.leadrize.workers.dev/";
 
-      button.classList.add("selected");
+  let selectedCategory = "General";
 
-      selectedCategory = category;
+
+  function selectCategory(button, category) {
+
+    document.querySelectorAll(".category").forEach(function(item) {
+      item.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+
+    selectedCategory = category;
+
+    document.getElementById("selectedLabel").textContent =
+      "Selected: " + category;
+
+    document.getElementById("step1").classList.remove("active");
+
+    document.getElementById("step2").classList.add("active");
+
+    document.getElementById("question").focus();
+
+  }
+
+
+  function goBack() {
+
+    document.getElementById("step2").classList.remove("active");
+
+    document.getElementById("step1").classList.add("active");
+
+  }
+
+
+  async function getGuidance() {
+
+    const question =
+      document.getElementById("question").value.trim();
+
+    const responseBox =
+      document.getElementById("response");
+
+    const loading =
+      document.getElementById("loading");
+
+    const button =
+      document.getElementById("askButton");
+
+    const newQuestion =
+      document.getElementById("newQuestion");
+
+
+    if (!question) {
+
+      responseBox.style.display = "block";
+
+      responseBox.innerHTML =
+        "<div class='error'>Please tell us what's happening first.</div>";
+
+      return;
+
     }
 
 
-    async function getGuidance() {
+    responseBox.style.display = "none";
 
-      const question =
-        document.getElementById("question").value.trim();
+    newQuestion.style.display = "none";
 
-      const responseBox =
-        document.getElementById("response");
+    loading.style.display = "block";
 
-      const loading =
-        document.getElementById("loading");
-
-      const button =
-        document.getElementById("askButton");
-
-      const newQuestion =
-        document.getElementById("newQuestion");
+    button.disabled = true;
 
 
-      if (!question) {
+    try {
 
-        responseBox.style.display = "block";
+      const response = await fetch(API_URL, {
 
-        responseBox.innerHTML =
-          "<div class='error'>Please tell us what's happening first.</div>";
+        method: "POST",
 
-        return;
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          category: selectedCategory,
+          question: question
+        })
+
+      });
+
+
+      const data = await response.json();
+
+
+      loading.style.display = "none";
+
+      button.disabled = false;
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.error ||
+          data.message ||
+          "Something went wrong."
+        );
+
       }
 
 
-      responseBox.style.display = "none";
-      newQuestion.style.display = "none";
-
-      loading.style.display = "block";
-
-      button.disabled = true;
+      responseBox.style.display = "block";
 
 
-      try {
-
-        const response = await fetch(API_URL, {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json"
-          },
-
-          body: JSON.stringify({
-            category: selectedCategory,
-            question: question
-          })
-
-        });
+      responseBox.innerHTML =
+        "<div class='response-title'>Your Guidance</div>" +
+        formatResponse(
+          data.response ||
+          "I couldn't generate guidance right now."
+        );
 
 
-        const data = await response.json();
+      newQuestion.style.display = "block";
 
 
-        loading.style.display = "none";
-
-        button.disabled = false;
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            data.error ||
-            data.message ||
-            "Something went wrong."
-          );
-
-        }
-
-
-        responseBox.style.display = "block";
-
-
-        responseBox.innerHTML =
-          "<div class='response-title'>Your Guidance</div>" +
-          formatResponse(
-            data.response ||
-            "I couldn't generate guidance right now."
-          );
-
-
-        newQuestion.style.display = "block";
-
-
-      } catch (error) {
-
-        loading.style.display = "none";
-
-        button.disabled = false;
-
-        responseBox.style.display = "block";
-
-        responseBox.innerHTML =
-          "<div class='error'>" +
-          "Unable to generate guidance right now." +
-          "<br><br>" +
-          "Please try again in a moment." +
-          "</div>";
-
-        console.error(error);
-
-      }
-
-    }
-
-
-    function formatResponse(text) {
-
-      return text
-        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\n/g, "<br>");
-
-    }
-
-
-    function startAgain() {
-
-      document.getElementById("question").value = "";
-
-      document.getElementById("response").style.display = "none";
-
-      document.getElementById("newQuestion").style.display = "none";
-
-      document.getElementById("askButton").disabled = false;
-
-      document.querySelectorAll(".category").forEach(function(item) {
-        item.classList.remove("selected");
+      responseBox.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
       });
 
-      selectedCategory = "General";
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+    } catch (error) {
+
+      loading.style.display = "none";
+
+      button.disabled = false;
+
+      responseBox.style.display = "block";
+
+      responseBox.innerHTML =
+        "<div class='error'>" +
+        "We couldn't generate your guidance right now." +
+        "<br><br>" +
+        "Please try again in a moment." +
+        "</div>";
+
+      console.error(error);
 
     }
 
-  </script>
+  }
+
+
+  function formatResponse(text) {
+
+    return text
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/^### (.*?)$/gm, "<strong>$1</strong>")
+      .replace(/\n/g, "<br>");
+
+  }
+
+
+  function startAgain() {
+
+    document.getElementById("question").value = "";
+
+    document.getElementById("response").style.display = "none";
+
+    document.getElementById("newQuestion").style.display = "none";
+
+    document.getElementById("askButton").disabled = false;
+
+    document.getElementById("step2").classList.remove("active");
+
+    document.getElementById("step1").classList.add("active");
+
+    document.querySelectorAll(".category").forEach(function(item) {
+      item.classList.remove("selected");
+    });
+
+    selectedCategory = "General";
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+</script>
 
 </body>
 </html>
