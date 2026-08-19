@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Relationship Guidance</title>
 
@@ -21,10 +26,12 @@ body {
 }
 
 .container {
-  max-width: 760px;
+  max-width: 780px;
   margin: auto;
   padding: 20px 16px 50px;
 }
+
+/* HEADER */
 
 .header {
   text-align: center;
@@ -44,9 +51,11 @@ body {
 .tagline {
   color: #666;
   line-height: 1.5;
-  max-width: 560px;
+  max-width: 600px;
   margin: auto;
 }
+
+/* CARD */
 
 .card {
   background: white;
@@ -55,13 +64,17 @@ body {
   box-shadow: 0 8px 35px rgba(0,0,0,.08);
 }
 
-.step {
+/* SCREENS */
+
+.screen {
   display: none;
 }
 
-.step.active {
+.screen.active {
   display: block;
 }
+
+/* CATEGORY */
 
 .title {
   text-align: center;
@@ -80,7 +93,7 @@ body {
 
 .categories {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 11px;
 }
 
@@ -92,85 +105,119 @@ body {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+  transition: .2s;
 }
 
-.category:hover,
+.category:hover {
+  border-color: #8e44ad;
+  background: #faf7ff;
+}
+
 .category.selected {
   background: #8e44ad;
   color: white;
   border-color: #8e44ad;
 }
 
-.selected {
+/* CHAT */
+
+.chat-header {
   text-align: center;
-  color: #8e44ad;
-  font-weight: bold;
   margin-bottom: 15px;
 }
 
-.chat {
-  display: none;
+.chat-title {
+  font-size: 21px;
+  font-weight: bold;
 }
 
-.chat.active {
-  display: block;
+.selected-category {
+  display: inline-block;
+  margin-top: 7px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #f5eafa;
+  color: #8e44ad;
+  font-size: 12px;
+  font-weight: bold;
 }
+
+/* MESSAGES */
 
 .messages {
-  max-height: 520px;
+  max-height: 560px;
   overflow-y: auto;
   padding: 5px 2px 15px;
+  scroll-behavior: smooth;
 }
 
 .message {
-  margin: 12px 0;
+  margin: 14px 0;
   padding: 14px 16px;
-  border-radius: 17px;
-  line-height: 1.6;
+  border-radius: 18px;
+  line-height: 1.65;
   font-size: 15px;
+  word-wrap: break-word;
 }
 
 .user-message {
   background: #8e44ad;
   color: white;
-  margin-left: 12%;
+  margin-left: 14%;
   border-bottom-right-radius: 5px;
 }
 
 .ai-message {
   background: #faf7ff;
   border-left: 4px solid #8e44ad;
-  margin-right: 7%;
+  margin-right: 6%;
   border-bottom-left-radius: 5px;
 }
 
 .message-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
   opacity: .7;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  letter-spacing: .5px;
 }
+
+/* INPUT */
 
 .chat-input-area {
   border-top: 1px solid #eee;
-  padding-top: 15px;
+  padding-top: 16px;
+  position: sticky;
+  bottom: 0;
+  background: white;
 }
 
 textarea {
   width: 100%;
-  min-height: 90px;
+  min-height: 80px;
+  max-height: 180px;
   resize: vertical;
   border: 1px solid #ddd;
-  border-radius: 14px;
+  border-radius: 15px;
   padding: 14px;
   font-family: inherit;
   font-size: 15px;
+  line-height: 1.5;
   outline: none;
 }
 
 textarea:focus {
   border-color: #8e44ad;
+  box-shadow: 0 0 0 2px rgba(142,68,173,.08);
 }
+
+.input-hint {
+  color: #999;
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+/* SEND */
 
 .send {
   width: 100%;
@@ -183,11 +230,19 @@ textarea:focus {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  transition: .2s;
+}
+
+.send:hover {
+  opacity: .92;
 }
 
 .send:disabled {
   background: #bbb;
+  cursor: not-allowed;
 }
+
+/* LOADING */
 
 .loading {
   display: none;
@@ -195,46 +250,54 @@ textarea:focus {
   color: #8e44ad;
   padding: 12px;
   font-weight: bold;
+  font-size: 14px;
 }
 
-.actions {
-  display: none;
-  margin-top: 20px;
+.loading.active {
+  display: block;
 }
 
-.action-title {
+/* COACH */
+
+.coach-section {
+  margin-top: 18px;
+  padding-top: 17px;
+  border-top: 1px solid #eee;
+}
+
+.coach-title {
   text-align: center;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-.action {
+.coach-text {
+  text-align: center;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.coach-button {
   width: 100%;
-  margin-top: 9px;
-  padding: 14px;
+  padding: 15px;
   border-radius: 13px;
-  border: 1px solid #e2d8e8;
-  background: white;
-  text-align: left;
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.action:hover {
-  border-color: #8e44ad;
-  background: #faf7ff;
-}
-
-.coach {
+  border: none;
   background: #8e44ad;
   color: white;
-  border-color: #8e44ad;
-  text-align: center;
+  font-size: 15px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-.back {
+.coach-button:hover {
+  opacity: .92;
+}
+
+/* START OVER */
+
+.start-over {
   width: 100%;
   margin-top: 12px;
   padding: 12px;
@@ -245,8 +308,14 @@ textarea:focus {
   color: #666;
 }
 
+.start-over:hover {
+  border-color: #8e44ad;
+}
+
+/* HISTORY */
+
 .history {
-  margin-top: 25px;
+  margin-top: 28px;
 }
 
 .history-title {
@@ -260,6 +329,11 @@ textarea:focus {
   padding: 13px;
   margin-bottom: 9px;
   cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.history-item:hover {
+  border-color: #8e44ad;
 }
 
 .history-category {
@@ -280,9 +354,15 @@ textarea:focus {
   margin-top: 5px;
 }
 
-.error {
+/* ERROR */
+
+.error-message {
   color: #c0392b;
+  background: #fff5f5;
+  border-left-color: #c0392b;
 }
+
+/* FOOTER */
 
 .footer {
   text-align: center;
@@ -291,7 +371,9 @@ textarea:focus {
   font-size: 12px;
 }
 
-@media(max-width:500px) {
+/* MOBILE */
+
+@media(max-width: 550px) {
 
   .container {
     padding: 12px;
@@ -299,6 +381,7 @@ textarea:focus {
 
   .card {
     padding: 17px;
+    border-radius: 18px;
   }
 
   .categories {
@@ -313,9 +396,14 @@ textarea:focus {
     margin-right: 3%;
   }
 
+  .messages {
+    max-height: none;
+  }
+
 }
 
 </style>
+
 </head>
 
 
@@ -323,15 +411,24 @@ textarea:focus {
 
 <div class="container">
 
+  <!-- HEADER -->
+
   <div class="header">
 
-    <div class="heart">❤️</div>
+    <div class="heart">
+      ❤️
+    </div>
 
-    <h1>Relationship Guidance</h1>
+    <h1>
+      Relationship Guidance
+    </h1>
 
     <div class="tagline">
-      Sometimes you don't need someone to tell you what to do.
-      You need help seeing what is really happening.
+
+      Sometimes you don't need someone to tell you
+      what to do. You need help seeing what is
+      really happening.
+
     </div>
 
   </div>
@@ -339,151 +436,229 @@ textarea:focus {
 
   <div class="card">
 
-    <!-- CATEGORY -->
 
-    <div id="categoryStep" class="step active">
+    <!-- ======================================
+         CATEGORY SCREEN
+         ====================================== -->
+
+    <div
+      id="categoryScreen"
+      class="screen active"
+    >
 
       <div class="title">
+
         What would you like help with today?
+
       </div>
 
       <div class="subtitle">
+
         Choose the area you'd like help understanding.
+
       </div>
 
 
       <div class="categories">
 
-        <button class="category"
-        onclick="chooseCategory(this,'Communication')">
-        💬 Communication
+
+        <button
+          class="category"
+          onclick="startConversation('Communication', this)"
+        >
+
+          💬 Communication
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Trust & Jealousy')">
-        🤝 Trust & Jealousy
+
+        <button
+          class="category"
+          onclick="startConversation('Trust & Jealousy', this)"
+        >
+
+          🤝 Trust & Jealousy
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Arguments & Conflict')">
-        ⚡ Arguments & Conflict
+
+        <button
+          class="category"
+          onclick="startConversation('Arguments & Conflict', this)"
+        >
+
+          ⚡ Arguments & Conflict
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Marriage')">
-        💍 Marriage
+
+        <button
+          class="category"
+          onclick="startConversation('Marriage', this)"
+        >
+
+          💍 Marriage
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Dating')">
-        ❤️ Dating
+
+        <button
+          class="category"
+          onclick="startConversation('Dating', this)"
+        >
+
+          ❤️ Dating
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Emotional Distance')">
-        💔 Emotional Distance
+
+        <button
+          class="category"
+          onclick="startConversation('Emotional Distance', this)"
+        >
+
+          💔 Emotional Distance
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Breakup & Separation')">
-        🌿 Breakup & Separation
+
+        <button
+          class="category"
+          onclick="startConversation('Breakup & Separation', this)"
+        >
+
+          🌿 Breakup & Separation
+
         </button>
 
-        <button class="category"
-        onclick="chooseCategory(this,'Family & Boundaries')">
-        🏡 Family & Boundaries
+
+        <button
+          class="category"
+          onclick="startConversation('Family & Boundaries', this)"
+        >
+
+          🏡 Family & Boundaries
+
         </button>
+
 
       </div>
 
 
-      <div id="history" class="history"></div>
+      <!-- HISTORY -->
+
+      <div
+        id="history"
+        class="history"
+      ></div>
+
 
     </div>
 
 
-    <!-- CHAT -->
+    <!-- ======================================
+         CHAT SCREEN
+         ====================================== -->
 
-    <div id="chatStep" class="chat">
+    <div
+      id="chatScreen"
+      class="screen"
+    >
 
-      <div class="title">
-        Your Relationship Conversation
+
+      <div class="chat-header">
+
+        <div class="chat-title">
+
+          Relationship Conversation
+
+        </div>
+
+
+        <div
+          id="selectedCategory"
+          class="selected-category"
+        ></div>
+
       </div>
 
-      <div id="selectedCategory" class="selected"></div>
+
+      <!-- MESSAGES -->
+
+      <div
+        id="messages"
+        class="messages"
+      ></div>
 
 
-      <div id="messages" class="messages"></div>
+      <!-- LOADING -->
 
+      <div
+        id="loading"
+        class="loading"
+      >
 
-      <div id="loading" class="loading">
         ❤️ Thinking about what you've shared...
+
       </div>
 
+
+      <!-- INPUT -->
 
       <div class="chat-input-area">
+
 
         <textarea
           id="messageInput"
           placeholder="Continue the conversation..."
+          aria-label="Your message"
         ></textarea>
+
+
+        <div class="input-hint">
+
+          Press Enter to send · Shift + Enter for a new line
+
+        </div>
 
 
         <button
           id="sendButton"
           class="send"
-          onclick="sendMessage()">
+          onclick="sendMessage()"
+        >
 
           Send Message
 
         </button>
 
+
       </div>
 
 
-      <div id="actions" class="actions">
+      <!-- HUMAN COACH -->
 
-        <div class="action-title">
-          What would you like to do next?
+      <div class="coach-section">
+
+        <div class="coach-title">
+
+          🤝 Want personal support?
+
+        </div>
+
+
+        <div class="coach-text">
+
+          Sometimes a real conversation can help
+          you work through what AI cannot.
+
         </div>
 
 
         <button
-          class="action"
-          onclick="exploreDeeper()">
-
-          🔎 <strong>Explore This Deeper</strong><br>
-
-          Look more closely at what's happening.
-
-        </button>
-
-
-        <button
-          class="action"
-          onclick="newConversation()">
-
-          💬 <strong>Ask Another Question</strong><br>
-
-          Start a new relationship conversation.
-
-        </button>
-
-
-        <button
-          class="action"
-          onclick="loadHistory()">
-
-          🕘 <strong>View Previous Guidance</strong><br>
-
-          Continue a previous conversation.
-
-        </button>
-
-
-        <button
-          class="action coach"
-          onclick="openCoach()">
+          class="coach-button"
+          onclick="openCoach()"
+        >
 
           🤝 Talk to a Human Coach
 
@@ -492,15 +667,20 @@ textarea:focus {
       </div>
 
 
-      <button
-        class="back"
-        onclick="newConversation()">
+      <!-- START OVER -->
 
-        ← Start Over
+      <button
+        class="start-over"
+        onclick="startOver()"
+      >
+
+        ← Start a New Conversation
 
       </button>
 
+
     </div>
+
 
   </div>
 
@@ -508,7 +688,9 @@ textarea:focus {
   <div class="footer">
 
     Relationship Guidance
+
     <br>
+
     Your thoughts matter.
 
   </div>
@@ -519,17 +701,43 @@ textarea:focus {
 <script>
 
 
-/* ==================================
-   IMPORTANT
-   ================================== */
+/* ==========================================
+   CONFIGURATION
+   ========================================== */
+
+
+/*
+ IMPORTANT:
+
+ Keep your existing Worker URL here.
+
+ This is the URL that was already working
+ with your previous version.
+*/
 
 const API_URL =
 "https://relationship-guidance-api.leadrize.workers.dev/";
 
 
+/*
+ Your booking page.
+*/
+
+const COACH_URL =
+"https://cal.id/riseandlead/partnership-call";
+
+
+/*
+ Browser storage.
+*/
+
 const STORAGE_KEY =
 "relationshipGuidanceHistory";
 
+
+/* ==========================================
+   STATE
+   ========================================== */
 
 let category =
 "General";
@@ -539,79 +747,119 @@ let conversation =
 [];
 
 
-/* ==================================
-   CATEGORY
-   ================================== */
-
-function chooseCategory(button, selectedCategory) {
-
-  document
-  .querySelectorAll(".category")
-  .forEach(function(item) {
-
-    item.classList.remove("selected");
-
-  });
+let currentSessionId =
+Date.now();
 
 
-  button.classList.add("selected");
+/* ==========================================
+   START NEW CONVERSATION
+   ========================================== */
+
+function startConversation(
+  selectedCategory,
+  button
+) {
 
 
   category =
   selectedCategory;
 
 
-  document
-  .getElementById("selectedCategory")
-  .textContent =
-  "Topic: " + category;
-
+  /*
+   Remove previous selected category.
+  */
 
   document
-  .getElementById("categoryStep")
-  .classList.remove("active");
+    .querySelectorAll(".category")
+    .forEach(function(item) {
+
+      item.classList.remove("selected");
+
+    });
 
 
-  document
-  .getElementById("chatStep")
-  .classList.add("active");
+  button.classList.add("selected");
 
+
+  /*
+   New conversation.
+  */
 
   conversation =
   [];
 
 
-  document
-  .getElementById("messages")
-  .innerHTML =
-  "";
+  currentSessionId =
+  Date.now();
 
 
-  document
-  .getElementById("actions")
-  .style.display =
-  "none";
-
+  /*
+   Update category label.
+  */
 
   document
-  .getElementById("messageInput")
-  .focus();
+    .getElementById("selectedCategory")
+    .textContent =
+    "Topic: " + category;
+
+
+  /*
+   Clear messages.
+  */
+
+  document
+    .getElementById("messages")
+    .innerHTML =
+    "";
+
+
+  /*
+   Switch screens.
+  */
+
+  document
+    .getElementById("categoryScreen")
+    .classList.remove("active");
+
+
+  document
+    .getElementById("chatScreen")
+    .classList.add("active");
+
+
+  /*
+   Focus input.
+  */
+
+  setTimeout(function() {
+
+    document
+      .getElementById("messageInput")
+      .focus();
+
+  }, 100);
 
 }
 
 
-/* ==================================
+/* ==========================================
    SEND MESSAGE
-   ================================== */
+   ========================================== */
 
 async function sendMessage() {
+
 
   const input =
   document.getElementById("messageInput");
 
+
   const text =
   input.value.trim();
 
+
+  /*
+   Don't send empty messages.
+  */
 
   if (!text) {
 
@@ -623,12 +871,14 @@ async function sendMessage() {
   const sendButton =
   document.getElementById("sendButton");
 
+
   const loading =
   document.getElementById("loading");
 
-  const actions =
-  document.getElementById("actions");
 
+  /*
+   Display user's message immediately.
+  */
 
   addMessage(
     "user",
@@ -636,89 +886,131 @@ async function sendMessage() {
   );
 
 
+  /*
+   Add to conversation history.
+  */
+
   conversation.push({
 
-    role: "user",
+    role:
+    "user",
 
-    content: text
+    content:
+    text
 
   });
 
+
+  /*
+   Clear input.
+  */
 
   input.value =
   "";
 
 
+  /*
+   Disable send while AI is responding.
+  */
+
   sendButton.disabled =
   true;
 
 
-  loading.style.display =
-  "block";
-
-
-  actions.style.display =
-  "none";
+  loading.classList.add(
+    "active"
+  );
 
 
   try {
 
 
     /*
-      Build a conversation-aware question.
+     IMPORTANT:
 
-      Your current Worker accepts one
-      "question" field, so we send the
-      conversation history inside that field.
+     Your Worker currently accepts:
+
+       category
+       question
+
+     We therefore send the COMPLETE
+     conversation inside "question".
+
+     This allows the AI to understand
+     previous messages.
     */
 
 
     const conversationText =
     conversation
-    .map(function(message) {
-
-      if (message.role === "user") {
-
-        return "USER: " +
-        message.content;
-
-      }
-
-      return "GUIDANCE ASSISTANT: " +
-      message.content;
-
-    })
-    .join("\n\n");
+      .map(function(message) {
 
 
-    const response =
-    await fetch(API_URL, {
+        if (
+          message.role === "user"
+        ) {
 
-      method: "POST",
+          return (
+            "USER: " +
+            message.content
+          );
 
-      headers: {
+        }
 
-        "Content-Type":
-        "application/json"
 
-      },
-
-      body: JSON.stringify({
-
-        category:
-        category,
-
-        question:
-        conversationText
+        return (
+          "RELATIONSHIP GUIDANCE: " +
+          message.content
+        );
 
       })
+      .join("\n\n");
 
-    });
 
+    /*
+     Send to Cloudflare Worker.
+    */
+
+    const response =
+    await fetch(
+      API_URL,
+      {
+
+        method:
+        "POST",
+
+        headers:
+        {
+          "Content-Type":
+          "application/json"
+        },
+
+        body:
+        JSON.stringify({
+
+          category:
+          category,
+
+          question:
+          conversationText
+
+        })
+
+      }
+    );
+
+
+    /*
+     Read response.
+    */
 
     const data =
     await response.json();
 
+
+    /*
+     Check for errors.
+    */
 
     if (!response.ok) {
 
@@ -730,19 +1022,33 @@ async function sendMessage() {
     }
 
 
+    /*
+     Get AI response.
+    */
+
     const guidance =
     data.response ||
     "I couldn't generate guidance right now.";
 
 
+    /*
+     Add AI response to conversation.
+    */
+
     conversation.push({
 
-      role: "assistant",
+      role:
+      "assistant",
 
-      content: guidance
+      content:
+      guidance
 
     });
 
+
+    /*
+     Display AI response.
+    */
 
     addMessage(
       "assistant",
@@ -750,233 +1056,259 @@ async function sendMessage() {
     );
 
 
+    /*
+     Save conversation.
+    */
+
     saveConversation();
-
-
-    actions.style.display =
-    "block";
 
 
   }
 
+
   catch(error) {
 
+
+    console.error(
+      "Relationship Guidance error:",
+      error
+    );
+
+
     addMessage(
-      "assistant",
+      "error",
       "I'm sorry, I couldn't connect to the guidance service right now. Please try again."
     );
 
 
-    console.error(error);
-
   }
 
 
-  loading.style.display =
-  "none";
+  finally {
 
 
-  sendButton.disabled =
-  false;
+    loading.classList.remove(
+      "active"
+    );
 
 
-  input.focus();
+    sendButton.disabled =
+    false;
+
+
+    /*
+     Put cursor back in input.
+    */
+
+    input.focus();
+
+  }
 
 }
 
 
-/* ==================================
+/* ==========================================
    ADD MESSAGE
-   ================================== */
+   ========================================== */
 
-function addMessage(type, text) {
+function addMessage(
+  type,
+  text
+) {
+
 
   const messages =
-  document.getElementById("messages");
-
-
-  const wrapper =
-  document.createElement("div");
-
-
-  wrapper.className =
-  "message " +
-  (
-    type === "user"
-    ? "user-message"
-    : "ai-message"
+  document.getElementById(
+    "messages"
   );
 
 
+  const wrapper =
+  document.createElement(
+    "div"
+  );
+
+
+  /*
+   Choose message class.
+  */
+
+  if (type === "user") {
+
+    wrapper.className =
+    "message user-message";
+
+  }
+
+  else if (type === "error") {
+
+    wrapper.className =
+    "message ai-message error-message";
+
+  }
+
+  else {
+
+    wrapper.className =
+    "message ai-message";
+
+  }
+
+
+  /*
+   Label.
+  */
+
   const label =
-  document.createElement("div");
+  document.createElement(
+    "div"
+  );
 
 
   label.className =
   "message-label";
 
 
-  label.textContent =
-  type === "user"
-  ? "YOU"
-  : "RELATIONSHIP GUIDANCE";
+  if (type === "user") {
 
+    label.textContent =
+    "YOU";
+
+  }
+
+  else if (type === "error") {
+
+    label.textContent =
+    "RELATIONSHIP GUIDANCE";
+
+  }
+
+  else {
+
+    label.textContent =
+    "RELATIONSHIP GUIDANCE";
+
+  }
+
+
+  /*
+   Content.
+  */
 
   const content =
-  document.createElement("div");
+  document.createElement(
+    "div"
+  );
 
 
   content.innerHTML =
   formatResponse(text);
 
 
-  wrapper.appendChild(label);
-
-  wrapper.appendChild(content);
-
-  messages.appendChild(wrapper);
+  wrapper.appendChild(
+    label
+  );
 
 
-  messages.scrollTop =
-  messages.scrollHeight;
+  wrapper.appendChild(
+    content
+  );
+
+
+  messages.appendChild(
+    wrapper
+  );
+
+
+  /*
+   Scroll to newest message.
+  */
+
+  setTimeout(function() {
+
+    messages.scrollTop =
+    messages.scrollHeight;
+
+  }, 50);
 
 }
 
 
-/* ==================================
-   FORMAT AI RESPONSE
-   ================================== */
+/* ==========================================
+   FORMAT RESPONSE
+   ========================================== */
 
-function formatResponse(text) {
+function formatResponse(
+  text
+) {
+
 
   return escapeHTML(text)
 
-  .replace(
-    /\*\*(.*?)\*\*/g,
-    "<strong>$1</strong>"
-  )
+    /*
+     Bold.
+    */
 
-  .replace(
-    /^### (.*?)$/gm,
-    "<strong>$1</strong>"
-  )
+    .replace(
+      /\*\*(.*?)\*\*/g,
+      "<strong>$1</strong>"
+    )
 
-  .replace(
-    /\n/g,
-    "<br>"
-  );
+    /*
+     Markdown headings.
+    */
+
+    .replace(
+      /^### (.*?)$/gm,
+      "<strong>$1</strong>"
+    )
+
+    /*
+     Line breaks.
+    */
+
+    .replace(
+      /\n/g,
+      "<br>"
+    );
 
 }
 
 
-/* ==================================
-   ESCAPE
-   ================================== */
+/* ==========================================
+   ESCAPE HTML
+   ========================================== */
 
-function escapeHTML(text) {
+function escapeHTML(
+  text
+) {
+
 
   const div =
-  document.createElement("div");
+  document.createElement(
+    "div"
+  );
+
 
   div.textContent =
   text;
+
 
   return div.innerHTML;
 
 }
 
 
-/* ==================================
-   EXPLORE DEEPER
-   ================================== */
-
-function exploreDeeper() {
-
-  const input =
-  document.getElementById("messageInput");
-
-
-  input.value =
-  "I want to explore this situation deeper. " +
-  "What might be underneath this pattern, " +
-  "what should I pay attention to, and " +
-  "what would be the most helpful next step for me?";
-
-
-  input.focus();
-
-}
-
-
-/* ==================================
-   NEW CONVERSATION
-   ================================== */
-
-function newConversation() {
-
-  category =
-  "General";
-
-
-  conversation =
-  [];
-
-
-  document
-  .getElementById("messages")
-  .innerHTML =
-  "";
-
-
-  document
-  .getElementById("messageInput")
-  .value =
-  "";
-
-
-  document
-  .getElementById("actions")
-  .style.display =
-  "none";
-
-
-  document
-  .getElementById("chatStep")
-  .classList.remove("active");
-
-
-  document
-  .getElementById("categoryStep")
-  .classList.add("active");
-
-
-  document
-  .querySelectorAll(".category")
-  .forEach(function(item) {
-
-    item.classList.remove("selected");
-
-  });
-
-
-  window.scrollTo({
-
-    top: 0,
-
-    behavior: "smooth"
-
-  });
-
-}
-
-
-/* ==================================
+/* ==========================================
    SAVE CONVERSATION
-   ================================== */
+   ========================================== */
 
 function saveConversation() {
 
-  if (!conversation.length) {
+
+  if (
+    conversation.length === 0
+  ) {
 
     return;
 
@@ -987,31 +1319,55 @@ function saveConversation() {
   getHistory();
 
 
+  /*
+   Find first user message.
+  */
+
   const firstUserMessage =
-  conversation.find(function(item) {
+  conversation.find(
+    function(message) {
 
-    return item.role === "user";
+      return (
+        message.role ===
+        "user"
+      );
 
-  });
+    }
+  );
 
+
+  /*
+   Find existing session.
+  */
 
   const existing =
-  history.find(function(item) {
+  history.find(
+    function(item) {
 
-    return item.sessionId ===
-    currentSessionId;
+      return (
+        String(item.sessionId) ===
+        String(currentSessionId)
+      );
 
-  });
+    }
+  );
 
 
   if (existing) {
 
+
     existing.conversation =
     conversation;
+
+
+    existing.category =
+    category;
+
 
   }
 
   else {
+
 
     history.unshift({
 
@@ -1037,36 +1393,38 @@ function saveConversation() {
   }
 
 
-  history =
-  history.slice(0,10);
+  /*
+   Keep last 10 conversations.
+  */
 
+  history =
+  history.slice(
+    0,
+    10
+  );
+
+
+  /*
+   Save locally.
+  */
 
   localStorage.setItem(
-
     STORAGE_KEY,
-
     JSON.stringify(history)
-
   );
 
 }
 
 
-/* ==================================
-   SESSION ID
-   ================================== */
-
-let currentSessionId =
-Date.now();
-
-
-/* ==================================
-   HISTORY
-   ================================== */
+/* ==========================================
+   GET HISTORY
+   ========================================== */
 
 function getHistory() {
 
+
   try {
+
 
     return JSON.parse(
 
@@ -1076,9 +1434,12 @@ function getHistory() {
 
     ) || [];
 
+
   }
 
+
   catch(error) {
+
 
     return [];
 
@@ -1087,17 +1448,26 @@ function getHistory() {
 }
 
 
+/* ==========================================
+   RENDER HISTORY
+   ========================================== */
+
 function renderHistory() {
 
+
   const box =
-  document.getElementById("history");
+  document.getElementById(
+    "history"
+  );
 
 
   const history =
   getHistory();
 
 
-  if (!history.length) {
+  if (
+    history.length === 0
+  ) {
 
     box.innerHTML =
     "";
@@ -1111,43 +1481,58 @@ function renderHistory() {
   "<div class='history-title'>🕘 Your Recent Guidance</div>";
 
 
-  history.forEach(function(item) {
-
-    const question =
-    item.question.length > 90
-    ? item.question.substring(0,90) + "..."
-    : item.question;
+  history.forEach(
+    function(item) {
 
 
-    html += `
+      const question =
+      item.question.length > 90
 
-      <div
-        class="history-item"
-        onclick="openHistory('${item.sessionId}')">
+      ? item.question.substring(
+          0,
+          90
+        ) + "..."
 
-        <div class="history-category">
+      : item.question;
 
-          ${escapeHTML(item.category)}
+
+      html += `
+
+        <div
+          class="history-item"
+          onclick="openHistory('${item.sessionId}')"
+        >
+
+          <div class="history-category">
+
+            ${escapeHTML(
+              item.category
+            )}
+
+          </div>
+
+          <div class="history-question">
+
+            ${escapeHTML(
+              question
+            )}
+
+          </div>
+
+          <div class="history-date">
+
+            ${escapeHTML(
+              item.date
+            )}
+
+          </div>
 
         </div>
 
-        <div class="history-question">
+      `;
 
-          ${escapeHTML(question)}
-
-        </div>
-
-        <div class="history-date">
-
-          ${escapeHTML(item.date)}
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 
   box.innerHTML =
@@ -1156,23 +1541,30 @@ function renderHistory() {
 }
 
 
-/* ==================================
+/* ==========================================
    OPEN HISTORY
-   ================================== */
+   ========================================== */
 
-function openHistory(sessionId) {
+function openHistory(
+  sessionId
+) {
+
 
   const history =
   getHistory();
 
 
   const item =
-  history.find(function(entry) {
+  history.find(
+    function(entry) {
 
-    return String(entry.sessionId) ===
-    String(sessionId);
+      return (
+        String(entry.sessionId) ===
+        String(sessionId)
+      );
 
-  });
+    }
+  );
 
 
   if (!item) {
@@ -1181,6 +1573,10 @@ function openHistory(sessionId) {
 
   }
 
+
+  /*
+   Restore session.
+  */
 
   category =
   item.category;
@@ -1194,92 +1590,202 @@ function openHistory(sessionId) {
   item.sessionId;
 
 
-  document
-  .getElementById("selectedCategory")
-  .textContent =
-  "Topic: " + category;
-
+  /*
+   Update category.
+  */
 
   document
-  .getElementById("categoryStep")
-  .classList.remove("active");
+    .getElementById(
+      "selectedCategory"
+    )
+    .textContent =
+    "Topic: " + category;
+
+
+  /*
+   Switch screen.
+  */
+
+  document
+    .getElementById(
+      "categoryScreen"
+    )
+    .classList.remove(
+      "active"
+    );
 
 
   document
-  .getElementById("chatStep")
-  .classList.add("active");
+    .getElementById(
+      "chatScreen"
+    )
+    .classList.add(
+      "active"
+    );
 
+
+  /*
+   Clear current messages.
+  */
 
   const messages =
-  document.getElementById("messages");
+  document.getElementById(
+    "messages"
+  );
 
 
   messages.innerHTML =
   "";
 
 
-  conversation.forEach(function(message) {
+  /*
+   Rebuild conversation.
+  */
 
-    addMessage(
-
-      message.role === "user"
-      ? "user"
-      : "assistant",
-
-      message.content
-
-    );
-
-  });
+  conversation.forEach(
+    function(message) {
 
 
-  if (conversation.length) {
+      addMessage(
 
-    document
-    .getElementById("actions")
-    .style.display =
-    "block";
+        message.role === "user"
+        ? "user"
+        : "assistant",
 
-  }
+        message.content
 
-}
+      );
+
+    }
+  );
 
 
-/* ==================================
-   LOAD HISTORY
-   ================================== */
-
-function loadHistory() {
-
-  newConversation();
-
+  /*
+   Focus chat box.
+  */
 
   setTimeout(function() {
 
     document
-    .getElementById("history")
-    .scrollIntoView({
+      .getElementById(
+        "messageInput"
+      )
+      .focus();
 
-      behavior: "smooth",
-
-      block: "start"
-
-    });
-
-  },100);
+  }, 100);
 
 }
 
 
-/* ==================================
+/* ==========================================
+   START OVER
+   ========================================== */
+
+function startOver() {
+
+
+  category =
+  "General";
+
+
+  conversation =
+  [];
+
+
+  currentSessionId =
+  Date.now();
+
+
+  /*
+   Clear messages.
+  */
+
+  document
+    .getElementById(
+      "messages"
+    )
+    .innerHTML =
+    "";
+
+
+  /*
+   Clear input.
+  */
+
+  document
+    .getElementById(
+      "messageInput"
+    )
+    .value =
+    "";
+
+
+  /*
+   Switch back.
+  */
+
+  document
+    .getElementById(
+      "chatScreen"
+    )
+    .classList.remove(
+      "active"
+    );
+
+
+  document
+    .getElementById(
+      "categoryScreen"
+    )
+    .classList.add(
+      "active"
+    );
+
+
+  /*
+   Clear category selection.
+  */
+
+  document
+    .querySelectorAll(
+      ".category"
+    )
+    .forEach(
+      function(item) {
+
+        item.classList.remove(
+          "selected"
+        );
+
+      }
+    );
+
+
+  /*
+   Scroll top.
+  */
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
+/* ==========================================
    HUMAN COACH
-   ================================== */
+   ========================================== */
 
 function openCoach() {
 
+
   window.open(
 
-    "https://cal.id/riseandlead/partnership-call",
+    COACH_URL,
 
     "_blank"
 
@@ -1288,38 +1794,51 @@ function openCoach() {
 }
 
 
-/* ==================================
-   INITIALIZE
-   ================================== */
-
-renderHistory();
-
-
-/* ==================================
-   ENTER KEY
-   ================================== */
+/* ==========================================
+   ENTER TO SEND
+   ========================================== */
 
 document
-.getElementById("messageInput")
-.addEventListener(
-  "keydown",
-  function(event) {
+  .getElementById(
+    "messageInput"
+  )
+  .addEventListener(
+    "keydown",
+    function(event) {
 
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
 
-      event.preventDefault();
+      /*
+       Enter sends.
 
-      sendMessage();
+       Shift + Enter creates
+       a new line.
+      */
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+
+        event.preventDefault();
+
+
+        sendMessage();
+
+      }
 
     }
+  );
 
-  }
-);
+
+/* ==========================================
+   INITIALIZE
+   ========================================== */
+
+renderHistory();
 
 </script>
 
 </body>
+
 </html>
