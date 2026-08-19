@@ -7,7 +7,6 @@
   <title>Relationship Guidance</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -52,7 +51,6 @@
 
     .how-it-works {
       margin: 0 auto 22px;
-      max-width: 760px;
     }
 
     .how-title {
@@ -256,6 +254,8 @@
       margin-bottom: 15px;
     }
 
+    /* NEXT ACTIONS */
+
     .next-actions {
       display: none;
       margin-top: 22px;
@@ -271,7 +271,7 @@
     .action-button {
       width: 100%;
       margin-top: 9px;
-      padding: 14px;
+      padding: 15px;
       border-radius: 13px;
       background: white;
       border: 1px solid #e2d8e8;
@@ -279,6 +279,7 @@
       cursor: pointer;
       text-align: left;
       font-size: 14px;
+      line-height: 1.45;
     }
 
     .action-button:hover {
@@ -292,6 +293,7 @@
       border-color: #8e44ad;
       text-align: center;
       font-weight: bold;
+      font-size: 15px;
     }
 
     .action-button.coach:hover {
@@ -310,6 +312,8 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    /* HISTORY */
 
     .history {
       margin-top: 25px;
@@ -403,7 +407,6 @@
       .categories {
         grid-template-columns: 1fr;
       }
-
     }
 
   </style>
@@ -465,7 +468,6 @@
 
 
   <div class="card">
-
 
     <!-- STEP 1 -->
 
@@ -582,7 +584,7 @@
       <div id="response" class="response"></div>
 
 
-      <!-- POST GUIDANCE ACTIONS -->
+      <!-- POST-GUIDANCE OPTIONS -->
 
       <div id="nextActions" class="next-actions">
 
@@ -602,6 +604,7 @@
 
         </button>
 
+
         <button
           class="action-button"
           onclick="startAgain()">
@@ -613,6 +616,7 @@
           </span>
 
         </button>
+
 
         <button
           class="action-button"
@@ -626,6 +630,7 @@
 
         </button>
 
+
         <button
           class="action-button coach"
           onclick="openCoach()">
@@ -636,29 +641,15 @@
 
       </div>
 
-
-      <button
-        id="newQuestion"
-        class="new-question"
-        onclick="startAgain()">
-
-        Ask Another Question
-
-      </button>
-
     </div>
 
   </div>
 
 
   <div class="footer">
-
     Relationship Guidance
-
     <br>
-
     Your thoughts matter.
-
   </div>
 
 </div>
@@ -757,6 +748,7 @@
     const nextActions =
       document.getElementById("nextActions");
 
+
     if (!question) {
 
       responseBox.style.display =
@@ -771,8 +763,10 @@
 
     }
 
+
     currentQuestion =
       question;
+
 
     responseBox.style.display =
       "none";
@@ -785,6 +779,7 @@
 
     button.disabled =
       true;
+
 
     try {
 
@@ -857,17 +852,14 @@
 
 
       /*
-        Only show normal post-guidance
-        actions if the Worker has not
-        identified a safety situation.
+        IMPORTANT:
+        Always show the post-guidance
+        action buttons after a successful
+        normal AI response.
       */
 
-      if (!data.safety) {
-
-        nextActions.style.display =
-          "block";
-
-      }
+      nextActions.style.display =
+        "block";
 
 
       responseBox.scrollIntoView({
@@ -875,8 +867,8 @@
         block: "start"
       });
 
-
     }
+
 
     catch (error) {
 
@@ -943,6 +935,7 @@
     const questionBox =
       document.getElementById("question");
 
+
     questionBox.value =
 
       currentQuestion +
@@ -967,6 +960,7 @@
 
     questionBox.focus();
 
+
     questionBox.scrollIntoView({
       behavior: "smooth",
       block: "center"
@@ -976,7 +970,7 @@
 
 
   /* =========================
-     COACH
+     HUMAN COACH
   ========================= */
 
   function openCoach() {
@@ -985,28 +979,6 @@
       "https://cal.id/riseandlead/partnership-call",
       "_blank"
     );
-
-  }
-
-
-  /* =========================
-     SHOW HISTORY
-  ========================= */
-
-  function showHistory() {
-
-    startAgain();
-
-    setTimeout(function() {
-
-      document
-        .getElementById("history")
-        .scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-    }, 100);
 
   }
 
@@ -1023,6 +995,7 @@
 
     let history =
       getHistory();
+
 
     history.unshift({
 
@@ -1042,13 +1015,16 @@
 
     });
 
+
     history =
       history.slice(0,10);
+
 
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(history)
     );
+
 
     renderHistory();
 
@@ -1083,6 +1059,7 @@
 
     const history =
       getHistory();
+
 
     if (!history.length) {
 
@@ -1158,10 +1135,12 @@
     const history =
       getHistory();
 
+
     const item =
       history.find(function(entry) {
         return entry.id === id;
       });
+
 
     if (!item) {
       return;
@@ -1178,6 +1157,7 @@
     document
       .getElementById("step1")
       .classList.remove("active");
+
 
     document
       .getElementById("step2")
@@ -1229,6 +1209,25 @@
   }
 
 
+  function showHistory() {
+
+    startAgain();
+
+
+    setTimeout(function() {
+
+      document
+        .getElementById("history")
+        .scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+    }, 100);
+
+  }
+
+
   function clearHistory() {
 
     if (!confirm(
@@ -1237,9 +1236,11 @@
       return;
     }
 
+
     localStorage.removeItem(
       STORAGE_KEY
     );
+
 
     renderHistory();
 
@@ -1274,28 +1275,34 @@
       .value =
       "";
 
+
     document
       .getElementById("response")
       .style.display =
       "none";
+
 
     document
       .getElementById("nextActions")
       .style.display =
       "none";
 
+
     document
       .getElementById("askButton")
       .disabled =
       false;
 
+
     document
       .getElementById("step2")
       .classList.remove("active");
 
+
     document
       .getElementById("step1")
       .classList.add("active");
+
 
     document
       .querySelectorAll(".category")
@@ -1303,11 +1310,14 @@
         item.classList.remove("selected");
       });
 
+
     selectedCategory =
       "General";
 
+
     currentQuestion =
       "";
+
 
     window.scrollTo({
       top: 0,
