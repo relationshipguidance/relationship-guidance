@@ -7,6 +7,7 @@
   <title>Relationship Guidance</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -25,9 +26,13 @@
       padding: 25px 18px 50px;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     .header {
       text-align: center;
-      padding: 20px 10px 25px;
+      padding: 20px 10px 20px;
     }
 
     .heart {
@@ -42,12 +47,68 @@
     }
 
     .tagline {
-      margin: 10px auto 0;
-      max-width: 520px;
+      margin: 12px auto 0;
+      max-width: 560px;
       color: #666;
       font-size: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
+
+
+    /* =========================
+       HOW IT WORKS
+    ========================= */
+
+    .how-it-works {
+      margin: 0 auto 22px;
+      max-width: 760px;
+    }
+
+    .how-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .how-item {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 14px;
+      padding: 15px 12px;
+      text-align: center;
+      border: 1px solid #eee5f2;
+    }
+
+    .how-number {
+      color: #8e44ad;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .how-heading {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .how-text {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.4;
+    }
+
+
+    /* =========================
+       MAIN CARD
+    ========================= */
 
     .card {
       background: white;
@@ -64,6 +125,11 @@
       display: block;
     }
 
+
+    /* =========================
+       TITLES
+    ========================= */
+
     .question-title {
       text-align: center;
       font-size: 21px;
@@ -79,6 +145,11 @@
       line-height: 1.5;
     }
 
+
+    /* =========================
+       CATEGORIES
+    ========================= */
+
     .categories {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -86,7 +157,7 @@
     }
 
     .category {
-      padding: 16px 10px;
+      padding: 17px 10px;
       border: 1px solid #e2d8e8;
       border-radius: 14px;
       background: white;
@@ -116,6 +187,11 @@
       font-weight: bold;
     }
 
+
+    /* =========================
+       QUESTION FORM
+    ========================= */
+
     label {
       display: block;
       font-weight: bold;
@@ -139,15 +215,25 @@
       border-color: #8e44ad;
     }
 
+
+    /* =========================
+       PRIVACY
+    ========================= */
+
     .privacy {
       margin-top: 12px;
-      padding: 10px 12px;
+      padding: 11px 12px;
       border-radius: 10px;
       background: #faf7ff;
       color: #777;
       font-size: 12px;
       line-height: 1.5;
     }
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
 
     .main-button {
       width: 100%;
@@ -183,6 +269,15 @@
       cursor: pointer;
     }
 
+    .back-button:hover {
+      background: #fafafa;
+    }
+
+
+    /* =========================
+       LOADING
+    ========================= */
+
     .loading {
       display: none;
       text-align: center;
@@ -191,6 +286,11 @@
       font-weight: bold;
       line-height: 1.5;
     }
+
+
+    /* =========================
+       RESPONSE
+    ========================= */
 
     .response {
       display: none;
@@ -210,6 +310,11 @@
       margin-bottom: 15px;
     }
 
+
+    /* =========================
+       NEW QUESTION
+    ========================= */
+
     .new-question {
       display: none;
       width: 100%;
@@ -222,6 +327,15 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    .new-question:hover {
+      background: #faf6ff;
+    }
+
+
+    /* =========================
+       HISTORY
+    ========================= */
 
     .history {
       margin-top: 25px;
@@ -240,10 +354,12 @@
       margin-bottom: 10px;
       cursor: pointer;
       border: 1px solid transparent;
+      transition: 0.2s;
     }
 
     .history-item:hover {
       border-color: #8e44ad;
+      transform: translateY(-1px);
     }
 
     .history-category {
@@ -274,9 +390,23 @@
       font-size: 12px;
     }
 
+    .clear-history:hover {
+      color: #8e44ad;
+    }
+
+
+    /* =========================
+       ERROR
+    ========================= */
+
     .error {
       color: #c0392b;
     }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
 
     .footer {
       text-align: center;
@@ -285,6 +415,11 @@
       font-size: 12px;
       line-height: 1.5;
     }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 500px) {
 
@@ -296,8 +431,24 @@
         padding: 18px;
       }
 
+      .header {
+        padding-top: 15px;
+      }
+
       .header h1 {
         font-size: 27px;
+      }
+
+      .tagline {
+        font-size: 14px;
+      }
+
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .how-item {
+        text-align: left;
       }
 
       .categories {
@@ -305,12 +456,19 @@
       }
 
     }
+
   </style>
 </head>
+
 
 <body>
 
 <div class="container">
+
+
+  <!-- =========================
+       HEADER
+  ========================== -->
 
   <div class="header">
 
@@ -319,22 +477,95 @@
     <h1>Relationship Guidance</h1>
 
     <div class="tagline">
-      Understand what's happening.<br>
-      Find a healthier way forward.
+      Sometimes you don't need someone to tell you what to do.
+      You need help seeing what is really happening.
     </div>
 
   </div>
 
 
+  <!-- =========================
+       HOW IT WORKS
+  ========================== -->
+
+  <div class="how-it-works">
+
+    <div class="how-title">
+      How it works
+    </div>
+
+    <div class="how-grid">
+
+      <div class="how-item">
+
+        <div class="how-number">
+          01
+        </div>
+
+        <div class="how-heading">
+          Tell us what's happening
+        </div>
+
+        <div class="how-text">
+          Share what's on your mind in your own words.
+        </div>
+
+      </div>
+
+
+      <div class="how-item">
+
+        <div class="how-number">
+          02
+        </div>
+
+        <div class="how-heading">
+          Understand the pattern
+        </div>
+
+        <div class="how-text">
+          Get a balanced perspective on what may be happening.
+        </div>
+
+      </div>
+
+
+      <div class="how-item">
+
+        <div class="how-number">
+          03
+        </div>
+
+        <div class="how-heading">
+          Find your next step
+        </div>
+
+        <div class="how-text">
+          Leave with something practical you can do.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       MAIN CARD
+  ========================== -->
+
   <div class="card">
 
 
-    <!-- STEP 1 -->
+    <!-- =========================
+         STEP 1
+    ========================== -->
 
     <div id="step1" class="step active">
 
       <div class="question-title">
-        What are you dealing with?
+        What would you like help with today?
       </div>
 
       <div class="question-subtitle">
@@ -344,75 +575,121 @@
 
       <div class="categories">
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Communication')">
+
           💬 Communication
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Trust & Jealousy')">
+
           🤝 Trust & Jealousy
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Arguments & Conflict')">
+
           ⚡ Arguments & Conflict
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Marriage')">
+
           💍 Marriage
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Dating')">
+
           ❤️ Dating
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Emotional Distance')">
+
           💔 Emotional Distance
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Breakup & Separation')">
+
           🌿 Breakup & Separation
+
         </button>
 
-        <button class="category"
+
+        <button
+          class="category"
           onclick="selectCategory(this, 'Family & Boundaries')">
+
           🏡 Family & Boundaries
+
         </button>
+
 
       </div>
 
 
-      <!-- HISTORY -->
+      <!-- =========================
+           HISTORY
+      ========================== -->
 
       <div id="history" class="history"></div>
 
     </div>
 
 
-    <!-- STEP 2 -->
+    <!-- =========================
+         STEP 2
+    ========================== -->
 
     <div id="step2" class="step">
+
 
       <div class="question-title">
         Tell us what's happening
       </div>
 
-      <div id="selectedLabel" class="selected-label"></div>
+
+      <div
+        id="selectedLabel"
+        class="selected-label">
+      </div>
+
 
       <div class="question-subtitle">
+
         You don't need to have the perfect words.
         Just describe what you're experiencing.
+
       </div>
 
 
       <label for="question">
         Your situation
       </label>
+
 
       <textarea
         id="question"
@@ -421,9 +698,12 @@
 
 
       <div class="privacy">
+
         🔒 Your guidance history stays on this device.
+
         You don't need to share your name, phone number,
         address, or other identifying information.
+
       </div>
 
 
@@ -431,47 +711,93 @@
         id="askButton"
         class="main-button"
         onclick="getGuidance()">
+
         Get My Guidance
+
       </button>
 
 
       <button
         class="back-button"
         onclick="goBack()">
+
         ← Choose a different topic
+
       </button>
 
 
-      <div id="loading" class="loading">
-        ❤️ Understanding your situation...<br>
-        <small>This may take a few seconds.</small>
+      <!-- =========================
+           LOADING
+      ========================== -->
+
+      <div
+        id="loading"
+        class="loading">
+
+        ❤️ Understanding your situation...
+
+        <br>
+
+        <small>
+          This may take a few seconds.
+        </small>
+
       </div>
 
 
-      <div id="response" class="response"></div>
+      <!-- =========================
+           RESPONSE
+      ========================== -->
 
+      <div
+        id="response"
+        class="response">
+      </div>
+
+
+      <!-- =========================
+           NEW QUESTION
+      ========================== -->
 
       <button
         id="newQuestion"
         class="new-question"
         onclick="startAgain()">
+
         Ask Another Question
+
       </button>
+
 
     </div>
 
   </div>
 
 
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <div class="footer">
-    Relationship Guidance<br>
+
+    Relationship Guidance
+
+    <br>
+
     Your thoughts matter.
+
   </div>
+
 
 </div>
 
 
 <script>
+
+
+  /* =========================
+     CONFIGURATION
+  ========================== */
 
   const API_URL =
     "https://relationship-guidance-api.leadrize.workers.dev/";
@@ -479,111 +805,185 @@
   const STORAGE_KEY =
     "relationshipGuidanceHistory";
 
-  let selectedCategory = "General";
+  let selectedCategory =
+    "General";
 
+
+  /* =========================
+     CATEGORY SELECTION
+  ========================== */
 
   function selectCategory(button, category) {
 
-    document.querySelectorAll(".category").forEach(function(item) {
-      item.classList.remove("selected");
-    });
+    document
+      .querySelectorAll(".category")
+      .forEach(function(item) {
+
+        item.classList.remove("selected");
+
+      });
+
 
     button.classList.add("selected");
 
-    selectedCategory = category;
 
-    document.getElementById("selectedLabel").textContent =
+    selectedCategory =
+      category;
+
+
+    document
+      .getElementById("selectedLabel")
+      .textContent =
       "Selected: " + category;
 
-    document.getElementById("step1").classList.remove("active");
 
-    document.getElementById("step2").classList.add("active");
+    document
+      .getElementById("step1")
+      .classList.remove("active");
 
-    document.getElementById("question").focus();
+
+    document
+      .getElementById("step2")
+      .classList.add("active");
+
+
+    document
+      .getElementById("question")
+      .focus();
 
   }
 
+
+  /* =========================
+     GO BACK
+  ========================== */
 
   function goBack() {
 
-    document.getElementById("step2").classList.remove("active");
+    document
+      .getElementById("step2")
+      .classList.remove("active");
 
-    document.getElementById("step1").classList.add("active");
+
+    document
+      .getElementById("step1")
+      .classList.add("active");
 
   }
 
 
+  /* =========================
+     GET GUIDANCE
+  ========================== */
+
   async function getGuidance() {
 
+
     const question =
-      document.getElementById("question").value.trim();
+      document
+        .getElementById("question")
+        .value
+        .trim();
+
 
     const responseBox =
-      document.getElementById("response");
+      document
+        .getElementById("response");
+
 
     const loading =
-      document.getElementById("loading");
+      document
+        .getElementById("loading");
+
 
     const button =
-      document.getElementById("askButton");
+      document
+        .getElementById("askButton");
+
 
     const newQuestion =
-      document.getElementById("newQuestion");
+      document
+        .getElementById("newQuestion");
 
 
     if (!question) {
 
-      responseBox.style.display = "block";
+      responseBox.style.display =
+        "block";
+
 
       responseBox.innerHTML =
-        "<div class='error'>Please tell us what's happening first.</div>";
+        "<div class='error'>" +
+        "Please tell us what's happening first." +
+        "</div>";
+
 
       return;
 
     }
 
 
-    responseBox.style.display = "none";
+    responseBox.style.display =
+      "none";
 
-    newQuestion.style.display = "none";
 
-    loading.style.display = "block";
+    newQuestion.style.display =
+      "none";
 
-    button.disabled = true;
+
+    loading.style.display =
+      "block";
+
+
+    button.disabled =
+      true;
 
 
     try {
 
-      const response = await fetch(API_URL, {
 
-        method: "POST",
+      const response =
+        await fetch(API_URL, {
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+          method: "POST",
 
-        body: JSON.stringify({
-          category: selectedCategory,
-          question: question
-        })
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-      });
+          body: JSON.stringify({
+
+            category:
+              selectedCategory,
+
+            question:
+              question
+
+          })
+
+        });
 
 
-      const data = await response.json();
+      const data =
+        await response.json();
 
 
-      loading.style.display = "none";
+      loading.style.display =
+        "none";
 
-      button.disabled = false;
+
+      button.disabled =
+        false;
 
 
       if (!response.ok) {
 
         throw new Error(
+
           data.error ||
           data.message ||
           "Something went wrong."
+
         );
 
       }
@@ -594,44 +994,77 @@
         "I couldn't generate guidance right now.";
 
 
-      responseBox.style.display = "block";
+      responseBox.style.display =
+        "block";
 
 
       responseBox.innerHTML =
-        "<div class='response-title'>Your Guidance</div>" +
+
+        "<div class='response-title'>" +
+        "Your Guidance" +
+        "</div>" +
+
         formatResponse(guidance);
 
 
-      newQuestion.style.display = "block";
+      newQuestion.style.display =
+        "block";
 
+
+      /* =========================
+         SAVE HISTORY
+      ========================== */
 
       saveHistory(
+
         selectedCategory,
+
         question,
+
         guidance
+
       );
 
 
       responseBox.scrollIntoView({
+
         behavior: "smooth",
+
         block: "start"
+
       });
 
 
-    } catch (error) {
+    }
 
-      loading.style.display = "none";
 
-      button.disabled = false;
+    catch (error) {
 
-      responseBox.style.display = "block";
+
+      loading.style.display =
+        "none";
+
+
+      button.disabled =
+        false;
+
+
+      responseBox.style.display =
+        "block";
+
 
       responseBox.innerHTML =
+
         "<div class='error'>" +
+
         "We couldn't generate your guidance right now." +
+
         "<br><br>" +
+
         "Please try again in a moment." +
+
         "</div>";
+
 
       console.error(error);
 
@@ -640,32 +1073,67 @@
   }
 
 
+  /* =========================
+     FORMAT RESPONSE
+  ========================== */
+
   function formatResponse(text) {
 
     return text
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      .replace(/^### (.*?)$/gm, "<strong>$1</strong>")
-      .replace(/\n/g, "<br>");
+
+      .replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+      )
+
+      .replace(
+        /^### (.*?)$/gm,
+        "<strong>$1</strong>"
+      )
+
+      .replace(
+        /\n/g,
+        "<br>"
+      );
 
   }
 
 
-  function saveHistory(category, question, response) {
+  /* =========================
+     SAVE HISTORY
+  ========================== */
 
-    let history = getHistory();
+  function saveHistory(
+
+    category,
+
+    question,
+
+    response
+
+  ) {
+
+
+    let history =
+      getHistory();
 
 
     const item = {
 
-      id: Date.now(),
+      id:
+        Date.now(),
 
-      category: category,
+      category:
+        category,
 
-      question: question,
+      question:
+        question,
 
-      response: response,
+      response:
+        response,
 
-      date: new Date().toLocaleString()
+      date:
+        new Date().toLocaleString()
 
     };
 
@@ -673,14 +1141,18 @@
     history.unshift(item);
 
 
-    // Keep the latest 10 conversations
+    /* Keep latest 10 */
 
-    history = history.slice(0, 10);
+    history =
+      history.slice(0, 10);
 
 
     localStorage.setItem(
+
       STORAGE_KEY,
+
       JSON.stringify(history)
+
     );
 
 
@@ -689,15 +1161,25 @@
   }
 
 
+  /* =========================
+     GET HISTORY
+  ========================== */
+
   function getHistory() {
 
     try {
 
       return JSON.parse(
-        localStorage.getItem(STORAGE_KEY)
+
+        localStorage.getItem(
+          STORAGE_KEY
+        )
+
       ) || [];
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       return [];
 
@@ -706,10 +1188,17 @@
   }
 
 
+  /* =========================
+     DISPLAY HISTORY
+  ========================== */
+
   function renderHistory() {
 
+
     const historyBox =
-      document.getElementById("history");
+      document
+        .getElementById("history");
+
 
     const history =
       getHistory();
@@ -717,7 +1206,8 @@
 
     if (!history.length) {
 
-      historyBox.innerHTML = "";
+      historyBox.innerHTML =
+        "";
 
       return;
 
@@ -725,14 +1215,21 @@
 
 
     let html =
-      "<div class='history-title'>🕘 Your Recent Guidance</div>";
+
+      "<div class='history-title'>" +
+      "🕘 Your Recent Guidance" +
+      "</div>";
 
 
     history.forEach(function(item) {
 
+
       const shortQuestion =
+
         item.question.length > 90
+
           ? item.question.substring(0, 90) + "..."
+
           : item.question;
 
 
@@ -743,15 +1240,21 @@
           onclick="openHistory(${item.id})">
 
           <div class="history-category">
+
             ${escapeHTML(item.category)}
+
           </div>
 
           <div class="history-question">
+
             ${escapeHTML(shortQuestion)}
+
           </div>
 
           <div class="history-date">
+
             ${escapeHTML(item.date)}
+
           </div>
 
         </div>
@@ -762,20 +1265,30 @@
 
 
     html += `
+
       <button
         class="clear-history"
         onclick="clearHistory()">
+
         Clear history
+
       </button>
+
     `;
 
 
-    historyBox.innerHTML = html;
+    historyBox.innerHTML =
+      html;
 
   }
 
 
+  /* =========================
+     OPEN HISTORY
+  ========================== */
+
   function openHistory(id) {
+
 
     const history =
       getHistory();
@@ -783,12 +1296,16 @@
 
     const item =
       history.find(function(entry) {
+
         return entry.id === id;
+
       });
 
 
     if (!item) {
+
       return;
+
     }
 
 
@@ -796,111 +1313,194 @@
       item.category;
 
 
-    document.getElementById("step1")
-      .classList.remove("active");
+    document
+      .getElementById("step1")
+      .classList
+      .remove("active");
 
 
-    document.getElementById("step2")
-      .classList.add("active");
+    document
+      .getElementById("step2")
+      .classList
+      .add("active");
 
 
-    document.getElementById("selectedLabel")
+    document
+      .getElementById("selectedLabel")
       .textContent =
       "Selected: " + item.category;
 
 
-    document.getElementById("question")
+    document
+      .getElementById("question")
       .value =
       item.question;
 
 
     const responseBox =
-      document.getElementById("response");
+      document
+        .getElementById("response");
 
 
-    responseBox.style.display = "block";
+    responseBox.style.display =
+      "block";
 
 
     responseBox.innerHTML =
-      "<div class='response-title'>Your Guidance</div>" +
-      formatResponse(item.response);
+
+      "<div class='response-title'>" +
+      "Your Guidance" +
+      "</div>" +
+
+      formatResponse(
+        item.response
+      );
 
 
-    document.getElementById("newQuestion")
-      .style.display = "block";
+    document
+      .getElementById("newQuestion")
+      .style.display =
+      "block";
 
 
     window.scrollTo({
+
       top: 0,
+
       behavior: "smooth"
+
     });
 
   }
 
 
+  /* =========================
+     CLEAR HISTORY
+  ========================== */
+
   function clearHistory() {
+
 
     const confirmed =
       confirm(
+
         "Clear all saved guidance from this device?"
+
       );
 
 
     if (!confirmed) {
+
       return;
+
     }
 
 
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(
+      STORAGE_KEY
+    );
+
 
     renderHistory();
 
   }
 
 
+  /* =========================
+     ESCAPE HTML
+  ========================== */
+
   function escapeHTML(text) {
+
 
     const div =
       document.createElement("div");
 
-    div.textContent = text;
+
+    div.textContent =
+      text;
+
 
     return div.innerHTML;
 
   }
 
 
+  /* =========================
+     START AGAIN
+  ========================== */
+
   function startAgain() {
 
-    document.getElementById("question").value = "";
 
-    document.getElementById("response").style.display = "none";
+    document
+      .getElementById("question")
+      .value =
+      "";
 
-    document.getElementById("newQuestion").style.display = "none";
 
-    document.getElementById("askButton").disabled = false;
+    document
+      .getElementById("response")
+      .style.display =
+      "none";
 
-    document.getElementById("step2").classList.remove("active");
 
-    document.getElementById("step1").classList.add("active");
+    document
+      .getElementById("newQuestion")
+      .style.display =
+      "none";
 
-    document.querySelectorAll(".category").forEach(function(item) {
-      item.classList.remove("selected");
-    });
 
-    selectedCategory = "General";
+    document
+      .getElementById("askButton")
+      .disabled =
+      false;
+
+
+    document
+      .getElementById("step2")
+      .classList
+      .remove("active");
+
+
+    document
+      .getElementById("step1")
+      .classList
+      .add("active");
+
+
+    document
+      .querySelectorAll(".category")
+      .forEach(function(item) {
+
+        item.classList.remove(
+          "selected"
+        );
+
+      });
+
+
+    selectedCategory =
+      "General";
+
 
     window.scrollTo({
+
       top: 0,
+
       behavior: "smooth"
+
     });
 
   }
 
 
-  // Load saved conversations when the app opens
+  /* =========================
+     LOAD HISTORY
+  ========================== */
 
   renderHistory();
+
 
 </script>
 
