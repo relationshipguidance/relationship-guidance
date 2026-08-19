@@ -26,13 +26,9 @@
       padding: 25px 18px 50px;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
-
     .header {
       text-align: center;
-      padding: 20px 10px 20px;
+      padding: 20px 10px;
     }
 
     .heart {
@@ -54,11 +50,6 @@
       line-height: 1.6;
     }
 
-
-    /* =========================
-       HOW IT WORKS
-    ========================= */
-
     .how-it-works {
       margin: 0 auto 22px;
       max-width: 760px;
@@ -79,7 +70,7 @@
     }
 
     .how-item {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255,255,255,.85);
       border-radius: 14px;
       padding: 15px 12px;
       text-align: center;
@@ -105,16 +96,11 @@
       line-height: 1.4;
     }
 
-
-    /* =========================
-       MAIN CARD
-    ========================= */
-
     .card {
       background: white;
       border-radius: 22px;
       padding: 26px;
-      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 35px rgba(0,0,0,.08);
     }
 
     .step {
@@ -124,11 +110,6 @@
     .step.active {
       display: block;
     }
-
-
-    /* =========================
-       TITLES
-    ========================= */
 
     .question-title {
       text-align: center;
@@ -145,14 +126,9 @@
       line-height: 1.5;
     }
 
-
-    /* =========================
-       CATEGORIES
-    ========================= */
-
     .categories {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2,1fr);
       gap: 12px;
     }
 
@@ -165,13 +141,12 @@
       cursor: pointer;
       font-size: 14px;
       font-weight: 600;
-      transition: 0.2s;
+      transition: .2s;
     }
 
     .category:hover {
       border-color: #8e44ad;
       background: #faf6ff;
-      transform: translateY(-1px);
     }
 
     .category.selected {
@@ -186,11 +161,6 @@
       color: #8e44ad;
       font-weight: bold;
     }
-
-
-    /* =========================
-       QUESTION FORM
-    ========================= */
 
     label {
       display: block;
@@ -215,11 +185,6 @@
       border-color: #8e44ad;
     }
 
-
-    /* =========================
-       PRIVACY
-    ========================= */
-
     .privacy {
       margin-top: 12px;
       padding: 11px 12px;
@@ -229,11 +194,6 @@
       font-size: 12px;
       line-height: 1.5;
     }
-
-
-    /* =========================
-       BUTTONS
-    ========================= */
 
     .main-button {
       width: 100%;
@@ -269,15 +229,6 @@
       cursor: pointer;
     }
 
-    .back-button:hover {
-      background: #fafafa;
-    }
-
-
-    /* =========================
-       LOADING
-    ========================= */
-
     .loading {
       display: none;
       text-align: center;
@@ -286,11 +237,6 @@
       font-weight: bold;
       line-height: 1.5;
     }
-
-
-    /* =========================
-       RESPONSE
-    ========================= */
 
     .response {
       display: none;
@@ -310,10 +256,47 @@
       margin-bottom: 15px;
     }
 
+    .next-actions {
+      display: none;
+      margin-top: 22px;
+    }
 
-    /* =========================
-       NEW QUESTION
-    ========================= */
+    .next-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .action-button {
+      width: 100%;
+      margin-top: 9px;
+      padding: 14px;
+      border-radius: 13px;
+      background: white;
+      border: 1px solid #e2d8e8;
+      color: #444;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .action-button:hover {
+      border-color: #8e44ad;
+      background: #faf6ff;
+    }
+
+    .action-button.coach {
+      background: #8e44ad;
+      color: white;
+      border-color: #8e44ad;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .action-button.coach:hover {
+      background: #732d91;
+    }
 
     .new-question {
       display: none;
@@ -327,15 +310,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-
-    .new-question:hover {
-      background: #faf6ff;
-    }
-
-
-    /* =========================
-       HISTORY
-    ========================= */
 
     .history {
       margin-top: 25px;
@@ -354,12 +328,10 @@
       margin-bottom: 10px;
       cursor: pointer;
       border: 1px solid transparent;
-      transition: 0.2s;
     }
 
     .history-item:hover {
       border-color: #8e44ad;
-      transform: translateY(-1px);
     }
 
     .history-category {
@@ -390,23 +362,9 @@
       font-size: 12px;
     }
 
-    .clear-history:hover {
-      color: #8e44ad;
-    }
-
-
-    /* =========================
-       ERROR
-    ========================= */
-
     .error {
       color: #c0392b;
     }
-
-
-    /* =========================
-       FOOTER
-    ========================= */
 
     .footer {
       text-align: center;
@@ -416,12 +374,7 @@
       line-height: 1.5;
     }
 
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 500px) {
+    @media (max-width:500px) {
 
       .container {
         padding: 15px 12px 35px;
@@ -429,10 +382,6 @@
 
       .card {
         padding: 18px;
-      }
-
-      .header {
-        padding-top: 15px;
       }
 
       .header h1 {
@@ -460,15 +409,9 @@
   </style>
 </head>
 
-
 <body>
 
 <div class="container">
-
-
-  <!-- =========================
-       HEADER
-  ========================== -->
 
   <div class="header">
 
@@ -484,10 +427,6 @@
   </div>
 
 
-  <!-- =========================
-       HOW IT WORKS
-  ========================== -->
-
   <div class="how-it-works">
 
     <div class="how-title">
@@ -497,53 +436,27 @@
     <div class="how-grid">
 
       <div class="how-item">
-
-        <div class="how-number">
-          01
-        </div>
-
-        <div class="how-heading">
-          Tell us what's happening
-        </div>
-
+        <div class="how-number">01</div>
+        <div class="how-heading">Tell us what's happening</div>
         <div class="how-text">
           Share what's on your mind in your own words.
         </div>
-
       </div>
 
-
       <div class="how-item">
-
-        <div class="how-number">
-          02
-        </div>
-
-        <div class="how-heading">
-          Understand the pattern
-        </div>
-
+        <div class="how-number">02</div>
+        <div class="how-heading">Understand the pattern</div>
         <div class="how-text">
           Get a balanced perspective on what may be happening.
         </div>
-
       </div>
 
-
       <div class="how-item">
-
-        <div class="how-number">
-          03
-        </div>
-
-        <div class="how-heading">
-          Find your next step
-        </div>
-
+        <div class="how-number">03</div>
+        <div class="how-heading">Find your next step</div>
         <div class="how-text">
           Leave with something practical you can do.
         </div>
-
       </div>
 
     </div>
@@ -551,16 +464,10 @@
   </div>
 
 
-  <!-- =========================
-       MAIN CARD
-  ========================== -->
-
   <div class="card">
 
 
-    <!-- =========================
-         STEP 1
-    ========================== -->
+    <!-- STEP 1 -->
 
     <div id="step1" class="step active">
 
@@ -572,192 +479,163 @@
         Choose the area you'd like help understanding.
       </div>
 
-
       <div class="categories">
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Communication')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Communication')">
           💬 Communication
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Trust & Jealousy')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Trust & Jealousy')">
           🤝 Trust & Jealousy
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Arguments & Conflict')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Arguments & Conflict')">
           ⚡ Arguments & Conflict
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Marriage')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Marriage')">
           💍 Marriage
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Dating')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Dating')">
           ❤️ Dating
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Emotional Distance')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Emotional Distance')">
           💔 Emotional Distance
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Breakup & Separation')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Breakup & Separation')">
           🌿 Breakup & Separation
-
         </button>
 
-
-        <button
-          class="category"
-          onclick="selectCategory(this, 'Family & Boundaries')">
-
+        <button class="category"
+          onclick="selectCategory(this,'Family & Boundaries')">
           🏡 Family & Boundaries
-
         </button>
-
 
       </div>
-
-
-      <!-- =========================
-           HISTORY
-      ========================== -->
 
       <div id="history" class="history"></div>
 
     </div>
 
 
-    <!-- =========================
-         STEP 2
-    ========================== -->
+    <!-- STEP 2 -->
 
     <div id="step2" class="step">
-
 
       <div class="question-title">
         Tell us what's happening
       </div>
 
-
-      <div
-        id="selectedLabel"
+      <div id="selectedLabel"
         class="selected-label">
       </div>
 
-
       <div class="question-subtitle">
-
         You don't need to have the perfect words.
         Just describe what you're experiencing.
-
       </div>
-
 
       <label for="question">
         Your situation
       </label>
-
 
       <textarea
         id="question"
         placeholder="For example: My partner and I keep arguing about small things, and I feel like they don't really listen to me..."
       ></textarea>
 
-
       <div class="privacy">
-
         🔒 Your guidance history stays on this device.
-
         You don't need to share your name, phone number,
         address, or other identifying information.
-
       </div>
-
 
       <button
         id="askButton"
         class="main-button"
         onclick="getGuidance()">
-
         Get My Guidance
-
       </button>
-
 
       <button
         class="back-button"
         onclick="goBack()">
-
         ← Choose a different topic
-
       </button>
 
-
-      <!-- =========================
-           LOADING
-      ========================== -->
-
-      <div
-        id="loading"
-        class="loading">
-
+      <div id="loading" class="loading">
         ❤️ Understanding your situation...
-
         <br>
+        <small>This may take a few seconds.</small>
+      </div>
 
-        <small>
-          This may take a few seconds.
-        </small>
+      <div id="response" class="response"></div>
+
+
+      <!-- POST GUIDANCE ACTIONS -->
+
+      <div id="nextActions" class="next-actions">
+
+        <div class="next-title">
+          What would you like to do next?
+        </div>
+
+        <button
+          class="action-button"
+          onclick="exploreDeeper()">
+
+          🔎 <strong>Explore This Deeper</strong><br>
+
+          <span>
+            Look more closely at the situation you're experiencing.
+          </span>
+
+        </button>
+
+        <button
+          class="action-button"
+          onclick="startAgain()">
+
+          💬 <strong>Ask Another Question</strong><br>
+
+          <span>
+            Start a new relationship question.
+          </span>
+
+        </button>
+
+        <button
+          class="action-button"
+          onclick="showHistory()">
+
+          🕘 <strong>View Previous Guidance</strong><br>
+
+          <span>
+            Return to something you've explored before.
+          </span>
+
+        </button>
+
+        <button
+          class="action-button coach"
+          onclick="openCoach()">
+
+          🤝 Talk to a Human Coach
+
+        </button>
 
       </div>
 
-
-      <!-- =========================
-           RESPONSE
-      ========================== -->
-
-      <div
-        id="response"
-        class="response">
-      </div>
-
-
-      <!-- =========================
-           NEW QUESTION
-      ========================== -->
 
       <button
         id="newQuestion"
@@ -768,15 +646,10 @@
 
       </button>
 
-
     </div>
 
   </div>
 
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
 
   <div class="footer">
 
@@ -788,16 +661,10 @@
 
   </div>
 
-
 </div>
 
 
 <script>
-
-
-  /* =========================
-     CONFIGURATION
-  ========================== */
 
   const API_URL =
     "https://relationship-guidance-api.leadrize.workers.dev/";
@@ -808,44 +675,39 @@
   let selectedCategory =
     "General";
 
+  let currentQuestion =
+    "";
+
 
   /* =========================
-     CATEGORY SELECTION
-  ========================== */
+     CATEGORY
+  ========================= */
 
   function selectCategory(button, category) {
 
     document
       .querySelectorAll(".category")
       .forEach(function(item) {
-
         item.classList.remove("selected");
-
       });
-
 
     button.classList.add("selected");
 
-
     selectedCategory =
       category;
-
 
     document
       .getElementById("selectedLabel")
       .textContent =
       "Selected: " + category;
 
-
     document
       .getElementById("step1")
       .classList.remove("active");
 
-
     document
       .getElementById("step2")
       .classList.add("active");
-
 
     document
       .getElementById("question")
@@ -855,15 +717,14 @@
 
 
   /* =========================
-     GO BACK
-  ========================== */
+     BACK
+  ========================= */
 
   function goBack() {
 
     document
       .getElementById("step2")
       .classList.remove("active");
-
 
     document
       .getElementById("step1")
@@ -874,10 +735,9 @@
 
   /* =========================
      GET GUIDANCE
-  ========================== */
+  ========================= */
 
   async function getGuidance() {
-
 
     const question =
       document
@@ -885,62 +745,48 @@
         .value
         .trim();
 
-
     const responseBox =
-      document
-        .getElementById("response");
-
+      document.getElementById("response");
 
     const loading =
-      document
-        .getElementById("loading");
-
+      document.getElementById("loading");
 
     const button =
-      document
-        .getElementById("askButton");
+      document.getElementById("askButton");
 
-
-    const newQuestion =
-      document
-        .getElementById("newQuestion");
-
+    const nextActions =
+      document.getElementById("nextActions");
 
     if (!question) {
 
       responseBox.style.display =
         "block";
 
-
       responseBox.innerHTML =
         "<div class='error'>" +
         "Please tell us what's happening first." +
         "</div>";
 
-
       return;
 
     }
 
+    currentQuestion =
+      question;
 
     responseBox.style.display =
       "none";
 
-
-    newQuestion.style.display =
+    nextActions.style.display =
       "none";
-
 
     loading.style.display =
       "block";
 
-
     button.disabled =
       true;
 
-
     try {
-
 
       const response =
         await fetch(API_URL, {
@@ -971,7 +817,6 @@
       loading.style.display =
         "none";
 
-
       button.disabled =
         false;
 
@@ -979,11 +824,8 @@
       if (!response.ok) {
 
         throw new Error(
-
           data.error ||
-          data.message ||
           "Something went wrong."
-
         );
 
       }
@@ -1007,64 +849,57 @@
         formatResponse(guidance);
 
 
-      newQuestion.style.display =
-        "block";
-
-
-      /* =========================
-         SAVE HISTORY
-      ========================== */
-
       saveHistory(
-
         selectedCategory,
-
         question,
-
         guidance
-
       );
 
 
+      /*
+        Only show normal post-guidance
+        actions if the Worker has not
+        identified a safety situation.
+      */
+
+      if (!data.safety) {
+
+        nextActions.style.display =
+          "block";
+
+      }
+
+
       responseBox.scrollIntoView({
-
         behavior: "smooth",
-
         block: "start"
-
       });
 
 
     }
 
-
     catch (error) {
-
 
       loading.style.display =
         "none";
 
-
       button.disabled =
         false;
 
-
       responseBox.style.display =
         "block";
-
 
       responseBox.innerHTML =
 
         "<div class='error'>" +
 
-        "We couldn't generate your guidance right now." +
+        "We couldn't connect to the guidance service right now." +
 
         "<br><br>" +
 
         "Please try again in a moment." +
 
         "</div>";
-
 
       console.error(error);
 
@@ -1075,7 +910,7 @@
 
   /* =========================
      FORMAT RESPONSE
-  ========================== */
+  ========================= */
 
   function formatResponse(text) {
 
@@ -1100,28 +935,98 @@
 
 
   /* =========================
-     SAVE HISTORY
-  ========================== */
+     EXPLORE DEEPER
+  ========================= */
+
+  function exploreDeeper() {
+
+    const questionBox =
+      document.getElementById("question");
+
+    questionBox.value =
+
+      currentQuestion +
+
+      "\n\nI want to explore this situation deeper. " +
+      "What might be underneath this pattern, " +
+      "what should I pay attention to, and what " +
+      "would be the most helpful next step for me?";
+
+
+    document
+      .getElementById("response")
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById("nextActions")
+      .style.display =
+      "none";
+
+
+    questionBox.focus();
+
+    questionBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+
+
+  /* =========================
+     COACH
+  ========================= */
+
+  function openCoach() {
+
+    window.open(
+      "https://cal.id/riseandlead/partnership-call",
+      "_blank"
+    );
+
+  }
+
+
+  /* =========================
+     SHOW HISTORY
+  ========================= */
+
+  function showHistory() {
+
+    startAgain();
+
+    setTimeout(function() {
+
+      document
+        .getElementById("history")
+        .scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+    }, 100);
+
+  }
+
+
+  /* =========================
+     HISTORY
+  ========================= */
 
   function saveHistory(
-
     category,
-
     question,
-
     response
-
   ) {
-
 
     let history =
       getHistory();
 
+    history.unshift({
 
-    const item = {
-
-      id:
-        Date.now(),
+      id: Date.now(),
 
       category:
         category,
@@ -1135,51 +1040,34 @@
       date:
         new Date().toLocaleString()
 
-    };
-
-
-    history.unshift(item);
-
-
-    /* Keep latest 10 */
+    });
 
     history =
-      history.slice(0, 10);
-
+      history.slice(0,10);
 
     localStorage.setItem(
-
       STORAGE_KEY,
-
       JSON.stringify(history)
-
     );
-
 
     renderHistory();
 
   }
 
 
-  /* =========================
-     GET HISTORY
-  ========================== */
-
   function getHistory() {
 
     try {
 
       return JSON.parse(
-
         localStorage.getItem(
           STORAGE_KEY
         )
-
       ) || [];
 
     }
 
-    catch (error) {
+    catch(error) {
 
       return [];
 
@@ -1188,21 +1076,13 @@
   }
 
 
-  /* =========================
-     DISPLAY HISTORY
-  ========================== */
-
   function renderHistory() {
 
-
     const historyBox =
-      document
-        .getElementById("history");
-
+      document.getElementById("history");
 
     const history =
       getHistory();
-
 
     if (!history.length) {
 
@@ -1223,13 +1103,9 @@
 
     history.forEach(function(item) {
 
-
       const shortQuestion =
-
         item.question.length > 90
-
-          ? item.question.substring(0, 90) + "..."
-
+          ? item.question.substring(0,90) + "..."
           : item.question;
 
 
@@ -1240,21 +1116,15 @@
           onclick="openHistory(${item.id})">
 
           <div class="history-category">
-
             ${escapeHTML(item.category)}
-
           </div>
 
           <div class="history-question">
-
             ${escapeHTML(shortQuestion)}
-
           </div>
 
           <div class="history-date">
-
             ${escapeHTML(item.date)}
-
           </div>
 
         </div>
@@ -1283,46 +1153,35 @@
   }
 
 
-  /* =========================
-     OPEN HISTORY
-  ========================== */
-
   function openHistory(id) {
-
 
     const history =
       getHistory();
 
-
     const item =
       history.find(function(entry) {
-
         return entry.id === id;
-
       });
 
-
     if (!item) {
-
       return;
-
     }
 
 
     selectedCategory =
       item.category;
 
+    currentQuestion =
+      item.question;
+
 
     document
       .getElementById("step1")
-      .classList
-      .remove("active");
-
+      .classList.remove("active");
 
     document
       .getElementById("step2")
-      .classList
-      .add("active");
+      .classList.add("active");
 
 
     document
@@ -1338,8 +1197,7 @@
 
 
     const responseBox =
-      document
-        .getElementById("response");
+      document.getElementById("response");
 
 
     responseBox.style.display =
@@ -1358,48 +1216,30 @@
 
 
     document
-      .getElementById("newQuestion")
+      .getElementById("nextActions")
       .style.display =
       "block";
 
 
     window.scrollTo({
-
       top: 0,
-
       behavior: "smooth"
-
     });
 
   }
 
 
-  /* =========================
-     CLEAR HISTORY
-  ========================== */
-
   function clearHistory() {
 
-
-    const confirmed =
-      confirm(
-
-        "Clear all saved guidance from this device?"
-
-      );
-
-
-    if (!confirmed) {
-
+    if (!confirm(
+      "Clear all saved guidance from this device?"
+    )) {
       return;
-
     }
-
 
     localStorage.removeItem(
       STORAGE_KEY
     );
-
 
     renderHistory();
 
@@ -1408,18 +1248,15 @@
 
   /* =========================
      ESCAPE HTML
-  ========================== */
+  ========================= */
 
   function escapeHTML(text) {
-
 
     const div =
       document.createElement("div");
 
-
     div.textContent =
       text;
-
 
     return div.innerHTML;
 
@@ -1428,79 +1265,63 @@
 
   /* =========================
      START AGAIN
-  ========================== */
+  ========================= */
 
   function startAgain() {
-
 
     document
       .getElementById("question")
       .value =
       "";
 
-
     document
       .getElementById("response")
       .style.display =
       "none";
 
-
     document
-      .getElementById("newQuestion")
+      .getElementById("nextActions")
       .style.display =
       "none";
-
 
     document
       .getElementById("askButton")
       .disabled =
       false;
 
-
     document
       .getElementById("step2")
-      .classList
-      .remove("active");
-
+      .classList.remove("active");
 
     document
       .getElementById("step1")
-      .classList
-      .add("active");
-
+      .classList.add("active");
 
     document
       .querySelectorAll(".category")
       .forEach(function(item) {
-
-        item.classList.remove(
-          "selected"
-        );
-
+        item.classList.remove("selected");
       });
-
 
     selectedCategory =
       "General";
 
+    currentQuestion =
+      "";
 
     window.scrollTo({
-
       top: 0,
-
       behavior: "smooth"
-
     });
 
   }
 
 
   /* =========================
-     LOAD HISTORY
-  ========================== */
+     INITIALIZE
+  ========================= */
 
   renderHistory();
-
 
 </script>
 
