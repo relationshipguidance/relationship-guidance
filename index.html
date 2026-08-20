@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,7 +94,8 @@ body {
   font-weight: 600;
 }
 
-.category:hover {
+.category:hover,
+.category.selected {
   border-color: #8e44ad;
   background: #faf7ff;
 }
@@ -141,21 +143,26 @@ body {
   letter-spacing: .5px;
 }
 
-textarea {
+textarea,
+input {
   width: 100%;
-  min-height: 80px;
-  max-height: 180px;
-  resize: vertical;
   border: 1px solid #ddd;
   border-radius: 15px;
   padding: 14px;
   font-family: inherit;
   font-size: 15px;
-  line-height: 1.5;
   outline: none;
 }
 
-textarea:focus {
+textarea {
+  min-height: 80px;
+  max-height: 180px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+textarea:focus,
+input:focus {
   border-color: #8e44ad;
 }
 
@@ -326,7 +333,6 @@ textarea:focus {
   border-radius: 12px;
   padding: 13px;
   margin-bottom: 9px;
-  cursor: pointer;
 }
 
 .history-category {
@@ -345,6 +351,65 @@ textarea:focus {
   font-size: 11px;
   color: #999;
   margin-top: 5px;
+}
+
+.coach-card {
+  text-align: center;
+}
+
+.coach-icon {
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.coach-card h2 {
+  color: #8e44ad;
+  margin: 5px 0 10px;
+}
+
+.coach-card p {
+  color: #666;
+  line-height: 1.5;
+}
+
+.small-text {
+  font-size: 13px;
+}
+
+.form-group {
+  text-align: left;
+  margin: 16px 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 13px;
+  background: #e67e22;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.error-message {
+  margin-top: 12px;
+  color: #c0392b;
+  font-size: 13px;
+}
+
+.privacy-note {
+  font-size: 11px !important;
+  color: #999 !important;
+  margin-top: 18px;
 }
 
 .footer {
@@ -399,7 +464,9 @@ textarea:focus {
 
 <div class="card">
 
-<!-- CATEGORY SCREEN -->
+<!-- =========================================================
+     CATEGORY SCREEN
+========================================================== -->
 
 <div id="categoryScreen" class="screen active">
 
@@ -460,7 +527,9 @@ textarea:focus {
 </div>
 
 
-<!-- AI CHAT -->
+<!-- =========================================================
+     AI CHAT
+========================================================== -->
 
 <div id="chatScreen" class="screen">
 
@@ -515,7 +584,7 @@ textarea:focus {
 
     <button
       class="coach-button"
-      onclick="openCoachChat()">
+      onclick="openCoachRegistration()">
       🤝 Talk to a Human Coach
     </button>
 
@@ -524,7 +593,85 @@ textarea:focus {
 </div>
 
 
-<!-- HUMAN COACH CHAT -->
+<!-- =========================================================
+     COACH REGISTRATION
+========================================================== -->
+
+<div id="coachRegisterScreen" class="screen">
+
+  <div class="coach-card">
+
+    <div class="coach-icon">
+      🤝
+    </div>
+
+    <h2>
+      Talk to a Human Coach
+    </h2>
+
+    <p>
+      Get personal guidance from a human relationship coach.
+    </p>
+
+    <p class="small-text">
+      Your first 3 messages are complimentary.
+    </p>
+
+    <div class="form-group">
+
+      <label for="coachName">
+        Your Name
+      </label>
+
+      <input
+        type="text"
+        id="coachName"
+        placeholder="Enter your name"
+        autocomplete="name"
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label for="coachEmail">
+        Email Address
+      </label>
+
+      <input
+        type="email"
+        id="coachEmail"
+        placeholder="Enter your email"
+        autocomplete="email"
+      >
+
+    </div>
+
+    <button
+      type="button"
+      onclick="registerForCoach()"
+      class="primary-button">
+      Start My Free Conversation
+    </button>
+
+    <div
+      id="coachRegisterError"
+      class="error-message hidden">
+    </div>
+
+    <p class="privacy-note">
+      Your information is used to maintain your coaching
+      conversation and keep your messages secure.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     HUMAN COACH CHAT
+========================================================== -->
 
 <div id="coachScreen" class="screen">
 
@@ -563,15 +710,13 @@ textarea:focus {
     ></textarea>
 
     <button
+      id="coachSendButton"
       class="send"
       onclick="sendCoachMessage()">
       Send to Coach
     </button>
 
   </div>
-
-
-  <!-- PAYMENT LOCK -->
 
   <div
     id="paymentBox"
@@ -617,85 +762,191 @@ textarea:focus {
 
 <script>
 
-/* ==========================================
+/* =========================================================
    CONFIGURATION
-   ========================================== */
+========================================================== */
 
 const API_URL =
-"https://relationship-guidance-api.leadrize.workers.dev/";
+  "https://relationship-guidance-api.leadrize.workers.dev/";
 
 const STORAGE_KEY =
-"relationshipGuidanceHistory";
+  "relationshipGuidanceHistory";
+
+const CUSTOMER_STORAGE_KEY =
+  "relationship_customer";
 
 const COACH_MESSAGE_LIMIT =
-3;
+  3;
 
 
-/* ==========================================
+/* =========================================================
    AI STATE
-   ========================================== */
+========================================================== */
 
 let category = "General";
 
 let conversation = [];
 
-let currentSessionId = Date.now();
+let currentSessionId =
+  String(Date.now());
 
 
-/* ==========================================
+/* =========================================================
    COACH STATE
-   ========================================== */
+========================================================== */
 
 let coachConversation = [];
 
 let coachMessageCount = 0;
 
+let coachPollingTimer = null;
 
-/* ==========================================
+let lastCoachMessageId = 0;
+
+
+/* =========================================================
+   CUSTOMER STATE
+========================================================== */
+
+let customerId = null;
+
+let userName = "";
+
+let userEmail = "";
+
+
+/* =========================================================
+   LOAD CUSTOMER FROM LOCAL STORAGE
+========================================================== */
+
+function loadSavedCustomer() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        CUSTOMER_STORAGE_KEY
+      );
+
+    if (!saved) {
+      return false;
+    }
+
+    const customer =
+      JSON.parse(saved);
+
+    if (!customer || !customer.id) {
+      return false;
+    }
+
+    customerId =
+      customer.id;
+
+    userName =
+      customer.name || "";
+
+    userEmail =
+      customer.email || "";
+
+    window.customerId =
+      customerId;
+
+    window.userName =
+      userName;
+
+    window.userEmail =
+      userEmail;
+
+    return true;
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Customer restore error:",
+      error
+    );
+
+    return false;
+  }
+}
+
+
+/* =========================================================
    START AI CONVERSATION
-   ========================================== */
+========================================================== */
 
-function startConversation(selectedCategory, button) {
+function startConversation(
+  selectedCategory,
+  button
+) {
 
-  category = selectedCategory;
+  category =
+    selectedCategory;
 
   document
     .querySelectorAll(".category")
     .forEach(function(item) {
-      item.classList.remove("selected");
+
+      item.classList.remove(
+        "selected"
+      );
+
     });
 
-  button.classList.add("selected");
+  if (button) {
+
+    button.classList.add(
+      "selected"
+    );
+
+  }
 
   conversation = [];
 
-  currentSessionId = Date.now();
+  currentSessionId =
+    String(Date.now());
 
-  document.getElementById("selectedCategory")
-    .textContent =
+  document.getElementById(
+    "selectedCategory"
+  ).textContent =
     "Topic: " + category;
 
-  document.getElementById("messages")
-    .innerHTML = "";
+  document.getElementById(
+    "messages"
+  ).innerHTML = "";
 
-  showScreen("chatScreen");
+  showScreen(
+    "chatScreen"
+  );
 
   setTimeout(function() {
-    document.getElementById("messageInput").focus();
+
+    document
+      .getElementById(
+        "messageInput"
+      )
+      .focus();
+
   }, 100);
 }
 
 
-/* ==========================================
+/* =========================================================
    SCREEN CONTROL
-   ========================================== */
+========================================================== */
 
 function showScreen(screenId) {
 
   document
     .querySelectorAll(".screen")
     .forEach(function(screen) {
-      screen.classList.remove("active");
+
+      screen.classList.remove(
+        "active"
+      );
+
     });
 
   document
@@ -704,27 +955,38 @@ function showScreen(screenId) {
 }
 
 
-/* ==========================================
+/* =========================================================
    SEND AI MESSAGE
-   ========================================== */
+========================================================== */
 
 async function sendMessage() {
 
   const input =
-    document.getElementById("messageInput");
+    document.getElementById(
+      "messageInput"
+    );
 
   const text =
     input.value.trim();
 
-  if (!text) return;
+  if (!text) {
+    return;
+  }
 
   const sendButton =
-    document.getElementById("sendButton");
+    document.getElementById(
+      "sendButton"
+    );
 
   const loading =
-    document.getElementById("loading");
+    document.getElementById(
+      "loading"
+    );
 
-  addMessage("user", text);
+  addMessage(
+    "user",
+    text
+  );
 
   conversation.push({
     role: "user",
@@ -735,7 +997,9 @@ async function sendMessage() {
 
   sendButton.disabled = true;
 
-  loading.classList.add("active");
+  loading.classList.add(
+    "active"
+  );
 
   try {
 
@@ -743,59 +1007,88 @@ async function sendMessage() {
       conversation
         .map(function(message) {
 
-          if (message.role === "user") {
-            return "USER: " + message.content;
+          if (
+            message.role ===
+            "user"
+          ) {
+
+            return (
+              "USER: " +
+              message.content
+            );
+
           }
 
-          return "RELATIONSHIP GUIDANCE: " +
-            message.content;
+          return (
+            "RELATIONSHIP GUIDANCE: " +
+            message.content
+          );
 
         })
         .join("\n\n");
 
+
     const response =
-      await fetch(API_URL, {
+      await fetch(
+        API_URL,
+        {
 
-        method: "POST",
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
 
-          category: category,
+            category:
+              category,
 
-          question: conversationText
+            question:
+              conversationText
 
-        })
+          })
 
-      });
+        }
+      );
+
 
     const data =
       await response.json();
 
+
     if (!response.ok) {
+
       throw new Error(
         data.error ||
         "Unable to generate guidance."
       );
+
     }
+
 
     const guidance =
       data.response ||
       "I couldn't generate guidance right now.";
 
+
     conversation.push({
-      role: "assistant",
-      content: guidance
+
+      role:
+        "assistant",
+
+      content:
+        guidance
+
     });
+
 
     addMessage(
       "assistant",
       guidance
     );
+
 
     saveConversation();
 
@@ -814,75 +1107,109 @@ async function sendMessage() {
 
   finally {
 
-    loading.classList.remove("active");
+    loading.classList.remove(
+      "active"
+    );
 
-    sendButton.disabled = false;
+    sendButton.disabled =
+      false;
 
     input.focus();
+
   }
 }
 
 
-/* ==========================================
+/* =========================================================
    ADD AI MESSAGE
-   ========================================== */
+========================================================== */
 
-function addMessage(type, text) {
+function addMessage(
+  type,
+  text
+) {
 
   const messages =
-    document.getElementById("messages");
+    document.getElementById(
+      "messages"
+    );
 
   const wrapper =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
-  if (type === "user") {
+  if (
+    type === "user"
+  ) {
+
     wrapper.className =
       "message user-message";
+
   }
 
   else {
+
     wrapper.className =
       "message ai-message";
+
   }
 
+
   const label =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   label.className =
     "message-label";
+
 
   label.textContent =
     type === "user"
       ? "YOU"
       : "RELATIONSHIP GUIDANCE";
 
+
   const content =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   content.innerHTML =
     formatResponse(text);
 
-  wrapper.appendChild(label);
 
-  wrapper.appendChild(content);
+  wrapper.appendChild(
+    label
+  );
 
-  messages.appendChild(wrapper);
+  wrapper.appendChild(
+    content
+  );
+
+  messages.appendChild(
+    wrapper
+  );
 
   messages.scrollTop =
     messages.scrollHeight;
 }
 
 
-/* ==========================================
-   FORMAT AI RESPONSE
-   ========================================== */
+/* =========================================================
+   FORMAT RESPONSE
+========================================================== */
 
 function formatResponse(text) {
 
   const div =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
-  div.textContent = text;
+  div.textContent =
+    text;
 
   return div.innerHTML
 
@@ -903,15 +1230,266 @@ function formatResponse(text) {
 }
 
 
-/* ==========================================
-   HUMAN COACH
-   ========================================== */
+/* =========================================================
+   OPEN COACH REGISTRATION
+========================================================== */
 
-function openCoachChat() {
+function openCoachRegistration() {
+
+  /*
+  If customer is already registered,
+  go directly to the coach chat.
+  */
+
+  if (
+    customerId ||
+    loadSavedCustomer()
+  ) {
+
+    openCoachChat();
+
+    return;
+  }
+
+
+  /*
+  Otherwise show registration.
+  */
+
+  document.getElementById(
+    "coachRegisterError"
+  ).classList.add(
+    "hidden"
+  );
+
+  showScreen(
+    "coachRegisterScreen"
+  );
+
+  setTimeout(function() {
+
+    document.getElementById(
+      "coachName"
+    ).focus();
+
+  }, 100);
+}
+
+
+/* =========================================================
+   REGISTER CUSTOMER
+========================================================== */
+
+async function registerForCoach() {
+
+  const nameInput =
+    document.getElementById(
+      "coachName"
+    );
+
+  const emailInput =
+    document.getElementById(
+      "coachEmail"
+    );
+
+  const errorBox =
+    document.getElementById(
+      "coachRegisterError"
+    );
+
+
+  const name =
+    nameInput.value.trim();
+
+  const email =
+    emailInput.value
+      .trim()
+      .toLowerCase();
+
+
+  errorBox.classList.add(
+    "hidden"
+  );
+
+
+  if (!name) {
+
+    errorBox.textContent =
+      "Please enter your name.";
+
+    errorBox.classList.remove(
+      "hidden"
+    );
+
+    nameInput.focus();
+
+    return;
+  }
+
+
+  if (!email) {
+
+    errorBox.textContent =
+      "Please enter your email.";
+
+    errorBox.classList.remove(
+      "hidden"
+    );
+
+    emailInput.focus();
+
+    return;
+  }
+
+
+  const emailPattern =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+  if (
+    !emailPattern.test(email)
+  ) {
+
+    errorBox.textContent =
+      "Please enter a valid email address.";
+
+    errorBox.classList.remove(
+      "hidden"
+    );
+
+    emailInput.focus();
+
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+
+            action:
+              "register_customer",
+
+            name:
+              name,
+
+            email:
+              email
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Unable to register."
+      );
+
+    }
+
+
+    /*
+    Save customer.
+    */
+
+    customerId =
+      data.customer.id;
+
+    userName =
+      data.customer.name;
+
+    userEmail =
+      data.customer.email;
+
+
+    window.customerId =
+      customerId;
+
+    window.userName =
+      userName;
+
+    window.userEmail =
+      userEmail;
+
+
+    /*
+    Persist registration locally.
+    */
+
+    localStorage.setItem(
+      CUSTOMER_STORAGE_KEY,
+      JSON.stringify({
+
+        id:
+          customerId,
+
+        name:
+          userName,
+
+        email:
+          userEmail
+
+      })
+    );
+
+
+    /*
+    Start coach chat.
+    */
+
+    openCoachChat();
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Registration error:",
+      error
+    );
+
+    errorBox.textContent =
+      "We couldn't create your account right now. Please try again.";
+
+    errorBox.classList.remove(
+      "hidden"
+    );
+
+  }
+}
+
+
+/* =========================================================
+   OPEN HUMAN COACH CHAT
+========================================================== */
+
+async function openCoachChat() {
+
+  /*
+  Do NOT reset the server-side count here.
+  */
 
   coachConversation = [];
-
-  coachMessageCount = 0;
 
   document.getElementById(
     "coachMessages"
@@ -923,79 +1501,289 @@ function openCoachChat() {
 
   document.getElementById(
     "paymentBox"
-  ).classList.add("hidden");
+  ).classList.add(
+    "hidden"
+  );
 
   document.getElementById(
     "coachInputArea"
-  ).classList.remove("hidden");
+  ).classList.remove(
+    "hidden"
+  );
 
-  updateCoachCounter();
-
-  showScreen("coachScreen");
-
-  setTimeout(function() {
-
-    document.getElementById(
-      "coachInput"
-    ).focus();
-
-  }, 100);
+  showScreen(
+    "coachScreen"
+  );
 
 
   /*
-   Opening message.
-
-   This is only the UI introduction.
-   The real coach connection comes next.
+  Ask the Worker for the
+  customer's current state.
   */
 
-  addCoachMessage(
-    "coach",
-    "Hi. I'm glad you reached out. You have 3 complimentary messages with a human coach. Tell me what's happening."
-  );
-   /*
-   Start checking for real coach replies.
+  await loadCoachState();
+
+
+  /*
+  If no messages exist yet,
+  show the introduction.
   */
+
+  if (
+    coachConversation.length ===
+    0
+  ) {
+
+    addCoachMessage(
+      "coach",
+      "Hi. I'm glad you reached out. You have 3 complimentary messages with a human coach. Tell me what's happening."
+    );
+
+  }
+
 
   startCoachPolling();
+
+
+  setTimeout(function() {
+
+    const input =
+      document.getElementById(
+        "coachInput"
+      );
+
+    if (
+      !input.disabled
+    ) {
+
+      input.focus();
+
+    }
+
+  }, 100);
 }
 
 
-/* ==========================================
-   SEND COACH MESSAGE
-   ========================================== */
+/* =========================================================
+   LOAD COACH STATE
+========================================================== */
+
+async function loadCoachState() {
+
+  if (!currentSessionId) {
+
+    currentSessionId =
+      String(Date.now());
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+
+            action:
+              "get_messages",
+
+            sessionId:
+              currentSessionId,
+
+            customerId:
+              customerId,
+
+            userEmail:
+              userEmail
+
+          })
+
+        }
+      );
+
+
+    if (!response.ok) {
+      return;
+    }
+
+
+    const data =
+      await response.json();
+
+
+    /*
+    Restore server-side usage count.
+    */
+
+    if (
+      typeof data.messagesUsed !==
+      "undefined"
+    ) {
+
+      coachMessageCount =
+        Number(
+          data.messagesUsed
+        );
+
+    }
+
+
+    updateCoachCounter();
+
+
+    /*
+    Restore server-side lock.
+    */
+
+    if (
+      data.locked === true ||
+      coachMessageCount >=
+      COACH_MESSAGE_LIMIT
+    ) {
+
+      lockCoachChat();
+
+    }
+
+
+    /*
+    Restore coach messages.
+    */
+
+    if (
+      data.messages &&
+      Array.isArray(
+        data.messages
+      )
+    ) {
+
+      for (
+        const message
+        of data.messages
+      ) {
+
+        const messageId =
+          Number(
+            message.id
+          );
+
+
+        if (
+          messageId >
+          lastCoachMessageId
+        ) {
+
+          lastCoachMessageId =
+            messageId;
+
+        }
+
+
+        if (
+          message.sender ===
+          "coach"
+        ) {
+
+          addCoachMessage(
+            "coach",
+            message.message
+          );
+
+          coachConversation.push({
+
+            role:
+              "coach",
+
+            content:
+              message.message
+
+          });
+
+        }
+
+      }
+
+    }
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Coach state error:",
+      error
+    );
+
+  }
+}
+
+
+/* =========================================================
+   SEND HUMAN COACH MESSAGE
+========================================================== */
 
 async function sendCoachMessage() {
 
   const input =
-    document.getElementById("coachInput");
+    document.getElementById(
+      "coachInput"
+    );
+
+  const sendButton =
+    document.getElementById(
+      "coachSendButton"
+    );
 
   const text =
     input.value.trim();
 
-  if (!text) return;
+
+  if (!text) {
+    return;
+  }
+
+
+  /*
+  Local protection.
+  */
 
   if (
     coachMessageCount >=
     COACH_MESSAGE_LIMIT
   ) {
+
     lockCoachChat();
+
     return;
   }
 
+
   /*
-  ============================================================
-  COUNT CUSTOMER MESSAGE
-  ============================================================
+  Customer must be registered.
   */
 
-  coachMessageCount++;
+  if (
+    !customerId
+  ) {
+
+    openCoachRegistration();
+
+    return;
+  }
 
 
   /*
-  ============================================================
-  SHOW CUSTOMER MESSAGE
-  ============================================================
+  Show immediately.
   */
 
   addCoachMessage(
@@ -1004,64 +1792,65 @@ async function sendCoachMessage() {
   );
 
 
-  /*
-  ============================================================
-  SAVE LOCALLY
-  ============================================================
-  */
-
   coachConversation.push({
-    role: "user",
-    content: text
+
+    role:
+      "user",
+
+    content:
+      text
+
   });
 
 
   input.value = "";
 
-  updateCoachCounter();
-
   input.disabled = true;
 
+  sendButton.disabled = true;
 
-  /*
-  ============================================================
-  SEND TO WORKER
-  ============================================================
-  */
 
   try {
 
     const response =
-      await fetch(API_URL, {
+      await fetch(
+        API_URL,
+        {
 
-        method: "POST",
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
 
-          action:
-            "coach_message",
+            action:
+              "coach_message",
 
-          message:
-            text,
+            message:
+              text,
 
-          sessionId:
-            currentSessionId,
+            sessionId:
+              currentSessionId,
 
-          category:
-            category,
+            category:
+              category,
 
-          userEmail:
-            window.userEmail ||
-            ""
+            customerId:
+              customerId,
 
-        })
+            userEmail:
+              userEmail,
 
-      });
+            userName:
+              userName
+
+          })
+
+        }
+      );
 
 
     const data =
@@ -1079,21 +1868,7 @@ async function sendCoachMessage() {
 
 
     /*
-    ============================================================
-    CONFIRMATION
-    ============================================================
-    */
-
-    addCoachMessage(
-      "system",
-      "✓ Your message has been sent to your human coach."
-    );
-
-
-    /*
-    ============================================================
-    UPDATE SERVER MESSAGE COUNT
-    ============================================================
+    Worker is authoritative.
     */
 
     if (
@@ -1106,15 +1881,30 @@ async function sendCoachMessage() {
           data.messagesUsed
         );
 
-      updateCoachCounter();
+    }
+
+    else {
+
+      coachMessageCount++;
 
     }
 
 
+    updateCoachCounter();
+
+
     /*
-    ============================================================
-    LOCK AFTER 3 FREE CUSTOMER MESSAGES
-    ============================================================
+    Confirmation.
+    */
+
+    addCoachMessage(
+      "system",
+      "✓ Your message has been sent to your human coach."
+    );
+
+
+    /*
+    Server can lock the account.
     */
 
     if (
@@ -1133,9 +1923,7 @@ async function sendCoachMessage() {
 
 
     /*
-    ============================================================
-    START CHECKING FOR COACH REPLIES
-    ============================================================
+    Continue checking for replies.
     */
 
     startCoachPolling();
@@ -1151,18 +1939,11 @@ async function sendCoachMessage() {
 
 
     /*
-    If sending failed, give the
-    customer their message back.
+    Remove optimistic message if
+    the server rejected the send.
     */
 
-    coachMessageCount =
-      Math.max(
-        0,
-        coachMessageCount - 1
-      );
-
-
-    updateCoachCounter();
+    coachConversation.pop();
 
 
     addCoachMessage(
@@ -1174,32 +1955,40 @@ async function sendCoachMessage() {
 
   finally {
 
-    input.disabled = false;
+    /*
+    Do not reopen the input if the
+    account has already been locked.
+    */
 
-    input.focus();
+    if (
+      coachMessageCount <
+      COACH_MESSAGE_LIMIT
+    ) {
+
+      input.disabled = false;
+
+      sendButton.disabled = false;
+
+      input.focus();
+
+    }
 
   }
-
 }
-  /*
-============================================================
-HUMAN COACH REPLY POLLING
-============================================================
-*/
-
-let coachPollingTimer = null;
-
-let lastCoachMessageId = 0;
 
 
-/*
-Start checking for new coach messages.
-*/
+/* =========================================================
+   HUMAN COACH REPLY POLLING
+========================================================== */
 
 function startCoachPolling() {
 
-  if (coachPollingTimer) {
+  if (
+    coachPollingTimer
+  ) {
+
     return;
+
   }
 
 
@@ -1211,63 +2000,74 @@ function startCoachPolling() {
       checkForCoachReplies,
       5000
     );
-
 }
 
 
-/*
-Stop polling when necessary.
-*/
-
 function stopCoachPolling() {
 
-  if (coachPollingTimer) {
+  if (
+    coachPollingTimer
+  ) {
 
     clearInterval(
       coachPollingTimer
     );
 
-    coachPollingTimer = null;
+    coachPollingTimer =
+      null;
 
   }
-
 }
 
 
-/*
-Check Worker for conversation updates.
-*/
+/* =========================================================
+   CHECK FOR COACH REPLIES
+========================================================== */
 
 async function checkForCoachReplies() {
 
-  if (!currentSessionId) {
+  if (
+    !currentSessionId ||
+    !customerId
+  ) {
+
     return;
+
   }
 
 
   try {
 
     const response =
-      await fetch(API_URL, {
+      await fetch(
+        API_URL,
+        {
 
-        method: "POST",
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
+          body: JSON.stringify({
 
-          action:
-            "get_messages",
+            action:
+              "get_messages",
 
-          sessionId:
-            currentSessionId
+            sessionId:
+              currentSessionId,
 
-        })
+            customerId:
+              customerId,
 
-      });
+            userEmail:
+              userEmail
+
+          })
+
+        }
+      );
 
 
     if (!response.ok) {
@@ -1277,6 +2077,37 @@ async function checkForCoachReplies() {
 
     const data =
       await response.json();
+
+
+    /*
+    Keep the server as the source
+    of truth for message count.
+    */
+
+    if (
+      typeof data.messagesUsed !==
+      "undefined"
+    ) {
+
+      coachMessageCount =
+        Number(
+          data.messagesUsed
+        );
+
+      updateCoachCounter();
+
+    }
+
+
+    if (
+      data.locked === true ||
+      coachMessageCount >=
+      COACH_MESSAGE_LIMIT
+    ) {
+
+      lockCoachChat();
+
+    }
 
 
     if (
@@ -1292,8 +2123,7 @@ async function checkForCoachReplies() {
 
 
     /*
-    Look for messages we haven't
-    displayed yet.
+    Add only new coach messages.
     */
 
     for (
@@ -1320,11 +2150,6 @@ async function checkForCoachReplies() {
       lastCoachMessageId =
         messageId;
 
-
-      /*
-      Only add coach messages
-      from the server.
-      */
 
       if (
         message.sender ===
@@ -1361,31 +2186,42 @@ async function checkForCoachReplies() {
     );
 
   }
-
 }
-/* ==========================================
-   ADD COACH MESSAGE
-   ========================================== */
-  
 
-function addCoachMessage(type, text) {
+
+/* =========================================================
+   ADD COACH MESSAGE
+========================================================== */
+
+function addCoachMessage(
+  type,
+  text
+) {
 
   const messages =
     document.getElementById(
       "coachMessages"
     );
 
-  const wrapper =
-    document.createElement("div");
 
-  if (type === "user") {
+  const wrapper =
+    document.createElement(
+      "div"
+    );
+
+
+  if (
+    type === "user"
+  ) {
 
     wrapper.className =
       "message user-message";
 
   }
 
-  else if (type === "system") {
+  else if (
+    type === "system"
+  ) {
 
     wrapper.className =
       "message ai-message";
@@ -1399,20 +2235,28 @@ function addCoachMessage(type, text) {
 
   }
 
+
   const label =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   label.className =
     "message-label";
 
-  if (type === "user") {
+
+  if (
+    type === "user"
+  ) {
 
     label.textContent =
       "YOU";
 
   }
 
-  else if (type === "system") {
+  else if (
+    type === "system"
+  ) {
 
     label.textContent =
       "RELATIONSHIP GUIDANCE";
@@ -1426,26 +2270,39 @@ function addCoachMessage(type, text) {
 
   }
 
+
   const content =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   content.innerHTML =
     formatResponse(text);
 
-  wrapper.appendChild(label);
 
-  wrapper.appendChild(content);
+  wrapper.appendChild(
+    label
+  );
 
-  messages.appendChild(wrapper);
+  wrapper.appendChild(
+    content
+  );
+
+
+  messages.appendChild(
+    wrapper
+  );
+
 
   messages.scrollTop =
     messages.scrollHeight;
 }
 
 
-/* ==========================================
-   UPDATE COUNTER
-   ========================================== */
+/* =========================================================
+   UPDATE COACH COUNTER
+========================================================== */
 
 function updateCoachCounter() {
 
@@ -1456,17 +2313,25 @@ function updateCoachCounter() {
       coachMessageCount
     );
 
+
   const counter =
     document.getElementById(
       "coachCounter"
     );
 
-  if (remaining > 0) {
+
+  if (
+    remaining > 0
+  ) {
 
     counter.textContent =
       remaining +
       " free message" +
-      (remaining === 1 ? "" : "s") +
+      (
+        remaining === 1
+          ? ""
+          : "s"
+      ) +
       " remaining";
 
   }
@@ -1480,39 +2345,35 @@ function updateCoachCounter() {
 }
 
 
-/* ==========================================
+/* =========================================================
    LOCK COACH CHAT
-   ========================================== */
+========================================================== */
 
 function lockCoachChat() {
 
   document.getElementById(
     "coachInputArea"
-  ).classList.add("hidden");
+  ).classList.add(
+    "hidden"
+  );
+
 
   document.getElementById(
     "paymentBox"
-  ).classList.remove("hidden");
+  ).classList.remove(
+    "hidden"
+  );
+
 
   updateCoachCounter();
-
 }
 
 
-/* ==========================================
+/* =========================================================
    PAYMENT
-   ========================================== */
+========================================================== */
 
 function startPayment() {
-
-  /*
-   PAYMENT IS NOT CONNECTED YET.
-
-   Do NOT pretend that payment has happened.
-
-   We'll replace this with Razorpay/payment
-   verification after the coach inbox works.
-  */
 
   alert(
     "Payment will be connected next. Your 3 free coach messages are now complete."
@@ -1520,68 +2381,110 @@ function startPayment() {
 }
 
 
-/* ==========================================
+/* =========================================================
    BACK TO AI
-   ========================================== */
+========================================================== */
 
 function backToAI() {
 
-  showScreen("chatScreen");
+  showScreen(
+    "chatScreen"
+  );
 
 }
 
 
-/* ==========================================
+/* =========================================================
    START OVER
-   ========================================== */
+========================================================== */
 
 function startOver() {
 
-  category = "General";
+  category =
+    "General";
 
-  conversation = [];
+  conversation =
+    [];
 
-  currentSessionId = Date.now();
+  currentSessionId =
+    String(Date.now());
+
 
   document.getElementById(
     "messages"
   ).innerHTML = "";
 
+
   document.getElementById(
     "messageInput"
   ).value = "";
 
-  showScreen("categoryScreen");
+
+  showScreen(
+    "categoryScreen"
+  );
+
 
   document
     .querySelectorAll(".category")
     .forEach(function(item) {
-      item.classList.remove("selected");
+
+      item.classList.remove(
+        "selected"
+      );
+
     });
 }
 
 
-/* ==========================================
+/* =========================================================
    SAVE AI HISTORY
-   ========================================== */
+========================================================== */
 
 function saveConversation() {
 
-  if (!conversation.length) return;
+  if (
+    !conversation.length
+  ) {
+
+    return;
+
+  }
+
 
   let history =
     getHistory();
 
+
   const firstUserMessage =
-    conversation.find(function(message) {
-      return message.role === "user";
-    });
+    conversation.find(
+      function(message) {
+
+        return (
+          message.role ===
+          "user"
+        );
+
+      }
+    );
+
 
   const existing =
-    history.find(function(item) {
-      return String(item.sessionId) ===
-        String(currentSessionId);
-    });
+    history.find(
+      function(item) {
+
+        return (
+          String(
+            item.sessionId
+          ) ===
+          String(
+            currentSessionId
+          )
+        );
+
+      }
+    );
+
 
   if (existing) {
 
@@ -1612,13 +2515,20 @@ function saveConversation() {
         conversation,
 
       date:
-        new Date().toLocaleString()
+        new Date()
+          .toLocaleString()
 
     });
+
   }
 
+
   history =
-    history.slice(0, 10);
+    history.slice(
+      0,
+      10
+    );
+
 
   localStorage.setItem(
     STORAGE_KEY,
@@ -1627,9 +2537,9 @@ function saveConversation() {
 }
 
 
-/* ==========================================
+/* =========================================================
    GET HISTORY
-   ========================================== */
+========================================================== */
 
 function getHistory() {
 
@@ -1651,9 +2561,9 @@ function getHistory() {
 }
 
 
-/* ==========================================
+/* =========================================================
    RENDER HISTORY
-   ========================================== */
+========================================================== */
 
 function renderHistory() {
 
@@ -1662,115 +2572,156 @@ function renderHistory() {
       "history"
     );
 
+
   const history =
     getHistory();
 
-  if (!history.length) {
-    box.innerHTML = "";
+
+  if (
+    !history.length
+  ) {
+
+    box.innerHTML =
+      "";
+
     return;
+
   }
+
 
   let html =
     "<div class='history-title'>🕘 Your Recent Guidance</div>";
 
-  history.forEach(function(item) {
 
-    const question =
-      item.question.length > 90
-        ? item.question.substring(0, 90) + "..."
-        : item.question;
+  history.forEach(
+    function(item) {
 
-    html += `
+      const question =
+        item.question.length > 90
+          ? item.question.substring(
+              0,
+              90
+            ) + "..."
+          : item.question;
 
-      <div class="history-item">
 
-        <div class="history-category">
-          ${escapeHTML(item.category)}
+      html += `
+
+        <div class="history-item">
+
+          <div class="history-category">
+            ${escapeHTML(item.category)}
+          </div>
+
+          <div class="history-question">
+            ${escapeHTML(question)}
+          </div>
+
+          <div class="history-date">
+            ${escapeHTML(item.date)}
+          </div>
+
         </div>
 
-        <div class="history-question">
-          ${escapeHTML(question)}
-        </div>
+      `;
 
-        <div class="history-date">
-          ${escapeHTML(item.date)}
-        </div>
+    }
+  );
 
-      </div>
 
-    `;
-  });
-
-  box.innerHTML = html;
+  box.innerHTML =
+    html;
 }
 
 
-/* ==========================================
+/* =========================================================
    ESCAPE HTML
-   ========================================== */
+========================================================== */
 
 function escapeHTML(text) {
 
   const div =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
-  div.textContent = text;
+
+  div.textContent =
+    text;
+
 
   return div.innerHTML;
 }
 
 
-/* ==========================================
-   ENTER TO SEND
-   ========================================== */
+/* =========================================================
+   ENTER TO SEND — AI
+========================================================== */
 
 document
-  .getElementById("messageInput")
+  .getElementById(
+    "messageInput"
+  )
   .addEventListener(
     "keydown",
     function(event) {
 
       if (
-        event.key === "Enter" &&
+        event.key ===
+        "Enter" &&
         !event.shiftKey
       ) {
 
         event.preventDefault();
 
         sendMessage();
+
       }
 
     }
   );
 
 
+/* =========================================================
+   ENTER TO SEND — COACH
+========================================================== */
+
 document
-  .getElementById("coachInput")
+  .getElementById(
+    "coachInput"
+  )
   .addEventListener(
     "keydown",
     function(event) {
 
       if (
-        event.key === "Enter" &&
+        event.key ===
+        "Enter" &&
         !event.shiftKey
       ) {
 
         event.preventDefault();
 
         sendCoachMessage();
+
       }
 
     }
   );
 
 
-/* ==========================================
+/* =========================================================
    INITIALIZE
-   ========================================== */
+========================================================== */
+
+loadSavedCustomer();
 
 renderHistory();
+
+updateCoachCounter();
 
 </script>
 
 </body>
 </html>
+```
