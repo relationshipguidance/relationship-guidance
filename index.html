@@ -2375,9 +2375,14 @@ function lockCoachChat() {
 
 function startPayment() {
 
-  alert(
-    "Payment will be connected next. Your 3 free coach messages are now complete."
+  const paymentUrl =
+    "https://rzp.io/rzp/0RJcKYJ";
+
+  window.open(
+    paymentUrl,
+    "_blank"
   );
+
 }
 
 
