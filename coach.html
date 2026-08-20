@@ -1,11 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Relationship Guidance — Coach Dashboard</title>
 
@@ -303,6 +301,13 @@
       color: #166534;
     }
 
+    .live-status {
+      font-size: 11px;
+      color: #16a34a;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
     @media (max-width: 800px) {
 
       .dashboard {
@@ -323,661 +328,780 @@
       }
     }
   </style>
+
 </head>
 
 <body>
 
-  <div class="header">
+<div class="header">
 
-    <div class="brand">
-      Relationship <span>Guidance</span>
-      — Coach
-    </div>
-
-    <button
-      class="logout"
-      id="logoutButton"
-      onclick="logout()"
-    >
-      Logout
-    </button>
-
+  <div class="brand">
+    Relationship <span>Guidance</span> — Coach
   </div>
 
+<button
+ class="logout"
+ id="logoutButton"
+ onclick="logout()">
+Logout </button>
 
-  <!-- LOGIN -->
+</div>
+
+<!-- LOGIN -->
+
+<div
+  class="login"
+  id="loginScreen">
+
+  <h1>Coach Login</h1>
+
+  <p>
+    This is the private Relationship Guidance
+    coaching dashboard.
+  </p>
+
+<input
+ type="password"
+ id="secretInput"
+ placeholder="Enter coach secret"
+ autocomplete="off">
+
+<button
+ class="primary"
+ onclick="login()">
+Enter Dashboard </button>
 
   <div
-    class="login"
-    id="loginScreen"
-  >
-
-    <h1>Coach Login</h1>
-
-    <p>
-      This is the private Relationship Guidance
-      coaching dashboard.
-    </p>
-
-    <input
-      type="password"
-      id="secretInput"
-      placeholder="Enter coach secret"
-      autocomplete="off"
-    >
-
-    <button
-      class="primary"
-      onclick="login()"
-    >
-      Enter Dashboard
-    </button>
-
-    <div
-      class="error"
-      id="loginError"
-    ></div>
-
+    class="error"
+    id="loginError">
   </div>
 
+</div>
 
-  <!-- DASHBOARD -->
+<!-- DASHBOARD -->
 
-  <div
-    class="dashboard"
-    id="dashboard"
-  >
+<div
+  class="dashboard"
+  id="dashboard">
 
-    <aside class="sidebar">
+  <aside class="sidebar">
 
-      <div class="sidebar-header">
+```
+<div class="sidebar-header">
 
-        <strong>
-          Conversations
-        </strong>
+  <strong>
+    Conversations
+    <span
+      id="liveStatus"
+      class="live-status">
+      ● LIVE
+    </span>
+  </strong>
 
-        <button
-          class="refresh"
-          onclick="loadConversations()"
-        >
-          ↻ Refresh
-        </button>
+  <button
+    class="refresh"
+    onclick="manualRefresh()">
+    ↻ Refresh
+  </button>
 
-      </div>
+</div>
 
-      <div id="conversationList"></div>
+<div id="conversationList"></div>
+```
 
-    </aside>
+  </aside>
 
+  <main class="chat">
 
-    <main class="chat">
+```
+<div
+  class="chat-header"
+  id="chatHeader">
 
-      <div
-        class="chat-header"
-        id="chatHeader"
-      >
-
-        <div class="chat-title">
-          Select a conversation
-        </div>
-
-        <div class="chat-info">
-          Choose a customer from the left.
-        </div>
-
-      </div>
-
-
-      <div
-        class="messages"
-        id="messages"
-      >
-
-        <div class="empty">
-          Select a conversation to begin.
-        </div>
-
-      </div>
-
-
-      <div class="composer">
-
-        <textarea
-          id="replyInput"
-          placeholder="Write your reply..."
-          disabled
-        ></textarea>
-
-        <button
-          class="send"
-          id="sendButton"
-          onclick="sendReply()"
-          disabled
-        >
-          Send
-        </button>
-
-      </div>
-
-    </main>
-
+  <div class="chat-title">
+    Select a conversation
   </div>
 
+  <div class="chat-info">
+    Choose a customer from the left.
+  </div>
 
-  <script>
-
-    const API_URL =
-      "https://relationship-guidance-api.leadrize.workers.dev";
-
-
-    let coachSecret = "";
-
-    let selectedSessionId = "";
-
-    let selectedConversation = null;
+</div>
 
 
-    /*
-    ============================================================
-    LOGIN
-    ============================================================
-    */
+<div
+  class="messages"
+  id="messages">
 
-    async function login() {
+  <div class="empty">
+    Select a conversation to begin.
+  </div>
 
-      const input =
-        document.getElementById(
-          "secretInput"
-        );
-
-      const secret =
-        input.value.trim();
-
-      const error =
-        document.getElementById(
-          "loginError"
-        );
-
-      error.textContent = "";
+</div>
 
 
-      if (!secret) {
+<div class="composer">
 
-        error.textContent =
-          "Please enter your coach secret.";
+  <textarea
+    id="replyInput"
+    placeholder="Write your reply..."
+    disabled></textarea>
 
-        return;
-      }
+  <button
+    class="send"
+    id="sendButton"
+    onclick="sendReply()"
+    disabled>
+    Send
+  </button>
 
+</div>
+```
 
-      /*
-      Test authentication by requesting
-      the conversation list.
-      */
+  </main>
 
-      try {
+</div>
 
-        const response =
-          await fetch(API_URL, {
+<script>
 
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-
-              action:
-                "coach_list",
-
-              coachSecret:
-                secret
-
-            })
-
-          });
+const API_URL =
+  "https://relationship-guidance-api.leadrize.workers.dev";
 
 
-        const data =
-          await response.json();
+const POLL_INTERVAL =
+  3000;
 
 
-        if (!response.ok) {
+let coachSecret = "";
 
-          throw new Error(
-            data.error ||
-            "Invalid coach secret."
-          );
-        }
+let selectedSessionId = "";
 
+let selectedConversation = null;
 
-        coachSecret =
-          secret;
+let pollingTimer = null;
 
+let conversationPollingBusy = false;
 
-        sessionStorage.setItem(
-          "coachSecret",
-          secret
-        );
+let messagePollingBusy = false;
+
+let lastRenderedMessageSignature = "";
 
 
-        document.getElementById(
-          "loginScreen"
-        ).style.display = "none";
+/*
+============================================================
+LOGIN
+============================================================
+*/
+
+async function login() {
+
+  const input =
+    document.getElementById("secretInput");
+
+  const secret =
+    input.value.trim();
+
+  const errorBox =
+    document.getElementById("loginError");
+
+  errorBox.textContent = "";
+
+  if (!secret) {
+
+    errorBox.textContent =
+      "Please enter your coach secret.";
+
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          action:
+            "coach_list",
+
+          coachSecret:
+            secret
+
+        })
+
+      });
 
 
-        document.getElementById(
-          "dashboard"
-        ).style.display = "flex";
+    const data =
+      await response.json();
 
 
-        document.getElementById(
-          "logoutButton"
-        ).style.display = "block";
+    if (!response.ok) {
 
-
-        renderConversations(
-          data.conversations || []
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-        error =
-          document.getElementById(
-            "loginError"
-          );
-
-        error.textContent =
-          "Login failed. Check your coach secret.";
-
-      }
-
-    }
-
-
-    /*
-    ============================================================
-    LOGOUT
-    ============================================================
-    */
-
-    function logout() {
-
-      coachSecret = "";
-
-      selectedSessionId = "";
-
-      selectedConversation = null;
-
-      sessionStorage.removeItem(
-        "coachSecret"
+      throw new Error(
+        data.error ||
+        "Invalid coach secret."
       );
 
-      document.getElementById(
-        "dashboard"
-      ).style.display = "none";
+    }
 
-      document.getElementById(
-        "loginScreen"
-      ).style.display = "block";
 
-      document.getElementById(
-        "logoutButton"
-      ).style.display = "none";
+    coachSecret =
+      secret;
 
-      document.getElementById(
-        "secretInput"
-      ).value = "";
+
+    sessionStorage.setItem(
+      "coachSecret",
+      secret
+    );
+
+
+    document.getElementById(
+      "loginScreen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "dashboard"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+      "logoutButton"
+    ).style.display = "block";
+
+
+    renderConversations(
+      data.conversations || []
+    );
+
+
+    /*
+    Start automatic live updates.
+    */
+
+    startDashboardPolling();
+
+  }
+
+  catch (err) {
+
+    console.error(err);
+
+    errorBox.textContent =
+      "Login failed. Check your coach secret.";
+
+  }
+
+}
+
+
+/*
+============================================================
+LOGOUT
+============================================================
+*/
+
+function logout() {
+
+  stopDashboardPolling();
+
+  coachSecret = "";
+
+  selectedSessionId = "";
+
+  selectedConversation = null;
+
+  lastRenderedMessageSignature = "";
+
+  sessionStorage.removeItem(
+    "coachSecret"
+  );
+
+  document.getElementById(
+    "dashboard"
+  ).style.display = "none";
+
+  document.getElementById(
+    "loginScreen"
+  ).style.display = "block";
+
+  document.getElementById(
+    "logoutButton"
+  ).style.display = "none";
+
+  document.getElementById(
+    "secretInput"
+  ).value = "";
+
+}
+
+
+/*
+============================================================
+START LIVE POLLING
+============================================================
+*/
+
+function startDashboardPolling() {
+
+  stopDashboardPolling();
+
+
+  /*
+  Check immediately.
+  */
+
+  pollDashboard();
+
+
+  /*
+  Then check every 3 seconds.
+  */
+
+  pollingTimer =
+    setInterval(
+      pollDashboard,
+      POLL_INTERVAL
+    );
+
+}
+
+
+/*
+============================================================
+STOP LIVE POLLING
+============================================================
+*/
+
+function stopDashboardPolling() {
+
+  if (pollingTimer) {
+
+    clearInterval(
+      pollingTimer
+    );
+
+    pollingTimer = null;
+
+  }
+
+}
+
+
+/*
+============================================================
+MAIN POLLING FUNCTION
+============================================================
+*/
+
+async function pollDashboard() {
+
+  if (!coachSecret) {
+    return;
+  }
+
+
+  /*
+  Prevent overlapping requests.
+  */
+
+  if (
+    conversationPollingBusy ||
+    messagePollingBusy
+  ) {
+
+    return;
+
+  }
+
+
+  await refreshConversationList();
+
+
+  /*
+  If a conversation is open,
+  check it for new messages.
+  */
+
+  if (selectedSessionId) {
+
+    await refreshSelectedConversation();
+
+  }
+
+}
+
+
+/*
+============================================================
+LOAD / REFRESH CONVERSATION LIST
+============================================================
+*/
+
+async function refreshConversationList() {
+
+  if (!coachSecret) {
+    return;
+  }
+
+
+  if (conversationPollingBusy) {
+    return;
+  }
+
+
+  conversationPollingBusy = true;
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          action:
+            "coach_list",
+
+          coachSecret:
+            coachSecret
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Unable to load conversations."
+      );
 
     }
 
 
-    /*
-    ============================================================
-    LOAD CONVERSATIONS
-    ============================================================
-    */
+    renderConversations(
+      data.conversations || []
+    );
 
-    async function loadConversations() {
+  }
 
-      if (!coachSecret) return;
+  catch (error) {
 
+    console.error(
+      "Conversation polling error:",
+      error
+    );
 
-      try {
+  }
 
-        const response =
-          await fetch(API_URL, {
+  finally {
 
-            method: "POST",
+    conversationPollingBusy =
+      false;
 
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
+  }
 
-            body: JSON.stringify({
-
-              action:
-                "coach_list",
-
-              coachSecret:
-                coachSecret
-
-            })
-
-          });
+}
 
 
-        const data =
-          await response.json();
+/*
+============================================================
+MANUAL REFRESH
+============================================================
+*/
+
+async function manualRefresh() {
+
+  await refreshConversationList();
+
+  if (selectedSessionId) {
+
+    await refreshSelectedConversation();
+
+  }
+
+}
 
 
-        if (!response.ok) {
+/*
+============================================================
+RENDER CONVERSATION LIST
+============================================================
+*/
 
-          throw new Error(
-            data.error ||
-            "Unable to load conversations."
+function renderConversations(
+  conversations
+) {
+
+  const list =
+    document.getElementById(
+      "conversationList"
+    );
+
+
+  if (!conversations.length) {
+
+    list.innerHTML = `
+
+      <div style="
+        padding:25px;
+        color:#9ca3af;
+        text-align:center;
+      ">
+        No conversations yet.
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    conversations
+      .map(function(conversation) {
+
+        const active =
+          String(conversation.id) ===
+          String(selectedSessionId)
+            ? "active"
+            : "";
+
+
+        const paid =
+          Number(
+            conversation.paid
+          ) === 1;
+
+
+        const messageCount =
+          Number(
+            conversation.free_messages_used ||
+            0
           );
-        }
 
 
-        renderConversations(
-          data.conversations || []
-        );
+        return `
 
-      }
+          <div
+            class="conversation ${active}"
+            onclick="openConversation('${escapeAttribute(conversation.id)}')">
 
-      catch (error) {
+            <div class="conversation-category">
 
-        console.error(error);
+              ${escapeHtml(
+                conversation.category ||
+                "General"
+              )}
 
-        alert(
-          "Unable to load conversations."
-        );
+              <span
+                class="badge ${
+                  paid ? "paid" : ""
+                }">
 
-      }
+                ${
+                  paid
+                    ? "PAID"
+                    : messageCount + "/3 FREE"
+                }
 
-    }
+              </span>
 
-
-    /*
-    ============================================================
-    RENDER CONVERSATION LIST
-    ============================================================
-    */
-
-    function renderConversations(
-      conversations
-    ) {
-
-      const list =
-        document.getElementById(
-          "conversationList"
-        );
+            </div>
 
 
-      if (!conversations.length) {
+            <div class="conversation-email">
 
-        list.innerHTML = `
-          <div style="
-            padding:25px;
-            color:#9ca3af;
-            text-align:center;
-          ">
-            No conversations yet.
+              ${escapeHtml(
+                conversation.customer_email ||
+                "No email provided"
+              )}
+
+            </div>
+
+
+            <div class="conversation-message">
+
+              ${escapeHtml(
+                conversation.latest_message ||
+                "No messages"
+              )}
+
+            </div>
+
+
+            <div class="conversation-meta">
+
+              ID:
+              ${escapeHtml(
+                conversation.id
+              )}
+
+            </div>
+
           </div>
+
         `;
 
-        return;
-      }
+      })
+      .join("");
+
+}
 
 
-      list.innerHTML =
-        conversations
-          .map(function(conversation) {
+/*
+============================================================
+OPEN CONVERSATION
+============================================================
+*/
 
-            const active =
-              conversation.id ===
-              selectedSessionId
-                ? "active"
-                : "";
+async function openConversation(
+  sessionId
+) {
 
+  selectedSessionId =
+    String(sessionId);
 
-            const paid =
-              Number(
-                conversation.paid
-              ) === 1;
-
-
-            const messageCount =
-              Number(
-                conversation.free_messages_used ||
-                0
-              );
+  lastRenderedMessageSignature =
+    "";
 
 
-            return `
-
-              <div
-                class="conversation ${active}"
-                onclick="openConversation('${escapeAttribute(conversation.id)}')"
-              >
-
-                <div class="conversation-category">
-
-                  ${escapeHtml(
-                    conversation.category ||
-                    "General"
-                  )}
-
-                  <span
-                    class="badge ${
-                      paid ? "paid" : ""
-                    }"
-                  >
-                    ${
-                      paid
-                        ? "PAID"
-                        : messageCount + "/3 FREE"
-                    }
-                  </span>
-
-                </div>
+  await refreshSelectedConversation();
 
 
-                <div class="conversation-email">
+  /*
+  Refresh sidebar so active state
+  is shown immediately.
+  */
 
-                  ${escapeHtml(
-                    conversation.customer_email ||
-                    "No email provided"
-                  )}
+  await refreshConversationList();
 
-                </div>
-
-
-                <div class="conversation-message">
-
-                  ${escapeHtml(
-                    conversation.latest_message ||
-                    "No messages"
-                  )}
-
-                </div>
+}
 
 
-                <div class="conversation-meta">
+/*
+============================================================
+REFRESH SELECTED CONVERSATION
+============================================================
+*/
 
-                  ID:
-                  ${escapeHtml(
-                    conversation.id
-                  )}
+async function refreshSelectedConversation() {
 
-                </div>
+  if (
+    !coachSecret ||
+    !selectedSessionId
+  ) {
 
-              </div>
+    return;
 
-            `;
-
-          })
-          .join("");
-
-    }
-
-
-    /*
-    ============================================================
-    OPEN CONVERSATION
-    ============================================================
-    */
-
-    async function openConversation(
-      sessionId
-    ) {
-
-      selectedSessionId =
-        sessionId;
+  }
 
 
-      try {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-
-              action:
-                "coach_messages",
-
-              coachSecret:
-                coachSecret,
-
-              sessionId:
-                sessionId
-
-            })
-
-          });
+  if (messagePollingBusy) {
+    return;
+  }
 
 
-        const data =
-          await response.json();
+  messagePollingBusy = true;
 
 
-        if (!response.ok) {
+  try {
 
-          throw new Error(
-            data.error ||
-            "Unable to load conversation."
-          );
-        }
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          action:
+            "coach_messages",
+
+          coachSecret:
+            coachSecret,
+
+          sessionId:
+            selectedSessionId
+
+        })
+
+      });
 
 
-        selectedConversation =
-          data.conversation;
+    const data =
+      await response.json();
 
 
-        renderConversation(
-          data.conversation,
-          data.messages || []
-        );
+    if (!response.ok) {
 
-
-        renderConversationsFromRefresh();
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Unable to open conversation."
-        );
-
-      }
+      throw new Error(
+        data.error ||
+        "Unable to load conversation."
+      );
 
     }
 
 
+    selectedConversation =
+      data.conversation;
+
+
+    const messages =
+      data.messages || [];
+
+
     /*
-    ============================================================
-    RENDER CURRENT CONVERSATION
-    ============================================================
+    Create a simple signature of
+    the current messages.
+
+    If nothing changed, don't
+    redraw the chat.
     */
 
-    function renderConversation(
-      conversation,
+    const signature =
       messages
+        .map(function(message) {
+
+          return [
+            message.id,
+            message.sender,
+            message.message
+          ].join("|");
+
+        })
+        .join("||");
+
+
+    if (
+      signature !==
+      lastRenderedMessageSignature
     ) {
-
-      const header =
-        document.getElementById(
-          "chatHeader"
-        );
-
-
-      const paid =
-        Number(
-          conversation.paid
-        ) === 1;
-
-
-      header.innerHTML = `
-
-        <div class="chat-title">
-
-          ${escapeHtml(
-            conversation.category ||
-            "General"
-          )}
-
-          <span
-            class="badge ${
-              paid ? "paid" : ""
-            }"
-          >
-            ${
-              paid
-                ? "PAID"
-                : conversation.free_messages_used +
-                  "/3 FREE"
-            }
-          </span>
-
-        </div>
-
-        <div class="chat-info">
-
-          Customer:
-          ${escapeHtml(
-            conversation.customer_email ||
-            "No email provided"
-          )}
-
-          &nbsp; • &nbsp;
-
-          Session:
-          ${escapeHtml(
-            conversation.id
-          )}
-
-        </div>
-
-      `;
-
 
       const container =
         document.getElementById(
@@ -985,323 +1109,456 @@
         );
 
 
-      if (!messages.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            No messages yet.
-          </div>
-        `;
-
-      }
-
-      else {
-
-        container.innerHTML =
-          messages
-            .map(function(message) {
-
-              const sender =
-                message.sender ===
-                "coach"
-                  ? "coach"
-                  : "customer";
+      const wasNearBottom =
+        container.scrollHeight -
+        container.scrollTop -
+        container.clientHeight <
+        100;
 
 
-              return `
-
-                <div
-                  class="message-row ${sender}"
-                >
-
-                  <div class="bubble">
-
-                    <div class="sender">
-
-                      ${
-                        sender === "coach"
-                          ? "YOU"
-                          : "CUSTOMER"
-                      }
-
-                    </div>
-
-                    ${escapeHtml(
-                      message.message
-                    )}
-
-                  </div>
-
-                </div>
-
-              `;
-
-            })
-            .join("");
-
-      }
+      renderConversation(
+        data.conversation,
+        messages,
+        wasNearBottom
+      );
 
 
-      container.scrollTop =
-        container.scrollHeight;
-
-
-      document.getElementById(
-        "replyInput"
-      ).disabled = false;
-
-
-      document.getElementById(
-        "sendButton"
-      ).disabled = false;
+      lastRenderedMessageSignature =
+        signature;
 
     }
 
+  }
 
-    /*
-    ============================================================
-    REFRESH SIDEBAR
-    ============================================================
-    */
+  catch (error) {
 
-    async function renderConversationsFromRefresh() {
+    console.error(
+      "Message polling error:",
+      error
+    );
 
-      await loadConversations();
+  }
 
-    }
+  finally {
 
+    messagePollingBusy =
+      false;
 
-    /*
-    ============================================================
-    SEND COACH REPLY
-    ============================================================
-    */
+  }
 
-    async function sendReply() {
+}
 
-      if (!selectedSessionId) {
 
-        alert(
-          "Select a conversation first."
-        );
+/*
+============================================================
+RENDER CURRENT CONVERSATION
+============================================================
+*/
 
-        return;
-      }
+function renderConversation(
+  conversation,
+  messages,
+  keepScrollPosition
+) {
 
-
-      const input =
-        document.getElementById(
-          "replyInput"
-        );
-
-
-      const text =
-        input.value.trim();
-
-
-      if (!text) return;
-
-
-      const button =
-        document.getElementById(
-          "sendButton"
-        );
-
-
-      button.disabled = true;
-
-      button.textContent =
-        "Sending...";
-
-
-      try {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-
-              action:
-                "coach_reply",
-
-              coachSecret:
-                coachSecret,
-
-              sessionId:
-                selectedSessionId,
-
-              message:
-                text
-
-            })
-
-          });
-
-
-        const data =
-          await response.json();
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            data.error ||
-            "Unable to send reply."
-          );
-
-        }
-
-
-        input.value = "";
-
-
-        /*
-        Reload the conversation so the
-        saved reply appears exactly as
-        it exists in D1.
-        */
-
-        await openConversation(
-          selectedSessionId
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-        alert(
-          error.message ||
-          "Unable to send reply."
-        );
-
-      }
-
-      finally {
-
-        button.disabled = false;
-
-        button.textContent =
-          "Send";
-
-      }
-
-    }
-
-
-    /*
-    ============================================================
-    SECURITY / DISPLAY HELPERS
-    ============================================================
-    */
-
-    function escapeHtml(value) {
-
-      return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    function escapeAttribute(value) {
-
-      return String(value || "")
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-    }
-
-
-    /*
-    ============================================================
-    AUTO LOGIN FROM SESSION
-    ============================================================
-    */
-
-    window.addEventListener(
-      "DOMContentLoaded",
-      function() {
-
-        const savedSecret =
-          sessionStorage.getItem(
-            "coachSecret"
-          );
-
-
-        if (savedSecret) {
-
-          document.getElementById(
-            "secretInput"
-          ).value =
-            savedSecret;
-
-          login();
-
-        }
-
-      }
+  const header =
+    document.getElementById(
+      "chatHeader"
     );
 
 
+  const paid =
+    Number(
+      conversation.paid
+    ) === 1;
+
+
+  header.innerHTML = `
+
+    <div class="chat-title">
+
+      ${escapeHtml(
+        conversation.category ||
+        "General"
+      )}
+
+      <span
+        class="badge ${
+          paid ? "paid" : ""
+        }">
+
+        ${
+          paid
+            ? "PAID"
+            : Number(
+                conversation.free_messages_used ||
+                0
+              ) + "/3 FREE"
+        }
+
+      </span>
+
+    </div>
+
+
+    <div class="chat-info">
+
+      Customer:
+      ${escapeHtml(
+        conversation.customer_email ||
+        "No email provided"
+      )}
+
+      &nbsp; • &nbsp;
+
+      Session:
+      ${escapeHtml(
+        conversation.id
+      )}
+
+    </div>
+
+  `;
+
+
+  const container =
+    document.getElementById(
+      "messages"
+    );
+
+
+  if (!messages.length) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+        No messages yet.
+      </div>
+
+    `;
+
+  }
+
+  else {
+
+    container.innerHTML =
+      messages
+        .map(function(message) {
+
+          const sender =
+            message.sender ===
+            "coach"
+              ? "coach"
+              : "customer";
+
+
+          return `
+
+            <div
+              class="message-row ${sender}">
+
+              <div class="bubble">
+
+                <div class="sender">
+
+                  ${
+                    sender === "coach"
+                      ? "YOU"
+                      : "CUSTOMER"
+                  }
+
+                </div>
+
+                ${escapeHtml(
+                  message.message
+                )}
+
+              </div>
+
+            </div>
+
+          `;
+
+        })
+        .join("");
+
+  }
+
+
+  /*
+  Only jump to bottom when:
+
+  - opening the conversation
+  - already near the bottom
+  - or keepScrollPosition is true
+  */
+
+  if (
+    keepScrollPosition === true
+  ) {
+
+    container.scrollTop =
+      container.scrollHeight;
+
+  }
+
+
+  document.getElementById(
+    "replyInput"
+  ).disabled = false;
+
+
+  document.getElementById(
+    "sendButton"
+  ).disabled = false;
+
+}
+
+
+/*
+============================================================
+SEND COACH REPLY
+============================================================
+*/
+
+async function sendReply() {
+
+  if (!selectedSessionId) {
+
+    alert(
+      "Select a conversation first."
+    );
+
+    return;
+  }
+
+
+  const input =
+    document.getElementById(
+      "replyInput"
+    );
+
+
+  const text =
+    input.value.trim();
+
+
+  if (!text) return;
+
+
+  const button =
+    document.getElementById(
+      "sendButton"
+    );
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Sending...";
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          action:
+            "coach_reply",
+
+          coachSecret:
+            coachSecret,
+
+          sessionId:
+            selectedSessionId,
+
+          message:
+            text
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Unable to send reply."
+      );
+
+    }
+
+
+    input.value = "";
+
+
     /*
-    Enter key on login.
+    Immediately reload the conversation.
     */
 
-    document
-      .getElementById("secretInput")
-      .addEventListener(
-        "keydown",
-        function(event) {
+    lastRenderedMessageSignature =
+      "";
 
-          if (
-            event.key === "Enter"
-          ) {
 
-            login();
+    await refreshSelectedConversation();
 
-          }
 
-        }
+    /*
+    Also update sidebar.
+    */
+
+    await refreshConversationList();
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Unable to send reply."
+    );
+
+  }
+
+  finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      "Send";
+
+    input.focus();
+
+  }
+
+}
+
+
+/*
+============================================================
+SECURITY / DISPLAY HELPERS
+============================================================
+*/
+
+function escapeHtml(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeAttribute(value) {
+
+  return String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+
+}
+
+
+/*
+============================================================
+AUTO LOGIN
+============================================================
+*/
+
+window.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    const savedSecret =
+      sessionStorage.getItem(
+        "coachSecret"
       );
 
 
-    /*
-    Ctrl + Enter sends a reply.
-    */
+    if (savedSecret) {
 
-    document
-      .getElementById("replyInput")
-      .addEventListener(
-        "keydown",
-        function(event) {
+      document.getElementById(
+        "secretInput"
+      ).value =
+        savedSecret;
 
-          if (
-            event.ctrlKey &&
-            event.key === "Enter"
-          ) {
+      login();
 
-            event.preventDefault();
+    }
 
-            sendReply();
+  }
+);
 
-          }
 
-        }
-      );
+/*
+============================================================
+ENTER KEY ON LOGIN
+============================================================
+*/
 
-  </script>
+document
+  .getElementById("secretInput")
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter"
+      ) {
+
+        login();
+
+      }
+
+    }
+  );
+
+
+/*
+============================================================
+CTRL + ENTER SENDS REPLY
+============================================================
+*/
+
+document
+  .getElementById("replyInput")
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.ctrlKey &&
+        event.key === "Enter"
+      ) {
+
+        event.preventDefault();
+
+        sendReply();
+
+      }
+
+    }
+  );
+
+</script>
 
 </body>
 </html>
