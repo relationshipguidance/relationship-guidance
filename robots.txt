@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://relationshipguidance.github.io/relationship-guidance/sitemap.xml

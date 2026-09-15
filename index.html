@@ -1,11 +1,32 @@
-```html
+﻿```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Relationship Guidance</title>
+<title>Relationship Guidance — Understand Your Relationship Before You Decide What to Do</title>
+
+<meta name="description" content="Relationship guidance for communication problems, trust, jealousy, conflict, marriage, dating, emotional distance and difficult relationship decisions.">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://relationshipguidance.github.io/relationship-guidance/">
+
+<meta property="og:title" content="Relationship Guidance">
+<meta property="og:description" content="Understand what is really happening in your relationship before deciding what to do.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://relationshipguidance.github.io/relationship-guidance/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Relationship Guidance",
+  "url": "https://relationshipguidance.github.io/relationship-guidance/",
+  "description": "Relationship guidance for communication, trust, conflict, marriage, dating and difficult relationship decisions."
+}
+</script>
 
 <style>
 * {
@@ -451,7 +472,7 @@ input:focus {
 
 <div class="header">
 
-  <div class="heart">❤️</div>
+  <div class="heart">â¤ï¸</div>
 
   <h1>Relationship Guidance</h1>
 
@@ -482,42 +503,42 @@ input:focus {
 
     <button class="category"
       onclick="startConversation('Communication', this)">
-      💬 Communication
+      ðŸ’¬ Communication
     </button>
 
     <button class="category"
       onclick="startConversation('Trust & Jealousy', this)">
-      🤝 Trust & Jealousy
+      ðŸ¤ Trust & Jealousy
     </button>
 
     <button class="category"
       onclick="startConversation('Arguments & Conflict', this)">
-      ⚡ Arguments & Conflict
+      âš¡ Arguments & Conflict
     </button>
 
     <button class="category"
       onclick="startConversation('Marriage', this)">
-      💍 Marriage
+      ðŸ’ Marriage
     </button>
 
     <button class="category"
       onclick="startConversation('Dating', this)">
-      ❤️ Dating
+      â¤ï¸ Dating
     </button>
 
     <button class="category"
       onclick="startConversation('Emotional Distance', this)">
-      💔 Emotional Distance
+      ðŸ’” Emotional Distance
     </button>
 
     <button class="category"
       onclick="startConversation('Breakup & Separation', this)">
-      🌿 Breakup & Separation
+      ðŸŒ¿ Breakup & Separation
     </button>
 
     <button class="category"
       onclick="startConversation('Family & Boundaries', this)">
-      🏡 Family & Boundaries
+      ðŸ¡ Family & Boundaries
     </button>
 
   </div>
@@ -534,7 +555,7 @@ input:focus {
 <div id="chatScreen" class="screen">
 
   <button class="back-button" onclick="startOver()">
-    ← Back to Relationship Topics
+    â† Back to Relationship Topics
   </button>
 
   <div class="chat-header">
@@ -552,7 +573,7 @@ input:focus {
   <div id="messages" class="messages"></div>
 
   <div id="loading" class="loading">
-    ❤️ Thinking about what you've shared...
+    â¤ï¸ Thinking about what you've shared...
   </div>
 
   <div class="chat-input-area">
@@ -574,7 +595,7 @@ input:focus {
   <div class="coach-section">
 
     <div class="coach-title">
-      🤝 Want to talk to a human coach?
+      ðŸ¤ Want to talk to a human coach?
     </div>
 
     <div class="coach-text">
@@ -585,7 +606,7 @@ input:focus {
     <button
       class="coach-button"
       onclick="openCoachRegistration()">
-      🤝 Talk to a Human Coach
+      ðŸ¤ Talk to a Human Coach
     </button>
 
   </div>
@@ -602,7 +623,7 @@ input:focus {
   <div class="coach-card">
 
     <div class="coach-icon">
-      🤝
+      ðŸ¤
     </div>
 
     <h2>
@@ -678,13 +699,13 @@ input:focus {
   <button
     class="back-button"
     onclick="backToAI()">
-    ← Back to AI Guidance
+    â† Back to AI Guidance
   </button>
 
   <div class="chat-header">
 
     <div class="chat-title">
-      🤝 Human Coach
+      ðŸ¤ Human Coach
     </div>
 
     <div class="selected-category">
@@ -732,7 +753,7 @@ input:focus {
     </p>
 
     <div class="price">
-      ₹1,499
+      â‚¹1,499
     </div>
 
     <p>
@@ -742,7 +763,7 @@ input:focus {
     <button
       class="payment-button"
       onclick="startPayment()">
-      Continue Coaching — ₹1,499
+      Continue Coaching â€” â‚¹1,499
     </button>
 
   </div>
@@ -1069,6 +1090,7 @@ async function sendMessage() {
 
 
     const guidance =
+      data.guidance ||
       data.response ||
       "I couldn't generate guidance right now.";
 
@@ -1899,7 +1921,7 @@ async function sendCoachMessage() {
 
     addCoachMessage(
       "system",
-      "✓ Your message has been sent to your human coach."
+      "âœ“ Your message has been sent to your human coach."
     );
 
 
@@ -2595,7 +2617,7 @@ function renderHistory() {
 
 
   let html =
-    "<div class='history-title'>🕘 Your Recent Guidance</div>";
+    "<div class='history-title'>ðŸ•˜ Your Recent Guidance</div>";
 
 
   history.forEach(
@@ -2660,7 +2682,7 @@ function escapeHTML(text) {
 
 
 /* =========================================================
-   ENTER TO SEND — AI
+   ENTER TO SEND â€” AI
 ========================================================== */
 
 document
@@ -2688,7 +2710,7 @@ document
 
 
 /* =========================================================
-   ENTER TO SEND — COACH
+   ENTER TO SEND â€” COACH
 ========================================================== */
 
 document
@@ -2730,3 +2752,4 @@ updateCoachCounter();
 </body>
 </html>
 ```
+
